@@ -211,7 +211,34 @@ session_start();
 
 
   <div id="welcome">
-	  <h1 class="welcome_font">Welcome Back,  <?php echo $_SESSION['username']; ?>  </h1>
+	  <h1 class="welcome_font">Welcome Back, 
+
+		   <?php
+		   		$con =mysqli_connect('localhost', 'root','190042106', 'login_system');
+
+		
+
+				$email = $_SESSION['email'];
+
+				$reg=" select name from login where email= '$email'";
+
+
+
+				$result = mysqli_query($con, $reg);
+
+				while($row = mysqli_fetch_assoc($result)){
+					echo "{$row['name']}";
+				}
+
+
+	
+	 
+	 	    ?>  
+			 
+			
+	    </h1>
+
+	  <!-- <h1 class="welcome_font">Welcome Back,    </h1> -->
   </div>
   	
 

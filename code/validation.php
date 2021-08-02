@@ -17,10 +17,13 @@ mysqli_select_db($con, 'login_system');
 
 	 $num= mysqli_num_rows($result);
 
-	 if($num==1){
+	 $_SESSION['email'] = $email;
+
+	 if($num == 1){
 		 while($row= mysqli_fetch_assoc($result)){
 			 if(password_verify($password, $row['password'])){
-				$_SESSION['username']=$name;
+				// $_SESSION['username']=$name;
+				// $_SESSION['email']=$email;
 				header('location:boot_home.php');
 			 }
 		 }
@@ -29,7 +32,7 @@ mysqli_select_db($con, 'login_system');
 
 	 else{
 
-        alert("Wrong Password");
+        echo '<script>alert("Wrong Password")</script>';
         header('location:login.php');
 		 
 	 }

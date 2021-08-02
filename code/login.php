@@ -174,23 +174,18 @@
 	  
 								<label for="" class="label-style">Confirm Password</label>
 								<input type="password" name="cpwd" placeholder="Confirm your Password" class="form-control" required> <p></p>
-	  
-	  
-								
+	  						
 	  
 							</div>
 	  
 							<button type="submit" name="register" class="btn btn-info">Submit</button>
-
               
 	  
 						</form>    
 	  
 					</div>
 	  
-					<div class="modal-footer">
-	  
-			  
+					<div class="modal-footer">  
 	  
 					</div>
 	  

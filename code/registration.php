@@ -9,7 +9,7 @@ $con =mysqli_connect('localhost', 'root','190042106');
 mysqli_select_db($con, 'login_system');
       
      $role=$_POST["role"];
-     $name = $_POST["name"];
+     $name = $_POST["name"];-
 	 $s_id= $_POST["s_id"];
 	 $dept = $_POST["dept"];
 	 $gender= $_POST["gender"];
