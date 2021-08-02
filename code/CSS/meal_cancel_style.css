@@ -1,0 +1,27 @@
+.label-style{
+    color: black;
+    background-color: blue;
+}
+
+
+
+
+#cancel_reason{
+    resize: none;
+    color: red;
+    font-size: 1.5rem;
+    border: royalblue solid;
+    height: 150px;
+}
+
+.meal_header{
+    font-weight: 700;
+    font-size: 1.3rem;
+    
+}
+
+
+
+
+
+  

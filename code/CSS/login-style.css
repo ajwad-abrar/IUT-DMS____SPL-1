@@ -1,0 +1,103 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: snow;
+}
+
+.login{
+    margin: 80px auto;
+}
+
+.row{
+    background: white;
+    border-radius: 30px;
+    box-shadow: 12px 12px 22px;
+}
+
+.login img{
+    /* border-top-left-radius: 30px; */
+    border-radius: 30px 0px 0px 30px;
+}
+
+.login h1{
+    font-size: 4rem;
+    font-weight: 700;
+    font-family: 'Pacifico', cursive;
+}
+
+.inp{
+    height: 50px;
+    width: 70%;
+    border: none;
+    outline: none;
+    border-radius: 60px;
+    box-shadow: 1px -1px 29px -12px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 1px -1px 29px -12px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px -1px 29px -12px rgba(0,0,0,0.75);
+}
+
+
+.btn1{
+    height: 50px;
+    width: 50%;
+    border: none;
+    outline: none;
+    border-radius: 60px;
+    font-weight: 700;
+    background: tomato;
+    color: white;
+    transition: 0.5s;
+    margin-left: 15%;
+}
+
+.btn1:hover{
+    background: teal;
+}
+
+p{
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+
+p a{
+    text-decoration: none;
+}
+
+p a:hover{
+    color: teal;
+    font-weight: 700;
+    
+}
+
+.remember{
+    font-size: 20px;
+    padding-left: 15%;
+    
+}
+
+.label-class{
+    font-size: 1.5rem;
+    font-weight: 600;
+    
+}
+
+.log-btn{
+    text-align: center;
+    color: cornflowerblue;
+}
+
+
+.checkbox-style{
+    color:crimson;
+    font-weight: 600;
+  }
+
+.label-style{
+    color:black;
+    font-weight: 800;
+}
+

@@ -1,0 +1,45 @@
+#user{
+    margin-left: 3px;
+    float: left;
+}
+
+#prb{
+  width: 100%;
+}
+
+
+#submit_button{
+
+    width: 15%;
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    color: white;
+    transition: 0.5s;
+  
+}
+
+#submit_button:hover{
+  background:crimson;
+} 
+
+
+
+#choose_room{
+  margin-bottom: 70px;
+  color:orangered;
+}
+
+
+.label-style{
+  color: black;
+  background: blanchedalmond;
+}
+
+.modal-body {
+
+  /* Making sure the footer & header of the modal stays fixed */
+  max-height: calc(100vh - 210px);
+  overflow-y: auto;
+}
+

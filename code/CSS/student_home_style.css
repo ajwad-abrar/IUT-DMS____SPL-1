@@ -1,0 +1,54 @@
+
+body{
+    background-image: linear-gradient(rgba(4, 9, 30, .7), rgba(4, 9, 30, .7)), url(https://media-exp1.licdn.com/dms/image/C561BAQGebLXz4Vsb7Q/company-background_10000/0/1604332697852?e=2159024400&v=beta&t=JhWNFCWHKAW8raBfl4JvI12nTD8BWSMMWBHTckYOONE);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    height: 100%;
+
+}
+
+#user{
+    margin-left: 3px;
+    float: left;
+}
+
+
+.modal-title-ann{
+  text-decoration: underline;
+  color: blue;
+}
+
+#welcome{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  
+}
+
+.welcome_font{
+  font-size: 4rem;
+  color: aliceblue;
+}
+
+.label-style{
+  color:black;
+  font-weight: 700;
+}
+
+.checkbox-style{
+  color:crimson;
+}
+
+.modal-body {
+
+  /* Making sure the footer & header of the modal stays fixed */
+  max-height: calc(100vh - 210px);
+  overflow-y: auto;
+}
+
+

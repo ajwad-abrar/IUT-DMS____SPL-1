@@ -1,0 +1,54 @@
+#subject_announcement{
+  resize: none;
+   color: red;
+   font-size: 1.5rem;
+   border: royalblue solid;
+   height: 150px;
+}
+
+
+#prb{
+  width: 100%;
+}
+
+#subject_announcement{
+   resize: none;
+    color: red;
+    font-size: 1.5rem;
+    border: royalblue solid;
+    height: 150px;
+}
+
+
+
+.label-style{
+  color:black;
+  font-weight: 700;
+}
+
+.checkbox-style{
+  color:crimson;
+}
+
+.modal-body {
+
+  /* Making sure the footer & header of the modal stays fixed */
+  max-height: calc(100vh - 210px);
+  overflow-y: auto;
+}
+
+
+
+#user{
+    margin-left: 3px;
+    float: left;
+}
+
+
+.modal-title-ann{
+  text-decoration: underline;
+  color: blue;
+}
+
+
+
