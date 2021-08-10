@@ -1,3 +1,8 @@
+<?php
+session_start();
+?>
+
+
 <!doctype html>
 <html lang="en">
 
@@ -9,14 +14,15 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="boot_style.css">
-	  <link rel="stylesheet" href="CSS/resource_request_student.css">
+	<link rel="stylesheet" href="CSS/resource_request_student.css">
+	<link rel="stylesheet" href="CSS/stuent_announcement_style.css">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   
 
-    <title>Room request</title>
+    <title>Student Announcement</title>
 
 </head>
 
@@ -31,8 +37,40 @@
               <a href="#" ><img src="images/ajwad_student.jpg" id="profile_picture"></a>
            </div>
               
-           <br><br><br><br>
-   		   <a href="#"><h4>Ajwad Abrar</h4></a>
+		   <h4>
+
+				<?php
+
+				function showName(){
+
+					$con =mysqli_connect('localhost', 'root','190042106', 'login_system');
+
+
+					$email = $_SESSION['email'];
+
+					$reg=" select name from login where email= '$email'";
+
+
+					$result = mysqli_query($con, $reg);
+
+					echo "<br>";
+
+					while($row = mysqli_fetch_assoc($result)){
+						echo "{$row['name']}";
+					}
+					
+				}
+
+				showName();
+
+
+				?>
+
+
+			</h4>
+
+
+
            <button type="button" class="btn btn-light mx-5" data-toggle="modal" data-target="#try" id="update_button">Update</button>
 
    		</div>
@@ -141,31 +179,31 @@
    		<ul class="list-unstyled components">
    		
    			<li>
-   				<a href="boot_home.php" ><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-house-door-fill mx-2" viewBox="0 0 16 16">
+   				<a href="student_home.php" ><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-house-door-fill mx-2" viewBox="0 0 16 16">
             <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
           </svg>  Home</a>
    		
    			</li>
    			
    			<li>
-   				<a href="boot_room_req.html"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-person-plus-fill mx-2" viewBox="0 0 16 16">
+   				<a href="student_room_request.php"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-person-plus-fill mx-2" viewBox="0 0 16 16">
             <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
             <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
           </svg>   Room Request</a>
    			</li>
-   			<li>
-   				<a href="student_announcement.html"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-megaphone-fill mx-2" viewBox="0 0 16 16">
+   			<li  class="active">
+   				<a href="student_announcement.php"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-megaphone-fill mx-2" viewBox="0 0 16 16">
             <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"/>
           </svg> Announcement</a>
    				
    			</li>
-   			<li class="active">
-   				<a href="boot_resource_req.html"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-patch-check-fill mx-2" viewBox="0 0 16 16">
+   			<li>
+   				<a href="student_resource_request.php"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-patch-check-fill mx-2" viewBox="0 0 16 16">
             <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
           </svg> Resource Request</a>
 
           <li>
-            <a href="boot_meal_cancellation.html" class="text-light text-decoration-none"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-x-circle-fill mx-2" viewBox="0 0 16 16">
+            <a href="student_meal.php" class="text-light text-decoration-none"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-x-circle-fill mx-2" viewBox="0 0 16 16">
               <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
             </svg> Meal Cancellation </a>
        </li> 
@@ -191,93 +229,197 @@
           <i class="fa fa-align-justify"></i> <span>Menu</span>
         </button>
       
-   	
-  
-  <!--<a class="navbar-brand" href="#">Navbar</a> -->
-  
-      </nav>
-  
+   		</nav>
 
-           
-<div class="other-section">
-  
-  <div>
 
-    <ul class="nav nav-tabs">
+	<!--annnouncement modal-->
+	
+	<div class="container">
+
     
-      <li class="nav-item "><a data-toggle="tab" class="nav-link active" href="#inbox">Request</a></li>
-    
-    </ul>
+		<!-- The Modal -->
+		<div class="modal fade" id="annmod">
+		  <div class="modal-dialog modal-lg">
+			<div class="modal-content">
+			
+			  <!-- Modal Header -->
+			  <div class="modal-header">
+				
 
-  </div>
+				   <h4 class="modal-title w-100 text-center label-style">Post Your Message</h4>
+              	   <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+			  </div>
+			  
+			  <!-- Modal body -->
+			  <div class="modal-body">
+			  
+				<form class="form-horizontal" action="">
+				  <div class="form-group">
+	
+					<div class="form-floating">
+						<label for="floatingTextarea1"> <b>Date of Announcement</b>  </label><br>
+						<input type="date" class = "" id="floatingTextarea1"></textarea>
+						
+					  </div>
+					  <br>
+					  <div class="form-floating">
+
+						<label for="floatingTextarea3"> <b>Subject</b> </label>
+
+							<textarea class="form-control p-2" placeholder="Purpose of Announcement" id="subject_announcement" maxlength="50"
+						
+								style="
+								
+								resize: none;
+								color: red;
+								border:royalblue solid;
+								height: 50px;"   ></textarea>
+					   
+					  </div>         
+						
+					  
+					  
+					  <br>
+					<div class="form-floating">
+
+						<label for="floatingTextarea2"> <b> Announcement</b></label>
+						<textarea class="form-control p-2" placeholder="Write an announement" id="floatingTextarea2"
+						
+						style="
+								
+						resize: none;
+						color: black;
+						border:black solid;
+						height: 200px;"  
+						
+						
+						></textarea>
+					   
+					  </div>
+					 <br>
+					
+
+			  
+					 <label class="form-label label-style" for="customFile">Upload relevant Attachment</label> <br>
+					 <input type="file" class="form-control" id="customFile"> 
+					
+					
   
-      
-    
-     <div class="tab-content">
-
-      	<div id="inbox" class="tab-pane active jumbotron"><p></p>
-
-		  	  <div id="choose_room"><h1 class="text-center">Choose a resource you want to request: </h1></div>
-
-
-			    <div class="container mt-5">
-				  <div class="row">
-					<!-- <div class="col-md-2">
-						<h5>Dynamic Drop down</h5>
-					</div> -->
-
-					<div class="col-md-5" style="margin-right: 15%;">
-
-						<h4 class="text-center">Resource Type</h4>
-
-						<select name="car" id="main_menu" class="custom-select">
-							
-							<option value="choose" selected>Select </option>
-							<option value="electrical">Electrical</option>
-							<option value="stationary">Stationary</option>
-							<option value="bed">Bed Related</option>
-
-		
-						</select>
-
+					 <br> <br>
+					  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-people" id="user" viewBox="0 0 16 16">
+						<path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+					  </svg>
+					  <h6 > &nbsp; It will appear to those who have access to IUTDMS</h6>
+	
+					  <br><br>
+				  <div class="form-group">        
+					<div class="col-sm-offset-2 col-sm-10">
+					  <button onclick="alert('Your announcement has been posted')" href="#ale" type="submit" class="btn btn-info" id="post">Post</button>
+	
+					  
 					</div>
-
-					<div class="col-md-5">
-
-						<h4 class="text-center">Resource Name</h4>
-
-						<select name="carname" id="sub_menu" class="custom-select">
-						</select>
-		
-		
-					</div>
-
- 
-		
-      
-
-				</div>
-		
+				  </div>
+				</form>
+			  </div>
+			  
+			  <!-- Modal footer -->
+			 
 			</div>
+		  </div>
+		</div>
+		
+	  </div>
+	  
+	
+	  <!--post announcement button-->
+  
+	  
+	  <div class="container"> 
+		<button type="button" class="btn btn-info " data-toggle="modal" data-target="#annmod">Post an announcement</button>
+	 </div>
+	 <br><br><br>
 
-			<div class="text-center mt-5">
-				<button type="submit" class="btn btn-success btn-lg" id="submit_button">Submit</button>
+
+
+	 <!---Previous announcement starts here-->
+
+	 <div class="other-section">
+		<div>
+	  
+		  <ul class="nav nav-tabs">
+		  
+			<li class="nav-item "><a data-toggle="tab" class="nav-link active mx-3" href="#inbox"> <b>Previous Announcements</b> </a></li>
+			  
+		  
+			</ul>
+	  
+		</div>
+	
+	
+		<div class="tab-content">
+		  <div id="inbox" class="tab-pane active">
+	
+			<div class="container-fluid">
+			  <h2></h2>
+			  <div id="accordion">
+				<div class="card">
+				  <div class="card-header">
+					<a class="card-link" data-toggle="collapse" href="#collapseOne">
+					Announcement on 21 june, 2021
+					</a>
+				  </div>
+				  <div id="collapseOne" class="collapse" data-parent="#accordion">
+					<div class="card-body">
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+						  Omnis quidem ipsum itaque velit? Debitis, quasi perspiciatis eligendi velit mollitia rerum.
+					</div>
+				  </div>
+				</div>
+				<div class="card">
+				  <div class="card-header">
+					<a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+					Announcement on 23 May,2021
+				  </a>
+				  </div>
+				  <div id="collapseTwo" class="collapse" data-parent="#accordion">
+					<div class="card-body">
+					  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+					</div>
+				  </div>
+				</div>
+				<div class="card">
+				  <div class="card-header">
+					<a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+					  Announcement on 16 March,2021
+					</a>
+				  </div>
+				  <div id="collapseThree" class="collapse" data-parent="#accordion">
+					<div class="card-body">
+					  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+					</div>
+				  </div>
+				</div>
+			  </div>
 			</div>
 			
+	
+		  </div>
+		 </div> 
+	
+		 </div>
+		
+	
+	  
+	  
+		<!--ends here-->
 
-		</div>
-
-
-     </div>
-
+	</div>	   
+  
     
    
      <!--annnouncement modal-->
-	
-     
-
-  	
-
+	    	
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
