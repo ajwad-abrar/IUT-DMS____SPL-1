@@ -1,3 +1,9 @@
+<?php
+session_start();
+?>
+
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -209,7 +215,7 @@
            
 
    
-     <!--annnouncement modal-->
+     <!--Annnouncement modal starts here -->
 	
      <div class="container">
 
@@ -230,18 +236,18 @@
             <!-- Modal body -->
             <div class="modal-body">
             
-              <form class="form-horizontal" action="">
+              <form class="form-horizontal" action="provost_announcement.php" method="POST">
                 <div class="form-group">
   
                   <div class="form-floating">
                       <label for="floatingTextarea1"> <b>Date of Announcement</b>  </label><br>
-                      <input type="date" id="floatingTextarea1" style="height: 40px"></textarea>
+                      <input type="date" id="floatingTextarea1" style="height: 40px" name="date_of_post"></textarea>
                       
                     </div>
                     <br>
                     <div class="form-floating">
                       <label for="floatingTextarea3"> <b>Subject</b> </label>
-                      <textarea class="form-control p-2" placeholder="Purpose of Announcement" id="floatingTextarea3" 
+                      <textarea class="form-control p-2" placeholder="Purpose of Announcement" id="floatingTextarea3"  name="subject_of_post"
                       
                       
                       style="
@@ -260,7 +266,7 @@
 
                   <div class="form-floating">
                       <label for="floatingTextarea2"> <b> Announcement</b></label>
-                      <textarea class="form-control p-2" placeholder="Write an Announement" id="floatingTextarea2" 
+                      <textarea class="form-control p-2" placeholder="Write an Announement" id="floatingTextarea2" name="message_of_post"
                       
                       style="
 
@@ -287,7 +293,7 @@
                     <br><br>
                 <div class="form-group">        
                   <div class="col-sm-offset-2 col-sm-10">
-                    <button onclick="alert('Your announcement has been posted')" href="#ale" type="submit" class="btn btn-info" id="post">Post</button>
+                    <button onclick="alert('Your announcement has been posted')" href="#ale" type="submit" class="btn btn-info" name="provost_post_announcement">Post</button>
   
                     
                   </div>
@@ -402,6 +408,60 @@
   
   
     <!--ends here-->
+
+
+    <!-- Announcement Table Creation Starts -->
+
+
+		<?php
+
+      if(isset($_POST['provost_post_announcement'])) {
+
+          $servername = "localhost";
+          $username = "root";
+          $password = "190042106";
+          $dbname = "iut_dms";
+
+          // Create connection
+          $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+          $date = $_POST['date_of_post'];
+          $sub = $_POST['subject_of_post'];
+          $message = $_POST['message_of_post'];
+          $email = $_SESSION['email'];
+
+
+          // Check connection
+          if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+          }
+
+          $sql = "INSERT INTO provost_announcement (subject, announcement_text, p_email) VALUES ( '$sub', '$message', '$email')";
+
+          if (mysqli_query($conn, $sql)) {
+            echo "";
+          } else {
+          echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+          }
+
+
+          mysqli_close($conn);
+
+        }
+
+    ?>	
+    
+
+    <!-- Announcement Table Creation Ends -->
+
+
+
+
+
+
+
+
+
     
     
 

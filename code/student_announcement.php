@@ -260,11 +260,11 @@ session_start();
 	
 					<div class="form-floating">
 						<label for="floatingTextarea1"> <b>Date of Announcement</b>  </label><br>
-						<input type="date" class = "" id="floatingTextarea1" name="date_of_post"></textarea>
+						<input type="date" id="floatingTextarea1" name="date_of_post"></textarea>
 						
-					  </div>
-					  <br>
-					  <div class="form-floating">
+					</div>      <br>
+					  
+					<div class="form-floating">
 
 						<label for="floatingTextarea3"> <b>Subject </b> </label>
 
@@ -277,11 +277,8 @@ session_start();
 								border:royalblue solid;
 								height: 50px;"   ></textarea>
 					   
-					  </div>         
-						
-					  
-					  
-					  <br>
+					</div>          <br>
+
 					<div class="form-floating">
 
 						<label for="floatingTextarea2"> <b> Announcement</b></label>
@@ -347,10 +344,6 @@ session_start();
 
 
 			
-
-
-
-
 
 
 	 <!---Previous announcement starts here-->
@@ -419,59 +412,10 @@ session_start();
 		 </div> 
 	
 		 </div>
-		
-	
-	  
+
 	  
 		<!--ends here-->
 
-	
-		<!-- Announcement Table Creation Starts -->
-
-
-		<?php
-
-
-
-			if(isset($_POST['post_announcement'])){
-
-				$servername = "localhost";
-				$username = "root";
-				$password = "190042106";
-				$dbname = "myDB";
-
-				// Create connection
-				$conn = mysqli_connect($servername, $username, $password, $dbname);
-
-				$date = $_POST['date_of_post'];
-				$sub = $_POST['subject'];
-				$message = $_POST['message'];
-				$email = $_SESSION['email'];
-
-
-				// Check connection
-				if (!$conn) {
-				die("Connection failed: " . mysqli_connect_error());
-				}
-
-				$sql = "INSERT INTO msg (subject, msg, Email)
-				VALUES ( '$sub', '$message', '$email')";
-
-				if (mysqli_query($conn, $sql)) {
-					echo "New record created successfully";
-				} else {
-				echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-				}
-
-				mysqli_close($conn);
-			}
-			// else{
-			// 	echo "hhudhheu";
-			// }
-
-
-
-		?>	
 
 	</div>	   
 
