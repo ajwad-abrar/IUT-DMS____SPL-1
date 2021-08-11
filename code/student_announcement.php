@@ -43,12 +43,12 @@ session_start();
 
 				function showName(){
 
-					$con =mysqli_connect('localhost', 'root','190042106', 'login_system');
+					$con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
 
 
 					$email = $_SESSION['email'];
 
-					$reg=" select name from login where email= '$email'";
+					$reg=" select name from student where email= '$email'";
 
 
 					$result = mysqli_query($con, $reg);
@@ -254,20 +254,21 @@ session_start();
 			  <!-- Modal body -->
 			  <div class="modal-body">
 			  
-				<form class="form-horizontal" action="">
+				<form class="form-horizontal" action="student_announcement.php" method="POST">
+
 				  <div class="form-group">
 	
 					<div class="form-floating">
 						<label for="floatingTextarea1"> <b>Date of Announcement</b>  </label><br>
-						<input type="date" class = "" id="floatingTextarea1"></textarea>
+						<input type="date" class = "" id="floatingTextarea1" name="date_of_post"></textarea>
 						
 					  </div>
 					  <br>
 					  <div class="form-floating">
 
-						<label for="floatingTextarea3"> <b>Subject</b> </label>
+						<label for="floatingTextarea3"> <b>Subject </b> </label>
 
-							<textarea class="form-control p-2" placeholder="Purpose of Announcement" id="subject_announcement" maxlength="50"
+							<textarea class="form-control p-2" placeholder="Purpose of Announcement" name="subject" id="subject_announcement" maxlength="50"
 						
 								style="
 								
@@ -284,7 +285,7 @@ session_start();
 					<div class="form-floating">
 
 						<label for="floatingTextarea2"> <b> Announcement</b></label>
-						<textarea class="form-control p-2" placeholder="Write an announement" id="floatingTextarea2"
+						<textarea class="form-control p-2" placeholder="Write an announement" id="floatingTextarea2" name="message"
 						
 						style="
 								
@@ -313,14 +314,18 @@ session_start();
 					  <h6 > &nbsp; It will appear to those who have access to IUTDMS</h6>
 	
 					  <br><br>
+
 				  <div class="form-group">        
 					<div class="col-sm-offset-2 col-sm-10">
-					  <button onclick="alert('Your announcement has been posted')" href="#ale" type="submit" class="btn btn-info" id="post">Post</button>
+
+					  <button onclick="alert('Your announcement has been posted')" href="#ale" type="submit" class="btn btn-info" name="post_announcement">Post</button>
 	
 					  
 					</div>
 				  </div>
+
 				</form>
+
 			  </div>
 			  
 			  <!-- Modal footer -->
@@ -339,6 +344,12 @@ session_start();
 		<button type="button" class="btn btn-info " data-toggle="modal" data-target="#annmod">Post an announcement</button>
 	 </div>
 	 <br><br><br>
+
+
+			
+
+
+
 
 
 
@@ -414,7 +425,58 @@ session_start();
 	  
 		<!--ends here-->
 
+	
+		<!-- Announcement Table Creation Starts -->
+
+
+		<?php
+
+
+
+			if(isset($_POST['post_announcement'])){
+
+				$servername = "localhost";
+				$username = "root";
+				$password = "190042106";
+				$dbname = "myDB";
+
+				// Create connection
+				$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+				$date = $_POST['date_of_post'];
+				$sub = $_POST['subject'];
+				$message = $_POST['message'];
+				$email = $_SESSION['email'];
+
+
+				// Check connection
+				if (!$conn) {
+				die("Connection failed: " . mysqli_connect_error());
+				}
+
+				$sql = "INSERT INTO msg (subject, msg, Email)
+				VALUES ( '$sub', '$message', '$email')";
+
+				if (mysqli_query($conn, $sql)) {
+					echo "New record created successfully";
+				} else {
+				echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+				}
+
+				mysqli_close($conn);
+			}
+			// else{
+			// 	echo "hhudhheu";
+			// }
+
+
+
+		?>	
+
 	</div>	   
+
+
+	
   
     
    

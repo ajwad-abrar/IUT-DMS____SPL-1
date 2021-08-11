@@ -42,12 +42,12 @@ session_start();
 
               function showName(){
 
-                  $con =mysqli_connect('localhost', 'root','190042106', 'login_system');
+                  $con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
 
 
                   $email = $_SESSION['email'];
 
-                  $reg=" select name from login where email= '$email'";
+                  $reg=" select name from student where email= '$email'";
 
 
                   $result = mysqli_query($con, $reg);
@@ -272,7 +272,7 @@ session_start();
 
 						<h4 class="text-center">Hall Name</h4>
 
-						<select name="car" id="main_menu" class="custom-select">
+						<select name="student_hall" id="main_menu" class="custom-select">
 							
 							<option value="choose" selected>Select </option>
 							<option value="north">North Hall</option>
@@ -288,7 +288,7 @@ session_start();
 
 						<h4 class="text-center">Floor</h4>
 
-						<select name="carname" id="sub_menu" class="custom-select">
+						<select name="floor_name" id="sub_menu" class="custom-select">
 						</select>
 		
 		
@@ -299,7 +299,7 @@ session_start();
 
 						<h4 class="text-center">Room Number</h4>
 
-						<select name="year" id="sub_menu2" class="custom-select">
+						<select name="room_number" id="sub_menu2" class="custom-select">
 		
 						</select>
 		
@@ -310,7 +310,7 @@ session_start();
 
 						<h4 class="text-center">Bed Number</h4>
 
-						<select name="Disc" id="sub_menu3" class="custom-select">
+						<select name="bed_number" id="sub_menu3" class="custom-select">
 		
 						</select>
 		

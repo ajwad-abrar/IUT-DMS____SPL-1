@@ -6,7 +6,7 @@ session_start();
 
 $con =mysqli_connect('localhost', 'root','190042106');
 
-mysqli_select_db($con, 'login_system');
+mysqli_select_db($con, 'iut_dms');
       
      $role=$_POST["role"];
      $name = $_POST["name"];
@@ -19,24 +19,50 @@ mysqli_select_db($con, 'login_system');
 
      $hashed_password= password_hash($password, PASSWORD_DEFAULT);
 
-	 $s=" select * from login where email='$email' ";
+	 $query1 = " select * from student where email = '$email' ";
+	 $query2 = " select * from provost where email = '$email' ";
 
-	 $result= mysqli_query($con, $s);
+	 $result1 = mysqli_query($con, $query1);
+	 $result2 = mysqli_query($con, $query2);
 
-	 $num= mysqli_num_rows($result);
+	 $num1 = mysqli_num_rows($result1);
+	 $num2 = mysqli_num_rows($result2);
 
-	 if($num==1){
+	 if($num1 == 1 or $num2 == 1){
 		 echo"Email already used";
 	 }
 
 	 else{
-        if($cpassword==$password){
-			$reg=" insert into login(role,name,student_ID,programme,gender,email,password) 
-			values('$role','$name','$s_id','$dept','$gender','$email', '$hashed_password')" ;
 
-			mysqli_query($con, $reg);
-			header('location:login.php');
-			echo '<script type="text/javascript"> alert("Registration Successful"); </script> ';
+        if($cpassword == $password){
+
+
+				if($role == "Student") {
+
+					$reg1 = " insert into student(name, student_ID, programme, gender, email, password) 
+					values('$name', '$s_id', '$dept', '$gender', '$email', '$hashed_password')" ;
+
+					mysqli_query($con, $reg1);
+					header('location:login.php');
+					echo '<script type="text/javascript"> alert("Registration Successful"); </script> ';
+				}
+
+				else{
+					
+					$reg2 = " insert into provost(name, programme, gender, email, password) 
+					values('$name', '$dept', '$gender', '$email', '$hashed_password')" ;
+
+					mysqli_query($con, $reg2);
+					header('location:login.php');
+					echo '<script type="text/javascript"> alert("Registration Successful"); </script> ';
+
+
+				}
+			
+
+			
+			
+			
 			
 		}
 
@@ -45,5 +71,7 @@ mysqli_select_db($con, 'login_system');
 		}
 		 
 	 }
+
+
 
 ?>

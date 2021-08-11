@@ -7,13 +7,13 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="boot_style.css">
+    <link rel="stylesheet" href="provost_style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   
 
-    <title>announcement</title>
+    <title>room request</title>
 
     <style>
       
@@ -25,19 +25,23 @@
         #prb{
           width: 100%;
         }
-       
       
         .modal-title-ann{
       text-decoration: underline;
       color: blue;
-    }
+ 
+        }
+
+
+        .request_dp{
+          border: 2px solid black;
+          border-radius: 50%;
+          padding: 5px;
+          margin-right: 3px;
+        }
+
     </style>
-
-
   </head>
-
-
-
   <body>
    
    <div class="wrapper">
@@ -50,13 +54,12 @@
            </div>
               
                <br><br><br><br>
-   			       <a href="#"><h4>Prianka Maheru</h4></a>
-
+   			        <a href="#"><h4>Prianka Maheru</h4></a>
                <button type="button" class="btn btn-light mx-5" data-toggle="modal" data-target="#try">Update</button>
 
    		</div>
  
-        <!-- UPDATE PROFILE MODAL-->
+         <!-- UPDATE PROFILE MODAL-->
 
 		   <div class="modal fade" id="try">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -157,36 +160,35 @@
       <!-- Update Profile Modal ends -->
 
 
-
    		
    		<ul class="list-unstyled components">
    		
    			<li>
-   				<a href="boot_home.html" ><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-house-door-fill mx-2" viewBox="0 0 16 16">
+   				<a href="provost_home.php" ><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-house-door-fill mx-2" viewBox="0 0 16 16">
             <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
           </svg>  Home</a>
    		
    			</li>
    			
-   			<li >
-   				<a href="boot_room_req.html"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-person-plus-fill mx-2" viewBox="0 0 16 16">
+   			<li class="active">
+   				<a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-person-plus-fill mx-2" viewBox="0 0 16 16">
             <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
             <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
           </svg>   Room Request</a>
    			</li>
-   			<li  class="active">
-   				<a href="#" ><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-megaphone-fill mx-2" viewBox="0 0 16 16">
+   			<li>
+   				<a href="provost_announcement.php" ><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-megaphone-fill mx-2" viewBox="0 0 16 16">
             <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"/>
           </svg> Announcement</a>
    				
    			</li>
    			<li >
-   				<a href="boot_resource_req.html"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-patch-check-fill mx-2" viewBox="0 0 16 16">
+   				<a href="provost_resource_request.php"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-patch-check-fill mx-2" viewBox="0 0 16 16">
             <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
           </svg> Resource Request</a>
    			</li>
                <li>
-                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-box-arrow-left mx-2" viewBox="0 0 16 16">
+                <a href="logout.php"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-box-arrow-left mx-2" viewBox="0 0 16 16">
                   <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
                   <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
                 </svg> Logout</a>
@@ -197,213 +199,222 @@
    	</nav>
    	
    	<div class="content" id="prb">
-
    		<nav class="navbar navbar-expand-lg navbar-light bg-light">
    	
         <button type="button" id="sidebarCollapse" class="btn btn-info">
           <i class="fa fa-align-justify"></i> <span>Menu</span>
         </button>
+      
+   	
+  
+  <!--<a class="navbar-brand" href="#">Navbar</a> -->
   
       </nav>
-      
-           
+  
 
+      <!--room request togglable tab-->
+           
+<div class="other-section">
+  <div>
+
+    <ul class="nav nav-tabs">
+    
+      <li class="nav-item "><a data-toggle="tab" class="nav-link active" href="#inbox"><b>Inbox</b></a></li>
+      <li class="nav-item"><a data-toggle="tab" class="nav-link" href="#archive"><b>Approved</b></a></li>
+      <li class="nav-item"><a data-toggle="tab" class="nav-link" href="#sent"><b>Room List</b></a></li>
+    
+      </ul>
+
+  </div>
+  
+      
+   
+  
+
+   <div class="tab-content">
+       
+       <div id="inbox" class="tab-pane active">
+        
+        <div class="list-group">
+          <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+            <div class=" w-100 justify-content-between">
+              <img src="#" class="request_dp float-left">
+              <h5 class="mb-1"><b>Nafisa Tabassum 190042104</b> is requesting for room 215 ,female hall</h5>
+              <small class="text-muted">3 days ago</small>
+
+              <button type="button" class="btn btn-danger float-right mx-1">Reject</button>
+              <button onclick="alert('Request has been approved')" href="#ale" type="submit" class="btn btn-info float-right" id="post">Approve</button>
+            
+            </div>
+          </a>
+
+
+          <a href="#" class="list-group-item list-group-item-action">
+            <div class=" w-100 justify-content-between">
+              <img src="#" class="request_dp float-left">
+              <h5 class="mb-1"><b>Mahira Khan 190052132</b> is requesting for room 217 ,female hall</h5>
+              <small class="text-muted">3 days ago</small>
+
+              <button type="button" class="btn btn-danger float-right mx-1">Reject</button>
+            <button type="button" class="btn btn-info float-right">Approve</button>
+            </div>
+          </a>
+
+
+          <a href="#" class="list-group-item list-group-item-action">
+            
+            <div class=" w-100 justify-content-between">
+              <img src="#" class="request_dp float-left">
+              <h5 class="mb-1"><b>Takia Islam 190041109</b> is requesting for room 215 ,female hall</h5>
+              <small class="text-muted">3 days ago</small>
+
+              <button type="button" class="btn btn-danger float-right mx-1">Reject</button>
+            <button type="button" class="btn btn-info float-right">Approve</button>
+            </div>
+          </a>
+
+        </div>
+
+               
+
+      </div>
+
+                 
+           
+      
+
+
+   <div id="archive" class="tab-pane"><p></p> <!--Approved requests-->
+    <div class="list-group">
+      <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+        <div class=" w-100 justify-content-between">
+          <img src="#" class="request_dp float-left">
+          <h5 class="mb-1"><b>Nabila Islam 190044155</b> is requesting for room 215 ,female hall</h5>
+          <small class="text-muted">Approved 1 day ago</small>
+
+         
+        </div>
+      </a>
+
+
+     
+
+    </div>
+
+   
+  </div>  <!--jdjsjdfhbjdjbhshbj-->
+
+
+  <div id="sent" class="tab-pane">
+
+    <div class="container">
+      <br>
+      <p>Search for residence or room number</p>  
+      <input class="form-control" id="myInput" type="text" placeholder="Search..">
+      <br>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Residence</th>
+            <th>Room No.</th>
+            <th>Students</th>
+            <th>Occupied</th>
+          </tr>
+        </thead>
+        <tbody id="myTable"class="text-dark">
+          <tr>
+            <td>South</td>
+            <td>201</td>
+            <td>abc 190042112
+              <p></p>xyz 190042104
+              <p></p>abd 190046291
+              <p></p>abp 190046291
+            </td>
+            <td class="text-info"><b>Yes</b></td>
+          </tr>
+
+          <tr>
+            <td>South</td>
+            <td>202</td>
+            <td>abc 190042112
+              <p></p>xyz 190042104
+              <p></p>abd 190046291
+              <p></p>abp 190046291
+            </td>
+            <td class="text-info"><b>Yes</b></td>
+
+          </tr>
+          <tr>
+            <td>North</td>
+            <td>201</td>
+            <td>abc 190042112
+              <p></p>xyz 190042104
+              <p></p>abd 190046291
+            
+            </td>
+            <td class="text-danger"><b>No</b></td>
+
+          </tr>
+
+          <tr>
+            <td>North</td>
+            <td>202</td>
+            <td>abc 190042112
+              <p></p>xyz 190042104
+              <p></p>abd 190046291
+              <p></p>abp 190046291
+            </td>
+            <td class="text-info"><b>Yes</b></td>
+          </tr>
+
+          
+          <tr>
+            <td>Female</td>
+            <td>201</td>
+            <td>abc 190042112
+              <p></p>xyz 190042104
+              <p></p>abd 190046291
+              <p></p>abp 190046291
+            </td>
+            <td class="text-info"><b>Yes</b></td>
+          </tr>
+
+          
+          <tr>
+            <td>Female</td>
+            <td>202</td>
+            <td>abc 190042112
+              <p></p>xyz 190042104
+              <p></p>abd 190046291
+              <p></p>abp 190046291
+            </td>
+            <td class="text-info"><b>Yes</b></td>
+          </tr>
+        </tbody>
+      </table>
+      
+  
+    </div>
+        
+    
+
+
+  </div>
+
+
+
+
+
+     </div>
+
+    
    
      <!--annnouncement modal-->
 	
-     <div class="container">
-
-    
-      <!-- The Modal -->
-      <div class="modal fade" id="annmod">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-          
-            <!-- Modal Header -->
-            <div class="modal-header">
-            
-              <h4 class="modal-title w-100 text-center label-style">Post Announcement</h4>
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-
-            </div>
-            
-            <!-- Modal body -->
-            <div class="modal-body">
-            
-              <form class="form-horizontal" action="">
-                <div class="form-group">
-  
-                  <div class="form-floating">
-                      <label for="floatingTextarea1"> <b>Date of Announcement</b>  </label><br>
-                      <input type="date" id="floatingTextarea1" style="height: 40px"></textarea>
-                      
-                    </div>
-                    <br>
-                    <div class="form-floating">
-                      <label for="floatingTextarea3"> <b>Subject</b> </label>
-                      <textarea class="form-control p-2" placeholder="Purpose of Announcement" id="floatingTextarea3" 
-                      
-                      
-                      style="
-								
-                        resize: none;
-                        color: black;
-                        border:black solid;
-                        height: 50px;" ></textarea>
-                    
-                     
-                    </div>         
-                      
-                    
-                    
-                    <br>
-
-                  <div class="form-floating">
-                      <label for="floatingTextarea2"> <b> Announcement</b></label>
-                      <textarea class="form-control p-2" placeholder="Write an Announement" id="floatingTextarea2" 
-                      
-                      style="
-
-                      resize: none;
-                      color: black;
-                      border:black solid;
-                      height: 200px;" > </textarea>
-                      
-                    
-                     
-                    </div>
-                   <br>
-
-                   <label class="form-label label-style" for="customFile" style="font-weight: 700;">Upload Relevant Attachment</label> <br>
-                   <input type="file" class="form-control" id="customFile"> 
-                  
-
-                   <br> <br>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-people" id="user" viewBox="0 0 16 16">
-                      <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
-                    </svg>
-                    <h6 > &nbsp; It will appear to those who have access to IUTDMS</h6>
-  
-                    <br><br>
-                <div class="form-group">        
-                  <div class="col-sm-offset-2 col-sm-10">
-                    <button onclick="alert('Your announcement has been posted')" href="#ale" type="submit" class="btn btn-info" id="post">Post</button>
-  
-                    
-                  </div>
-                </div>
-              </form>
-            </div>
-            
-            <!-- Modal footer -->
-           
-          </div>
-        </div>
-      </div>
-      
-    </div>
-    
-  
-    <!--post announcement button-->
-
-    
-    <div class="container"> 
-      <button type="button" class="btn btn-info " data-toggle="modal" data-target="#annmod">Post an announcement</button>
-   </div>
-   <br><br><br>
-
-
-
-   <!---Previous announcement starts here-->
-
-   <div class="other-section">
-    <div>
-  
-      <ul class="nav nav-tabs">
-      
-        <li class="nav-item "><a data-toggle="tab" class="nav-link active mx-3" href="#inbox"> <b>Previous Announcements</b> </a></li>
-          
-      
-        </ul>
-  
-    </div>
-
-
-    <div class="tab-content">
-      <div id="inbox" class="tab-pane active">
-
-        <div class="container-fluid">
-          <h2></h2>
-          <div id="accordion">
-            <div class="card">
-              <div class="card-header">
-                <a class="card-link" data-toggle="collapse" href="#collapseOne">
-                    Course Registration (21 june, 2021) 
-                </a>
-              </div>
-              <div id="collapseOne" class="collapse" data-parent="#accordion">
-                <div class="card-body" style="text-align: justify;">
-                  This is to remind you that course registration exercise started on Monday,
-                  19 April 2021 and it will end on Friday, 7 May 2021. A student who will not
-                  have registered his/her semester courses in SIS system within this period,
-                  may have problems of accessing course results eg quiz, assignments, tests
-                  and later on semester results.           <br> <br>
-                  Register NOW your courses offered for the semester one 2020-2021 A.Y to
-                  avoid regrets.
-                </div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-header">
-                <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
-                Lockdown (23 May,2021)
-              </a>
-              </div>
-              <div id="collapseTwo" class="collapse" data-parent="#accordion">
-                <div class="card-body" style="text-align: justify;">
-                  The Government of the Peoples’ Republic of Bangladesh has enforced "lockdown"
-                  in; Gazipur, and the surrounding areas of Narayanganj, Manikganj, Madaripur,
-                  Munshiganj, Gopalganj and Rajbari with effect from 6.00 AM tomorrow June 22 to
-                  30 June 2021.
-                </div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-header">
-                <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
-                  Academic Calendar 2020-2021 (12 April, 2021)
-                </a>
-              </div>
-              <div id="collapseThree" class="collapse" data-parent="#accordion">
-                <div class="card-body" style="text-align: justify;">
-                  Academic Calendar for 2nd-4th Year Students Winter Semester, 2020-2021 A.Y. <br>
-                  * Starting of Regular Courses (19 April, 2021)                              <br> 
-                  * Eid ul Fitr Holiday (10 - 14 May, 2021)                                   <br>
-                  * Classes Resume (17 May, 2021)                                             <br>
-                  * End of classes before Mid-Semester Examination (11 June, 2021)            <br>
-                  * Mid-Semester Examination (14 - 26 June, 2021)                             <br>
-                  * Classes Resume after Mid-Sem Examination (28 June, 2021)                  <br>
-                  * Eid ul Adha Holiday (19 - 23 July, 2021)                                  <br>
-                  * End of Winter Semester Course Work (27 August, 2021)                      <br>
-                  * Semester Final Examination (30 August - 18 September, 2021)               <br>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-
-      </div>
-     </div> 
-
-     </div>
     
 
-  
-  
-    <!--ends here-->
-    
-    
+  	
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -420,8 +431,14 @@
 
 
     $(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip();   
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
 });
+    
 	</script>
     
     

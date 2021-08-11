@@ -79,12 +79,12 @@ session_start();
 
               function showName(){
 
-                  $con =mysqli_connect('localhost', 'root','190042106', 'login_system');
+                  $con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
 
 
                   $email = $_SESSION['email'];
 
-                  $reg=" select name from login where email= '$email'";
+                  $reg=" select name from student where email= '$email'";
 
 
                   $result = mysqli_query($con, $reg);

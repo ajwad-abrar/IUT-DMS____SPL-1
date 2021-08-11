@@ -43,12 +43,12 @@ session_start();
 
 					function showName(){
 
-						$con =mysqli_connect('localhost', 'root','190042106', 'login_system');
+						$con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
 
 
 						$email = $_SESSION['email'];
 	
-						$reg=" select name from login where email= '$email'";
+						$reg=" select name from student where email= '$email'";
 	
 	
 						$result = mysqli_query($con, $reg);
@@ -239,15 +239,19 @@ session_start();
 
 
   <div id="welcome">
-	  <h1 class="welcome_font">Welcome Back, 
+	  <h1 class="welcome_font"> 
 
 		   <?php
 
-				showName();
+				echo "Welcome Back, ";
 
+				showName();
+				
+				echo "<br><br><br>Happy " . date("l");
 	 
 	 	    ?>  
 			 
+
 			
 	    </h1>
 
