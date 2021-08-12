@@ -157,16 +157,12 @@
 								<br><br>
 
 						    <label><b>Gender</b> </label><br> 
-                <input type="radio" class="text-danger" name="gender" value="Male"/>&nbsp; Male &nbsp;
-                <input type="radio" class="text-danger" name="gender" value="Female"/>&nbsp; Female
+                <input type="radio" class="text-danger" name="gender" value="Male"/> &nbsp; Male &nbsp;
+                <input type="radio" class="text-danger" name="gender" value="Female"/ >&nbsp; Female
 								
-
 								  
-
 								  <br> <br>
-								 
-	  
-								
+								 							
 						
 	  
 								<label for="" class="label-style">Password</label>

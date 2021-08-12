@@ -1,3 +1,10 @@
+<?php
+
+session_start();
+
+?>
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -46,14 +53,46 @@
     </style>
   </head>
   <body>
+
+  <?php
+
+      function showName(){
+
+        $con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+
+        $email = $_SESSION['email'];
+
+        $reg=" select name from provost where email= '$email'";
+
+
+        $result = mysqli_query($con, $reg);
+
+        echo "<br>";
+
+        while($row = mysqli_fetch_assoc($result)){
+          echo "{$row['name']}";
+        }
+
+      }
+
+  ?>
+
+
+
+
+
    
    <div class="wrapper">
    	<nav id="sidebar">
       
    		<div class="sidebar-header">
                <img src="mine.jpg" class="profile_img" id="img_on_resreq_page">
-               <br><br><br><br><br><br>
-   			<a href="#"><h4>Prianka Maheru</h4></a>
+
+               <br><br><br><br>
+
+   			       <h4 class="text-center"><?php showName();  ?></h4>
+
                <button type="button" class="btn btn-light mx-5" data-toggle="modal" data-target="#try">Update</button>
 
    		</div>

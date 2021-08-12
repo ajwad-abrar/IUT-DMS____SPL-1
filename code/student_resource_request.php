@@ -257,17 +257,17 @@ session_start();
 		  	  <div id="choose_room"><h1 class="text-center">Choose a resource you want to request: </h1></div>
 
 
+          <form action="student_resource_request.php" method="POST">
+
 			    <div class="container mt-5">
 				  <div class="row">
-					<!-- <div class="col-md-2">
-						<h5>Dynamic Drop down</h5>
-					</div> -->
+					
 
 					<div class="col-md-5" style="margin-right: 15%;">
 
 						<h4 class="text-center">Resource Type</h4>
 
-						<select name="car" id="main_menu" class="custom-select">
+						<select name="res_type" id="main_menu" class="custom-select">
 							
 							<option value="choose" selected>Select </option>
 							<option value="electrical">Electrical</option>
@@ -283,14 +283,12 @@ session_start();
 
 						<h4 class="text-center">Resource Name</h4>
 
-						<select name="carname" id="sub_menu" class="custom-select">
+						<select name="res_name" id="sub_menu" class="custom-select">
 						</select>
 		
 		
 					</div>
 
- 
-		
       
 
 				</div>
@@ -298,8 +296,11 @@ session_start();
 			</div>
 
 			<div class="text-center mt-5">
-				<button type="submit" class="btn btn-success btn-lg" id="submit_button">Submit</button>
+				<button type="submit" class="btn btn-success btn-lg" id="submit_button" name="submit_resource">Submit</button>
 			</div>
+
+
+      </form>
 			
 
 		</div>
@@ -308,9 +309,53 @@ session_start();
      </div>
 
     
-   
-     <!--annnouncement modal-->
 	
+
+
+      <!--YET TO BE IMPLEMENTED  -->
+    
+     <?php
+    /*
+
+        if(isset($_POST['submit_resource'])) {
+
+
+          $servername = "localhost";
+          $username = "root";
+          $password = "190042106";
+          $dbname = "iut_dms";
+
+          // Create connection
+          $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+          $type = $_POST['res_type'];
+          $name = $_POST['res_name'];
+          
+
+          // Check connection
+          if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+          }
+
+          $sql = "INSERT INTO demo (type, name) VALUES ( '$type', '$name')";
+
+          if (mysqli_query($conn, $sql)) {
+            echo "DONE";
+          } else {
+          echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+          }
+
+
+          mysqli_close($conn);
+
+
+
+        } */ 
+
+
+    ?>       
+    
+    
      
 
   	

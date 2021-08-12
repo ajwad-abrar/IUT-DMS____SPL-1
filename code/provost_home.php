@@ -65,22 +65,26 @@ session_start();
        
   </style>
   <body>
+
    
    <div class="wrapper">
    	<nav id="sidebar">
       
    		<div class="sidebar-header">
-         <div class="container">
-         <a href=""> <img src="mine.jpg" class="profile_img"></a>  <!---change resolution-->
-        
+
+        <div class="container">
+          <a href=""> <img src="mine.jpg" class="profile_img"></a>  <!---change resolution-->
         </div>
 
+        <br><br><br><br>
+
+   			<h4 class="text-center">
           
-         
-              
-               <br><br><br><br>
-   			<a href="#"><h4>Prianka Maheru</h4></a>
-               <button type="button" class="btn btn-light mx-5" data-toggle="modal" data-target="#try">Update</button>
+         <?php showName(); ?>
+
+        </h4>  
+
+        <button type="button" class="btn btn-light mx-5" data-toggle="modal" data-target="#try">Update</button>
 
    		</div>
  
