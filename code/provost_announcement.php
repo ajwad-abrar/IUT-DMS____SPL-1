@@ -49,23 +49,101 @@ session_start();
    
     <?php
 
+
+        $servername = "localhost";
+        $username = "root";
+        $password = "190042106";
+        $dbname = "iut_dms";
+
         function showName(){
 
-          $con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+          global $servername, $username, $password, $dbname;
 
+          // Create connection
+			    $conn = mysqli_connect($servername, $username, $password, $dbname);
 
           $email = $_SESSION['email'];
 
-          $reg=" select name from provost where email= '$email'";
+          $query = "select name from provost where email= '$email'";
 
-
-          $result = mysqli_query($con, $reg);
+          $result = mysqli_query($conn, $query);
 
           echo "<br>";
 
           while($row = mysqli_fetch_assoc($result)){
             echo "{$row['name']}";
           }
+        }
+
+
+        
+
+        function showAnnouncementSubject($rowNumber){
+
+          global $servername, $username, $password, $dbname;
+    
+          // Create connection
+          $conn = mysqli_connect($servername, $username, $password, $dbname);
+    
+          // Check connection
+    
+          if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+          }
+    
+          $sql = "SELECT * FROM provost_announcement ORDER BY announcement_id DESC LIMIT $rowNumber , 1;";
+    
+          $result = mysqli_query($conn, $sql);
+    
+    
+          if (mysqli_num_rows($result) > 0) {
+    
+          // output data of each row
+            while($row = mysqli_fetch_assoc($result)) {
+              echo "" .$row['subject'] .str_repeat("&nbsp;", 10). "  [ " .date("d M, Y ", strtotime($row['date'])) ." ] <br>";
+            }
+          } 	
+          else {
+            echo "0 results";
+          }
+    
+          mysqli_close($conn);
+    
+        }
+
+
+        
+        function showAnnouncementBody($rowNumber){
+
+          global $servername, $username, $password, $dbname;
+    
+          // Create connection
+          $conn = mysqli_connect($servername, $username, $password, $dbname);
+    
+          // Check connection
+    
+          if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+          }
+    
+          $sql = "SELECT * FROM provost_announcement ORDER BY announcement_id DESC LIMIT $rowNumber, 1;";
+    
+          $result = mysqli_query($conn, $sql);
+    
+    
+          if (mysqli_num_rows($result) > 0) {
+    
+          // output data of each row
+            while($row = mysqli_fetch_assoc($result)) {
+              echo "" .$row['announcement_text'] ."<br>";
+            }
+          } 	
+          else {
+            echo "0 results";
+          }
+    
+          mysqli_close($conn);
+    
         }
 
     ?>
@@ -377,54 +455,42 @@ session_start();
             <div class="card">
               <div class="card-header">
                 <a class="card-link" data-toggle="collapse" href="#collapseOne">
-                    Course Registration (21 june, 2021) 
+                    
+                    <?php    showAnnouncementSubject(0);     ?>
+ 
                 </a>
               </div>
               <div id="collapseOne" class="collapse" data-parent="#accordion">
                 <div class="card-body" style="text-align: justify;">
-                  This is to remind you that course registration exercise started on Monday,
-                  19 April 2021 and it will end on Friday, 7 May 2021. A student who will not
-                  have registered his/her semester courses in SIS system within this period,
-                  may have problems of accessing course results eg quiz, assignments, tests
-                  and later on semester results.           <br> <br>
-                  Register NOW your courses offered for the semester one 2020-2021 A.Y to
-                  avoid regrets.
+                    <?php ShowAnnouncementBody(0); ?>
                 </div>
               </div>
             </div>
             <div class="card">
               <div class="card-header">
+
                 <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
-                Lockdown (23 May,2021)
-              </a>
+                    <?php    showAnnouncementSubject(1);     ?>
+                </a>
+
               </div>
               <div id="collapseTwo" class="collapse" data-parent="#accordion">
                 <div class="card-body" style="text-align: justify;">
-                  The Government of the Peoples’ Republic of Bangladesh has enforced "lockdown"
-                  in; Gazipur, and the surrounding areas of Narayanganj, Manikganj, Madaripur,
-                  Munshiganj, Gopalganj and Rajbari with effect from 6.00 AM tomorrow June 22 to
-                  30 June 2021.
+                    <?php ShowAnnouncementBody(1); ?>
                 </div>
               </div>
             </div>
             <div class="card">
               <div class="card-header">
+
                 <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
-                  Academic Calendar 2020-2021 (12 April, 2021)
+                    <?php    showAnnouncementSubject(2);     ?>
                 </a>
+
               </div>
               <div id="collapseThree" class="collapse" data-parent="#accordion">
                 <div class="card-body" style="text-align: justify;">
-                  Academic Calendar for 2nd-4th Year Students Winter Semester, 2020-2021 A.Y. <br>
-                  * Starting of Regular Courses (19 April, 2021)                              <br> 
-                  * Eid ul Fitr Holiday (10 - 14 May, 2021)                                   <br>
-                  * Classes Resume (17 May, 2021)                                             <br>
-                  * End of classes before Mid-Semester Examination (11 June, 2021)            <br>
-                  * Mid-Semester Examination (14 - 26 June, 2021)                             <br>
-                  * Classes Resume after Mid-Sem Examination (28 June, 2021)                  <br>
-                  * Eid ul Adha Holiday (19 - 23 July, 2021)                                  <br>
-                  * End of Winter Semester Course Work (27 August, 2021)                      <br>
-                  * Semester Final Examination (30 August - 18 September, 2021)               <br>
+                    <?php ShowAnnouncementBody(2); ?>
                 </div>
               </div>
             </div>

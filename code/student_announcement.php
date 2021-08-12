@@ -36,7 +36,7 @@ session_start();
 		$password = "190042106";
 		$dbname = "iut_dms";
 
-		function showAnnouncementSubject($name){
+		function showAnnouncementSubject($rowNumber){
 
 			global $servername, $username, $password, $dbname;
 
@@ -49,7 +49,7 @@ session_start();
 				die("Connection failed: " . mysqli_connect_error());
 			}
 
-			$sql = "SELECT * FROM provost_announcement ORDER BY announcement_id DESC LIMIT $name, 1;";
+			$sql = "SELECT * FROM provost_announcement ORDER BY announcement_id DESC LIMIT $rowNumber, 1;";
 
 			$result = mysqli_query($conn, $sql);
 
