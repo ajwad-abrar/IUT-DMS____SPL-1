@@ -27,6 +27,113 @@ session_start();
 </head>
 
 <body>
+
+
+	<?php
+
+		$servername = "localhost";
+		$username = "root";
+		$password = "190042106";
+		$dbname = "iut_dms";
+
+		function showAnnouncementSubject($name){
+
+			global $servername, $username, $password, $dbname;
+
+			// Create connection
+			$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+			// Check connection
+
+			if (!$conn) {
+				die("Connection failed: " . mysqli_connect_error());
+			}
+
+			$sql = "SELECT * FROM provost_announcement ORDER BY announcement_id DESC LIMIT $name, 1;";
+
+			$result = mysqli_query($conn, $sql);
+
+
+			if (mysqli_num_rows($result) > 0) {
+
+			// output data of each row
+				while($row = mysqli_fetch_assoc($result)) {
+					echo "" .$row['subject'] .str_repeat("&nbsp;", 10). "[ " .date("d M, Y", strtotime($row['date'])) ." ] <br>";
+				}
+			} 	
+			else {
+				echo "0 results";
+			}
+
+			mysqli_close($conn);
+
+		}
+
+
+
+
+		function showAnnouncementBody($name){
+
+			global $servername, $username, $password, $dbname;
+
+			// Create connection
+			$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+			// Check connection
+
+			if (!$conn) {
+				die("Connection failed: " . mysqli_connect_error());
+			}
+
+			$sql = "SELECT * FROM provost_announcement ORDER BY announcement_id DESC LIMIT $name, 1;";
+
+			$result = mysqli_query($conn, $sql);
+
+
+			if (mysqli_num_rows($result) > 0) {
+
+			// output data of each row
+				while($row = mysqli_fetch_assoc($result)) {
+					echo "" .$row['announcement_text'] ."<br>";
+				}
+			} 	
+			else {
+				echo "0 results";
+			}
+
+			mysqli_close($conn);
+
+		}
+
+
+
+
+		function showName(){
+
+			$con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+
+			$email = $_SESSION['email'];
+
+			$reg=" select name from student where email= '$email'";
+
+
+			$result = mysqli_query($con, $reg);
+
+			echo "<br>";
+
+			while($row = mysqli_fetch_assoc($result)){
+				echo "{$row['name']}";
+			}
+			
+		}
+
+
+
+
+		
+
+	?>
    
    <div class="wrapper">
       <nav id="sidebar">
@@ -41,28 +148,7 @@ session_start();
 
 				<?php
 
-				function showName(){
-
-					$con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
-
-
-					$email = $_SESSION['email'];
-
-					$reg=" select name from student where email= '$email'";
-
-
-					$result = mysqli_query($con, $reg);
-
-					echo "<br>";
-
-					while($row = mysqli_fetch_assoc($result)){
-						echo "{$row['name']}";
-					}
-					
-				}
-
-				showName();
-
+					showName();
 
 				?>
 
@@ -353,7 +439,7 @@ session_start();
 	  
 		  <ul class="nav nav-tabs">
 		  
-			<li class="nav-item "><a data-toggle="tab" class="nav-link active mx-3" href="#inbox"> <b>Previous Announcements</b> </a></li>
+			<li class="nav-item "><a data-toggle="tab" class="nav-link active mx-3" href="#inbox"> <b>Recent Announcements</b> </a></li>
 			  
 		  
 			</ul>
@@ -370,40 +456,75 @@ session_start();
 				<div class="card">
 				  <div class="card-header">
 					<a class="card-link" data-toggle="collapse" href="#collapseOne">
-					Announcement on 21 june, 2021
+
+
+					<?php
+
+						showAnnouncementSubject(0);			
+
+					?>
+
+					
 					</a>
 				  </div>
 				  <div id="collapseOne" class="collapse" data-parent="#accordion">
-					<div class="card-body">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-						  Omnis quidem ipsum itaque velit? Debitis, quasi perspiciatis eligendi velit mollitia rerum.
+					<div class="card-body text-justify">
+						
+						<?php
+							showAnnouncementBody(0);
+						?>
+
 					</div>
 				  </div>
 				</div>
 				<div class="card">
+
 				  <div class="card-header">
-					<a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
-					Announcement on 23 May,2021
+
+				  <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+
+					<?php		
+						showAnnouncementSubject(1);
+					?>
+
 				  </a>
+
 				  </div>
+
 				  <div id="collapseTwo" class="collapse" data-parent="#accordion">
-					<div class="card-body">
-					  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+					<div class="card-body text-justify">
+
+						<?php
+							showAnnouncementBody(1);
+						?>
+
 					</div>
 				  </div>
 				</div>
+
+
 				<div class="card">
 				  <div class="card-header">
 					<a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
-					  Announcement on 16 March,2021
+
+						<?php		
+							showAnnouncementSubject(2);
+						?>
+
 					</a>
 				  </div>
 				  <div id="collapseThree" class="collapse" data-parent="#accordion">
-					<div class="card-body">
-					  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+					<div class="card-body text-justify">
+
+						<?php
+							showAnnouncementBody(2);
+						?>
+
 					</div>
 				  </div>
 				</div>
+
+
 			  </div>
 			</div>
 			
