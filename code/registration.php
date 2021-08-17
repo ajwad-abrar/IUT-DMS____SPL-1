@@ -4,7 +4,7 @@
 session_start();
 
 
-$con =mysqli_connect('localhost', 'root','190042106');
+$con =mysqli_connect('localhost', 'root','');
 
 mysqli_select_db($con, 'iut_dms');
       

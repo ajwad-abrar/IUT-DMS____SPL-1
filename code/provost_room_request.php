@@ -2,6 +2,26 @@
 
 session_start();
 
+$con =mysqli_connect('localhost', 'root','','iut_dms');
+    
+     if(!$con){
+       echo 'connection error'.mysqli_connect_error();
+     }
+
+     
+  
+
+     $sql='SELECT email,hall_name, level, room_no, bed,request_time
+     FROM `room_request`
+     ORDER BY request_time';
+
+    $result=mysqli_query($con,$sql);
+
+    $requests= mysqli_fetch_all($result,MYSQLI_ASSOC);
+
+    mysqli_free_result($result);
+    mysqli_close($con);
+
 ?>
 
 
@@ -53,11 +73,11 @@ session_start();
 
 
         
-  <?php
+ <!-- <?php
 
     function showName(){
 
-      $con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+      $con =mysqli_connect('localhost', 'root','', 'iut_dms');
 
 
       $email = $_SESSION['email'];
@@ -75,6 +95,7 @@ session_start();
     }
 
   ?>
+  -->
 
 
    
@@ -271,42 +292,34 @@ session_start();
        <div id="inbox" class="tab-pane active">
         
         <div class="list-group">
-          <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-            <div class=" w-100 justify-content-between">
-              <img src="#" class="request_dp float-left">
-              <h5 class="mb-1"><b>Nafisa Tabassum 190042104</b> is requesting for room 215 ,female hall</h5>
-              <small class="text-muted">3 days ago</small>
+        <?php foreach ($requests as $request):  ?>
 
-              <button type="button" class="btn btn-danger float-right mx-1">Reject</button>
-              <button onclick="alert('Request has been approved')" href="#ale" type="submit" class="btn btn-info float-right" id="post">Approve</button>
-            
-            </div>
-          </a>
+<a href="#" class="list-group-item list-group-item-action" aria-current="true">
+  <div class=" w-100 justify-content-between">
+    <img src="#" class="request_dp float-left">
+
+    <h5 class="mb-1"><b> <?php  echo htmlspecialchars($request['email']);?>,</b> is requesting for room <?php  echo htmlspecialchars($request['room_no']);?>,
+  BED- <?php  echo htmlspecialchars($request['bed']);?>,
+    <?php  echo htmlspecialchars($request['level']);?>,
+     <?php  echo htmlspecialchars($request['hall_name']);?> hall</h5>
+
+    <small class="text-muted">   <?php  echo htmlspecialchars($request['request_time']);?></small>
+   
+   
+    <form action="room_request_approval.php" method="POST">
+
+    <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="alert('Request Approved')">Approve</button>
+   
+    
+
+    </form>
+  </div>
+</a>
+<?php endforeach; ?>
 
 
-          <a href="#" class="list-group-item list-group-item-action">
-            <div class=" w-100 justify-content-between">
-              <img src="#" class="request_dp float-left">
-              <h5 class="mb-1"><b>Mahira Khan 190052132</b> is requesting for room 217 ,female hall</h5>
-              <small class="text-muted">3 days ago</small>
-
-              <button type="button" class="btn btn-danger float-right mx-1">Reject</button>
-            <button type="button" class="btn btn-info float-right">Approve</button>
-            </div>
-          </a>
-
-
-          <a href="#" class="list-group-item list-group-item-action">
-            
-            <div class=" w-100 justify-content-between">
-              <img src="#" class="request_dp float-left">
-              <h5 class="mb-1"><b>Takia Islam 190041109</b> is requesting for room 215 ,female hall</h5>
-              <small class="text-muted">3 days ago</small>
-
-              <button type="button" class="btn btn-danger float-right mx-1">Reject</button>
-            <button type="button" class="btn btn-info float-right">Approve</button>
-            </div>
-          </a>
+      
+        
 
         </div>
 

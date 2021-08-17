@@ -256,7 +256,7 @@ session_start();
 
         function showName(){
 
-          $con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+          $con =mysqli_connect('localhost', 'root','', 'iut_dms');
 
 
           $email = $_SESSION['email'];

@@ -42,7 +42,7 @@ session_start();
 
               function showName(){
 
-                  $con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+                  $con =mysqli_connect('localhost', 'root','', 'iut_dms');
 
 
                   $email = $_SESSION['email'];
@@ -261,8 +261,12 @@ session_start();
 
 		  	  <div id="choose_room"><h1 class="text-center">Choose a room from the list: </h1></div>
 
+           <!--FORM FOR ACTION -->
 
-			    <div class="container mt-5">
+   <form action="room_request_handle.php" class="room_rqst" method="POST">
+
+
+   <div class="container mt-5">
 				  <div class="row">
 					<!-- <div class="col-md-2">
 						<h5>Dynamic Drop down</h5>
@@ -272,7 +276,7 @@ session_start();
 
 						<h4 class="text-center">Hall Name</h4>
 
-						<select name="student_hall" id="main_menu" class="custom-select">
+						<select name="hall_name" id="main_menu" class="custom-select">
 							
 							<option value="choose" selected>Select </option>
 							<option value="north">North Hall</option>
@@ -288,7 +292,7 @@ session_start();
 
 						<h4 class="text-center">Floor</h4>
 
-						<select name="floor_name" id="sub_menu" class="custom-select">
+						<select name="floor_number" id="sub_menu" class="custom-select">
 						</select>
 		
 		
@@ -321,9 +325,13 @@ session_start();
 			</div>
 
 			<div class="text-center mt-5">
-				<button type="submit" class="btn btn-success btn-lg" id="submit_button">Submit</button>
+				<button onclick="alert('Request for the room submitted')" type="submit" name="submit" class="btn btn-success btn-lg" id="submit_button">Submit</button>
 			</div>
 			
+
+            </form>
+
+			    
 
 		</div>
 
