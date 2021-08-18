@@ -13,7 +13,7 @@ $con =mysqli_connect('localhost', 'root','','iut_dms');
 
      $sql='SELECT email,hall_name, level, room_no, bed,request_time
      FROM `room_request`
-     ORDER BY request_time';
+     ORDER BY request_time DESC' ;
 
     $result=mysqli_query($con,$sql);
 
