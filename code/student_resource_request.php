@@ -228,33 +228,30 @@ session_start();
           <i class="fa fa-align-justify"></i> <span>Menu</span>
         </button>
       
-   	
-  
-  <!--<a class="navbar-brand" href="#">Navbar</a> -->
   
       </nav>
   
 
            
-<div class="other-section">
-  
-  <div>
-
-    <ul class="nav nav-tabs">
+    <div class="other-section">
     
-      <li class="nav-item "><a data-toggle="tab" class="nav-link active" href="#inbox">Request</a></li>
-    
-    </ul>
+      <div>
 
-  </div>
+        <ul class="nav nav-tabs">
+      
+          <li class="nav-item "><a data-toggle="tab" class="nav-link active" href="#inbox">Request</a></li>
+      
+        </ul>
+
+      </div>
   
       
     
-     <div class="tab-content">
+    <div class="tab-content">
 
-      	<div id="inbox" class="tab-pane active jumbotron"><p></p>
+      <div id="inbox" class="tab-pane active jumbotron"><p></p>
 
-		  	  <div id="choose_room"><h1 class="text-center">Choose a resource you want to request: </h1></div>
+		  	<div id="choose_room"><h1 class="text-center">Choose a resource you want to request: </h1></div>
 
 
           <form action="student_resource_request.php" method="POST">
@@ -291,74 +288,26 @@ session_start();
 
       
 
-				</div>
-		
-			</div>
+          </div>
+      
+        </div>
 
-			<div class="text-center mt-5">
-				<button type="submit" class="btn btn-success btn-lg" id="submit_button" name="submit_resource">Submit</button>
-			</div>
+        <div class="text-center mt-5">
+          <button type="submit" class="btn btn-success btn-lg" id="submit_button" name="submit_resource">Submit</button>
+        </div>
 
 
-      </form>
+        </form>
 			
 
-		</div>
+		  </div>
 
 
-     </div>
+    </div>
 
     
 	
 
-
-      <!--YET TO BE IMPLEMENTED  -->
-    
-     <?php
-    /*
-
-        if(isset($_POST['submit_resource'])) {
-
-
-          $servername = "localhost";
-          $username = "root";
-          $password = "190042106";
-          $dbname = "iut_dms";
-
-          // Create connection
-          $conn = mysqli_connect($servername, $username, $password, $dbname);
-
-          $type = $_POST['res_type'];
-          $name = $_POST['res_name'];
-          
-
-          // Check connection
-          if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
-          }
-
-          $sql = "INSERT INTO demo (type, name) VALUES ( '$type', '$name')";
-
-          if (mysqli_query($conn, $sql)) {
-            echo "DONE";
-          } else {
-          echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-          }
-
-
-          mysqli_close($conn);
-
-
-
-        } */ 
-
-
-    ?>       
-    
-    
-     
-
-  	
 
 
     <!-- Optional JavaScript -->

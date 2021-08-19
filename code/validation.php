@@ -3,7 +3,7 @@
 session_start();
 header('location:login.php');
 
-$con =mysqli_connect('localhost', 'root','');
+$con =mysqli_connect('localhost', 'root', '190042106');
 
 mysqli_select_db($con, 'iut_dms');
 

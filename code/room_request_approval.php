@@ -2,7 +2,7 @@
 session_start();
 
 
-$con =mysqli_connect('localhost', 'root','');
+$con =mysqli_connect('localhost', 'root', '190042106');
 if(!$con){
     echo 'connection error'.mysqli_connect_error();
   }
