@@ -170,8 +170,10 @@ session_start();
           
       
             </div>
-      
+    
           </div>
+
+          
         </div>
         </div>
 
@@ -304,7 +306,46 @@ session_start();
 						<h4 class="text-center">Room Number</h4>
 
 						<select name="room_number" id="sub_menu2" class="custom-select">
-		
+		       <?php
+           /*
+               function blockOption(){
+                $con = mysqli_connect("localhost","root","","iut_dms");
+                $email = $_SESSION['email'];
+        
+                $count="SELECT COUNT(room_no)
+                FROM `room_request` 
+                GROUP BY room_no;";
+        
+        
+                $count_status = mysqli_query($con, $count);
+        
+        
+        
+                while($row = mysqli_fetch_assoc($count_status)){
+                 
+                 if($row[] =="Approved"){
+                   
+                   showName();
+                   echo ", Your request has been Approved!!!!";
+                   
+                  
+                  
+                 }
+                  else if($row['provost_approval'] ==""){
+                    echo "Your Request is pending";
+                  }
+        
+                }
+                
+                  
+               
+              }
+              
+              blockOption();
+
+*/
+             ?>
+             
 						</select>
 		
 		
@@ -325,18 +366,54 @@ session_start();
 			</div>
 
 			<div class="text-center mt-5">
-				<button onclick="alert('Request for the room submitted')" type="submit" name="submit" class="btn btn-success btn-lg" id="submit_button">Submit</button>
+				<button onclick="alert('Request Submitted')"  type="submit" name="submit" class="btn btn-success btn-lg" id="submit_button">Submit</button>
 			</div>
 			
 
             </form>
 
-			    
+			<?php
+      
+      function showStatus(){
+        $con = mysqli_connect("localhost","root","","iut_dms");
+        $email = $_SESSION['email'];
 
+        $app=" select provost_approval from room_request where email= '$email'";
+
+
+        $status = mysqli_query($con, $app);
+
+        echo "<br>";
+
+        while($row = mysqli_fetch_assoc($status)){
+         
+         if($row['provost_approval'] =="Approved"){
+          
+          echo '<div class="alert alert-success p-3 text-center" role="alert"><b> Your Request Has Been Approved</b></div>';
+           
+          
+          
+         }
+          else if($row['provost_approval'] ==""){
+            echo '<div class="alert alert-warning p-3 text-center" role="alert"><b>Your Request Is Pending</b></div>';
+          }
+
+        }
+        
+          
+       
+      }
+      
+      showStatus();
+
+      ?>    
+     
 		</div>
 
 
      </div>
+
+     
 
     
    
@@ -363,7 +440,13 @@ session_start();
 				$('#sidebar').toggleClass('active');
 			});
 		});  
+
+
+   
 	</script>
+
+
+  
 
 
 	<script src="JS/room_request.js"></script>

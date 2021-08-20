@@ -13,13 +13,23 @@ $con =mysqli_connect('localhost', 'root','','iut_dms');
 
      $sql='SELECT email,hall_name, level, room_no, bed,request_time
      FROM `room_request`
+     WHERE `provost_approval`= ""
      ORDER BY request_time DESC' ;
 
+      $sql2='SELECT email,hall_name, level, room_no, bed,request_time
+      FROM `room_request`
+      WHERE `provost_approval`= "Approved"
+      ORDER BY request_time DESC' ;
+
     $result=mysqli_query($con,$sql);
+    $result2=mysqli_query($con,$sql2);
 
     $requests= mysqli_fetch_all($result,MYSQLI_ASSOC);
+    $approved_requests= mysqli_fetch_all($result2,MYSQLI_ASSOC);
 
     mysqli_free_result($result);
+    mysqli_free_result($result2);
+
     mysqli_close($con);
 
 ?>
@@ -308,7 +318,7 @@ $con =mysqli_connect('localhost', 'root','','iut_dms');
    
     <form action="room_request_approval.php" method="POST">
 
-    <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="alert('Request Approved')">Approve</button>
+    <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>
    
     
 
@@ -334,15 +344,32 @@ $con =mysqli_connect('localhost', 'root','','iut_dms');
 
    <div id="archive" class="tab-pane"><p></p> <!--Approved requests-->
     <div class="list-group">
-      <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-        <div class=" w-100 justify-content-between">
-          <img src="#" class="request_dp float-left">
-          <h5 class="mb-1"><b>Nabila Islam 190044155</b> is requesting for room 215 ,female hall</h5>
-          <small class="text-muted">Approved 1 day ago</small>
 
-         
-        </div>
-      </a>
+    <?php foreach ($approved_requests as $approved_request):  ?>
+
+<a href="#" class="list-group-item list-group-item-action" aria-current="true">
+  <div class=" w-100 justify-content-between">
+    <img src="#" class="request_dp float-left">
+
+    <h5 class="mb-1"><b> <?php  echo htmlspecialchars($approved_request['email']);?>,</b> had requested for room <?php  echo htmlspecialchars($approved_request['room_no']);?>,
+  BED- <?php  echo htmlspecialchars($approved_request['bed']);?>,
+    <?php  echo htmlspecialchars($approved_request['level']);?>,
+     <?php  echo htmlspecialchars($approved_request['hall_name']);?> hall</h5>
+
+    <small class="text-muted">   <?php  echo htmlspecialchars($approved_request['request_time']);?></small>
+   
+   
+  <!--  <form action="room_request_approval.php" method="POST">
+
+    <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>
+   
+    
+
+    </form>
+    -->
+  </div>
+</a>
+<?php endforeach; ?>
 
 
      
@@ -486,6 +513,25 @@ $con =mysqli_connect('localhost', 'root','','iut_dms');
     });
   });
 });
+
+function approval(){
+  alert("Request Approved");
+
+  /*
+   var btn= document.getElementById("post");
+   
+  btn.addEventListener("click", ()=>{
+    if(btn.innerText === "Approve"){
+      btn.innerText= "Approvedddd"
+    }
+  }
+  
+
+  );
+  */
+
+  document.getElementById("post").innerHtml= "Approved";
+}
     
 	</script>
     
