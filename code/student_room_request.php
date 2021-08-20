@@ -42,7 +42,7 @@ session_start();
 
               function showName(){
 
-                  $con =mysqli_connect('localhost', 'root','', 'iut_dms');
+                  $con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
 
 
                   $email = $_SESSION['email'];
@@ -375,7 +375,7 @@ session_start();
 			<?php
       
       function showStatus(){
-        $con = mysqli_connect("localhost","root","","iut_dms");
+        $con = mysqli_connect("localhost","root","190042106","iut_dms");
         $email = $_SESSION['email'];
 
         $app=" select provost_approval from room_request where email= '$email'";

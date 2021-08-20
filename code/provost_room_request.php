@@ -2,7 +2,7 @@
 
 session_start();
 
-$con =mysqli_connect('localhost', 'root','','iut_dms');
+$con =mysqli_connect('localhost', 'root','190042106','iut_dms');
     
      if(!$con){
        echo 'connection error'.mysqli_connect_error();
@@ -87,7 +87,7 @@ $con =mysqli_connect('localhost', 'root','','iut_dms');
 
     function showName(){
 
-      $con =mysqli_connect('localhost', 'root','', 'iut_dms');
+      $con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
 
 
       $email = $_SESSION['email'];
