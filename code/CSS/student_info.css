@@ -1,0 +1,54 @@
+#submit_button{
+
+    margin-top: 12px;
+    width: 20%;
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    color: white;
+    transition: 0.5s;
+  
+}
+
+#submit_button:hover{
+  background:crimson;
+} 
+
+#email_head{
+  margin-top: -60px;
+    margin-bottom: 35px;
+    color:orangered;
+}
+
+#prb{
+    width: 100%;
+}
+
+
+.label-style{
+    color:black;
+    font-weight: 700;
+  }
+  
+  .checkbox-style{
+    color:crimson;
+  }
+  
+  .modal-body {
+  
+    /* Making sure the footer & header of the modal stays fixed */
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+  }
+
+
+#profile-card{
+
+  margin-top: 40px;
+
+}
+
+#email_form{
+  margin-bottom: -20px;
+} 
+

@@ -451,22 +451,24 @@ session_start();
 		  <div id="inbox" class="tab-pane active">
 	
 			<div class="container-fluid">
-			  <h2></h2>
+			  
 			  <div id="accordion">
+
 				<div class="card">
 				  <div class="card-header">
-					<a class="card-link" data-toggle="collapse" href="#collapseOne">
 
+					<a class="card-link" data-toggle="collapse" href="#collapseOne">
 
 					<?php
 
-						showAnnouncementSubject(0);			
+						showAnnouncementSubject(0);						
 
 					?>
-
 					
 					</a>
+
 				  </div>
+
 				  <div id="collapseOne" class="collapse" data-parent="#accordion">
 					<div class="card-body text-justify">
 						
@@ -477,6 +479,7 @@ session_start();
 					</div>
 				  </div>
 				</div>
+
 				<div class="card">
 
 				  <div class="card-header">
