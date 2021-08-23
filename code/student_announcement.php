@@ -108,6 +108,78 @@ session_start();
 
 
 
+		function showStudentAnnouncementSubject($rowNumber){
+
+			global $servername, $username, $password, $dbname;
+
+			// Create connection
+			$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+			// Check connection
+
+			if (!$conn) {
+				die("Connection failed: " . mysqli_connect_error());
+			}
+
+			$sql = "SELECT * FROM student_announcement ORDER BY announcement_id DESC LIMIT $rowNumber, 1;";
+
+			$result = mysqli_query($conn, $sql);
+
+
+			if (mysqli_num_rows($result) > 0) {
+
+			// output data of each row
+				while($row = mysqli_fetch_assoc($result)) {
+					echo "" .$row['subject'] .str_repeat("&nbsp;", 10). "[ " .date("d M, Y", strtotime($row['date'])) ." ] <br>";
+				}
+			} 	
+			else {
+				echo "0 results";
+			}
+
+			mysqli_close($conn);
+
+		}
+
+
+
+
+		function showStudentAnnouncementBody($name){
+
+			global $servername, $username, $password, $dbname;
+
+			// Create connection
+			$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+			// Check connection
+
+			if (!$conn) {
+				die("Connection failed: " . mysqli_connect_error());
+			}
+
+			$sql = "SELECT * FROM student_announcement ORDER BY announcement_id DESC LIMIT $name, 1;";
+
+			$result = mysqli_query($conn, $sql);
+
+
+			if (mysqli_num_rows($result) > 0) {
+
+			// output data of each row
+				while($row = mysqli_fetch_assoc($result)) {
+					echo "" .$row['announcement_text'] ."<br>";
+				}
+			} 	
+			else {
+				echo "0 results";
+			}
+
+			mysqli_close($conn);
+
+		}
+
+
+
+
 		function showName(){
 
 			$con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
@@ -338,78 +410,68 @@ session_start();
 			  </div>
 			  
 			  <!-- Modal body -->
-			  <div class="modal-body">
+			  	<div class="modal-body">
 			  
-				<form class="form-horizontal" action="student_announcement.php" method="POST">
+					<form class="form-horizontal" action="student_announcement.php" method="POST">
 
-				  <div class="form-group">
-	
-					<div class="form-floating">
-						<label for="floatingTextarea1"> <b>Date of Announcement</b>  </label><br>
-						<input type="date" id="floatingTextarea1" name="date_of_post"></textarea>
-						
-					</div>      <br>
-					  
-					<div class="form-floating">
+						<div class="form-group">
+			
+							<div class="form-floating">
+								<label for="floatingTextarea1"> <b>Date of Announcement</b>  </label><br>
+								<input type="date" id="floatingTextarea1" name="date_of_post"></textarea>
+							</div>      <br>
+							
+							<div class="form-floating">
+								<label for="floatingTextarea3"> <b>Subject </b> </label>
+									<textarea class="form-control p-2" placeholder="Purpose of Announcement" name="subject_of_post" id="subject_announcement" maxlength="50"
+								
+										style="
+										
+										resize: none;
+										color: red;
+										border:royalblue solid;
+										height: 50px;"   ></textarea>					
+							</div><br>
 
-						<label for="floatingTextarea3"> <b>Subject </b> </label>
-
-							<textarea class="form-control p-2" placeholder="Purpose of Announcement" name="subject" id="subject_announcement" maxlength="50"
-						
+							<div class="form-floating">
+								<label for="floatingTextarea2"> <b> Announcement</b></label>
+								<textarea class="form-control p-2" placeholder="Write an announement" id="floatingTextarea2" name="message_of_post"
+								
 								style="
-								
+										
 								resize: none;
-								color: red;
-								border:royalblue solid;
-								height: 50px;"   ></textarea>
-					   
-					</div>          <br>
-
-					<div class="form-floating">
-
-						<label for="floatingTextarea2"> <b> Announcement</b></label>
-						<textarea class="form-control p-2" placeholder="Write an announement" id="floatingTextarea2" name="message"
-						
-						style="
+								color: black;
+								border:black solid;
+								height: 200px;"  
 								
-						resize: none;
-						color: black;
-						border:black solid;
-						height: 200px;"  
-						
-						
-						></textarea>
-					   
-					  </div>
-					 <br>
+								
+								></textarea>							
+							</div> <br>
 					
+							<label class="form-label label-style" for="customFile">Upload relevant Attachment</label> <br>
+							<input type="file" class="form-control" id="customFile"> 
+		
+							<br> <br>
 
-			  
-					 <label class="form-label label-style" for="customFile">Upload relevant Attachment</label> <br>
-					 <input type="file" class="form-control" id="customFile"> 
-					
-					
-  
-					 <br> <br>
-					  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-people" id="user" viewBox="0 0 16 16">
-						<path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
-					  </svg>
-					  <h6 > &nbsp; It will appear to those who have access to IUTDMS</h6>
-	
-					  <br><br>
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-people" id="user" viewBox="0 0 16 16">
+								<path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+							</svg>
 
-				  <div class="form-group">        
-					<div class="col-sm-offset-2 col-sm-10">
+							<h6 > &nbsp; It will appear to those who have access to IUTDMS </h6>
+			
+							<br><br>
 
-					  <button onclick="alert('Your announcement has been posted')" href="#ale" type="submit" class="btn btn-info" name="post_announcement">Post</button>
-	
-					  
-					</div>
-				  </div>
+							<div class="form-group">   
 
-				</form>
+								<div class="col-sm-offset-2 col-sm-10">
+									<button onclick="alert('Your announcement has been posted')" href="#ale" type="submit" class="btn btn-info" name="student_post_announcement">Post</button>
+								</div>
 
-			  </div>
+							</div>
+
+					</form>
+
+			  	</div>
 			  
 			  <!-- Modal footer -->
 			 
@@ -432,118 +494,243 @@ session_start();
 			
 
 
-	 <!---Previous announcement starts here-->
+	 <!--- Announcement INBOX starts here-->
 
-	 <div class="other-section">
+	<div class="other-section">
+
 		<div>
 	  
-		  <ul class="nav nav-tabs">
-		  
-			<li class="nav-item "><a data-toggle="tab" class="nav-link active mx-3" href="#inbox"> <b>Recent Announcements</b> </a></li>
-			  
-		  
-			</ul>
+		    <ul class="nav nav-tabs">
+			  <li class="nav-item "><a data-toggle="tab" class="nav-link active mx-3" href="#inbox"> <b>Provost Announcement</b> </a></li>
+			  <li class="nav-item "><a data-toggle="tab" class="nav-link mx-3" href="#stu_inbox"> <b>Student Announcement</b> </a></li>		  
+		    </ul>
 	  
 		</div>
 	
+		
 	
 		<div class="tab-content">
-		  <div id="inbox" class="tab-pane active">
+
+		<!-- Provost Announcement Inbox Starts -->
+
+		 	<div id="inbox" class="tab-pane active">
 	
-			<div class="container-fluid">
-			  
-			  <div id="accordion">
+				<div class="container-fluid">
+				
+					<div id="accordion">
 
-				<div class="card">
-				  <div class="card-header">
+						<div class="card">
 
-					<a class="card-link" data-toggle="collapse" href="#collapseOne">
+							<div class="card-header">
 
-					<?php
+								<a class="card-link" data-toggle="collapse" href="#collapseOne">
 
-						showAnnouncementSubject(0);						
+								<?php
 
-					?>
+									showAnnouncementSubject(0);						
+
+								?>
+							
+								</a>
+
+							</div>
+
+						<div id="collapseOne" class="collapse" data-parent="#accordion">
+
+							<div class="card-body text-justify">
+								
+								<?php	showAnnouncementBody(0); ?>
+
+							</div>
+
+						</div>
+
+						</div>
+
+						<div class="card">
+
+							<div class="card-header">
+
+								<a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+									<?php		showAnnouncementSubject(1); ?>
+								</a>
+
+							</div>
+
+						<div id="collapseTwo" class="collapse" data-parent="#accordion">
+							<div class="card-body text-justify">
+
+								<?php	showAnnouncementBody(1); ?>
+
+							</div>
+						</div>
+						</div>
+
+
+						<div class="card">
+
+							<div class="card-header">
+								<a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+									<?php	showAnnouncementSubject(2);	?>
+								</a>
+							</div>
+
+							<div id="collapseThree" class="collapse" data-parent="#accordion">
+								<div class="card-body text-justify">
+
+									<?php	showAnnouncementBody(2); ?>
+
+								</div>
+							</div>
+
+						</div>
+
+
+					</div>
 					
-					</a>
-
-				  </div>
-
-				  <div id="collapseOne" class="collapse" data-parent="#accordion">
-					<div class="card-body text-justify">
-						
-						<?php
-							showAnnouncementBody(0);
-						?>
-
-					</div>
-				  </div>
 				</div>
-
-				<div class="card">
-
-				  <div class="card-header">
-
-				  <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
-
-					<?php		
-						showAnnouncementSubject(1);
-					?>
-
-				  </a>
-
-				  </div>
-
-				  <div id="collapseTwo" class="collapse" data-parent="#accordion">
-					<div class="card-body text-justify">
-
-						<?php
-							showAnnouncementBody(1);
-						?>
-
-					</div>
-				  </div>
-				</div>
-
-
-				<div class="card">
-				  <div class="card-header">
-					<a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
-
-						<?php		
-							showAnnouncementSubject(2);
-						?>
-
-					</a>
-				  </div>
-				  <div id="collapseThree" class="collapse" data-parent="#accordion">
-					<div class="card-body text-justify">
-
-						<?php
-							showAnnouncementBody(2);
-						?>
-
-					</div>
-				  </div>
-				</div>
-
-
-			  </div>
-			</div>
 			
 	
-		  </div>
-		 </div> 
-	
-		 </div>
+		  	</div>
 
-	  
-		<!--ends here-->
+
+
+			<!-- Provost Announcement Inbox Ends Here -->
+
+
+			<!-- Student Announcement Inbox Starts Here -->
+
+			<div id="stu_inbox" class="tab-pane">
+	
+				<div class="container-fluid">
+				
+					<div id="accordion">
+
+						<div class="card">
+
+							<div class="card-header">
+
+								<a class="card-link" data-toggle="collapse" href="#collapseOne">
+
+								<?php
+
+									showStudentAnnouncementSubject(0);						
+
+								?>
+							
+								</a>
+
+							</div>
+
+						<div id="collapseOne" class="collapse" data-parent="#accordion">
+
+							<div class="card-body text-justify">
+								
+								<?php	showStudentAnnouncementBody(0); ?>
+
+							</div>
+
+						</div>
+
+						</div>
+
+						<div class="card">
+
+							<div class="card-header">
+
+								<a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+									<?php		showStudentAnnouncementSubject(1); ?>
+								</a>
+
+							</div>
+
+						<div id="collapseTwo" class="collapse" data-parent="#accordion">
+							<div class="card-body text-justify">
+
+								<?php	showStudentAnnouncementBody(1); ?>
+
+							</div>
+						</div>
+						</div>
+
+
+						<div class="card">
+
+							<div class="card-header">
+								<a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+									<?php	showStudentAnnouncementSubject(2);	?>
+								</a>
+							</div>
+
+							<div id="collapseThree" class="collapse" data-parent="#accordion">
+								<div class="card-body text-justify">
+
+									<?php	showStudentAnnouncementBody(2); ?>
+
+								</div>
+							</div>
+
+						</div>
+
+
+					</div>
+					
+				</div>
+			
+	
+		  	</div>
+
+			<!-- Student Announcement Inbox Ends Here -->
+
+
+		</div>	
 
 
 	</div>	   
 
 
+
+
+	<?php
+
+      if(isset($_POST['student_post_announcement'])) {
+
+          $servername = "localhost";
+          $username = "root";
+          $password = "190042106";
+          $dbname = "iut_dms";
+
+          // Create connection
+          $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+          $date = $_POST['date_of_post'];
+          $sub = $_POST['subject_of_post'];
+          $message = $_POST['message_of_post'];
+          $email = $_SESSION['email'];
+
+
+          // Check connection
+          if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+          }
+
+          $sql = "INSERT INTO student_announcement (subject, announcement_text, s_email) VALUES ( '$sub', '$message', '$email')";
+
+          if (mysqli_query($conn, $sql)) {
+            echo "";
+          } else {
+          echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+          }
+
+
+          mysqli_close($conn);
+
+        }
+
+    ?>	
+    
+
+    <!-- Announcement Table Creation Ends -->
 	
   
     

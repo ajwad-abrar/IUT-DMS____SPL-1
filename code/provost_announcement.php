@@ -455,10 +455,11 @@ session_start();
 
 
     <div class="tab-content">
+
       <div id="inbox" class="tab-pane active">
 
         <div class="container-fluid">
-          <h2></h2>
+          
           <div id="accordion">
             <div class="card">
               <div class="card-header">
@@ -474,6 +475,7 @@ session_start();
                 </div>
               </div>
             </div>
+            
             <div class="card">
               <div class="card-header">
 
