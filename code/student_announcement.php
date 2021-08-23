@@ -488,10 +488,9 @@ session_start();
 	  <div class="container"> 
 		<button type="button" class="btn btn-info " data-toggle="modal" data-target="#annmod">Post an announcement</button>
 	 </div>
+
 	 <br><br><br>
 
-
-			
 
 
 	 <!--- Announcement INBOX starts here-->
@@ -604,33 +603,25 @@ session_start();
 	
 				<div class="container-fluid">
 				
-					<div id="accordion">
+					<div id="accordion-student">
 
 						<div class="card">
 
 							<div class="card-header">
 
-								<a class="card-link" data-toggle="collapse" href="#collapseOne">
-
-								<?php
-
-									showStudentAnnouncementSubject(0);						
-
-								?>
-							
+								<a class="card-link" data-toggle="collapse" href="#collapseFour">
+									<?php	showStudentAnnouncementSubject(0);						?>							
 								</a>
 
 							</div>
 
-						<div id="collapseOne" class="collapse" data-parent="#accordion">
+							<div id="collapseFour" class="collapse" data-parent="#accordion-student">
 
-							<div class="card-body text-justify">
-								
-								<?php	showStudentAnnouncementBody(0); ?>
+								<div class="card-body text-justify">									
+									<?php	showStudentAnnouncementBody(0); ?>
+								</div>
 
 							</div>
-
-						</div>
 
 						</div>
 
@@ -638,31 +629,30 @@ session_start();
 
 							<div class="card-header">
 
-								<a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+								<a class="collapsed card-link" data-toggle="collapse" href="#collapseFive">
 									<?php		showStudentAnnouncementSubject(1); ?>
 								</a>
 
 							</div>
 
-						<div id="collapseTwo" class="collapse" data-parent="#accordion">
-							<div class="card-body text-justify">
-
-								<?php	showStudentAnnouncementBody(1); ?>
-
+							<div id="collapseFive" class="collapse" data-parent="#accordion-student">
+								<div class="card-body text-justify">
+									<?php	showStudentAnnouncementBody(1); ?>
+								</div>
 							</div>
-						</div>
+							
 						</div>
 
 
 						<div class="card">
 
 							<div class="card-header">
-								<a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+								<a class="collapsed card-link" data-toggle="collapse" href="#collapseSix">
 									<?php	showStudentAnnouncementSubject(2);	?>
 								</a>
 							</div>
 
-							<div id="collapseThree" class="collapse" data-parent="#accordion">
+							<div id="collapseSix" class="collapse" data-parent="#accordion-student">
 								<div class="card-body text-justify">
 
 									<?php	showStudentAnnouncementBody(2); ?>
@@ -689,7 +679,7 @@ session_start();
 	</div>	   
 
 
-
+	<!-- Announcement INBOX Ends HERE -->
 
 	<?php
 
@@ -731,11 +721,6 @@ session_start();
     
 
     <!-- Announcement Table Creation Ends -->
-	
-  
-    
-   
-     <!--annnouncement modal-->
 	    	
 
     <!-- Optional JavaScript -->
