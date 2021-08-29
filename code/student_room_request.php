@@ -307,43 +307,7 @@ session_start();
 
 						<select name="room_number" id="sub_menu2" class="custom-select">
 		       <?php
-           /*
-               function blockOption(){
-                $con = mysqli_connect("localhost","root","","iut_dms");
-                $email = $_SESSION['email'];
-        
-                $count="SELECT COUNT(room_no)
-                FROM `room_request` 
-                GROUP BY room_no;";
-        
-        
-                $count_status = mysqli_query($con, $count);
-        
-        
-        
-                while($row = mysqli_fetch_assoc($count_status)){
-                 
-                 if($row[] =="Approved"){
-                   
-                   showName();
-                   echo ", Your request has been Approved!!!!";
-                   
-                  
-                  
-                 }
-                  else if($row['provost_approval'] ==""){
-                    echo "Your Request is pending";
-                  }
-        
-                }
-                
-                  
-               
-              }
-              
-              blockOption();
-
-*/
+           
              ?>
              
 						</select>
@@ -366,7 +330,7 @@ session_start();
 			</div>
 
 			<div class="text-center mt-5">
-				<button onclick="alert('Request Submitted')"  type="submit" name="submit" class="btn btn-success btn-lg" id="submit_button">Submit</button>
+				<button onclick="requestSubmission()"  type="submit" name="submit" class="btn btn-success btn-lg" id="submit_button">Submit</button>
 			</div>
 			
 
@@ -440,12 +404,19 @@ session_start();
 				$('#sidebar').toggleClass('active');
 			});
 		});  
-
+ 
 
    
 	</script>
 
+<script>
+function requestSubmission(){
+  alert('Request Submitted');
 
+}
+
+
+</script>
   
 
 

@@ -21,14 +21,18 @@ mysqli_select_db($con, 'iut_dms');
 
 	 $query1 = " select * from student where email = '$email' ";
 	 $query2 = " select * from provost where email = '$email' ";
+	 $query3 = " select * from admin where email = '$email' ";
+
 
 	 $result1 = mysqli_query($con, $query1);
 	 $result2 = mysqli_query($con, $query2);
+	 $result3 = mysqli_query($con, $query3);
 
 	 $num1 = mysqli_num_rows($result1);
 	 $num2 = mysqli_num_rows($result2);
+	 $num3 = mysqli_num_rows($result3);
 
-	 if($num1 == 1 or $num2 == 1){
+	 if($num1 == 1 or $num2 == 1 or $num3 ==1){
 		 echo"Email already used";
 	 }
 
@@ -47,7 +51,7 @@ mysqli_select_db($con, 'iut_dms');
 					echo '<script type="text/javascript"> alert("Registration Successful"); </script> ';
 				}
 
-				else{
+				else if(($role == "Provost")){
 					
 					$reg2 = " insert into provost(name, programme, gender, email, password) 
 					values('$name', '$dept', '$gender', '$email', '$hashed_password')" ;
@@ -57,6 +61,15 @@ mysqli_select_db($con, 'iut_dms');
 					echo '<script type="text/javascript"> alert("Registration Successful"); </script> ';
 
 
+				}
+
+				else{
+					$reg3 = " insert into admin(name, gender, email, password) 
+					values('$name', '$gender', '$email', '$hashed_password')" ;
+
+					mysqli_query($con, $reg3);
+					header('location:login.php');
+					echo '<script type="text/javascript"> alert("Registration Successful"); </script> ';
 				}
 			
 

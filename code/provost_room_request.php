@@ -21,14 +21,19 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
       WHERE `provost_approval`= "Approved"
       ORDER BY request_time DESC' ;
 
+  
+
     $result=mysqli_query($con,$sql);
     $result2=mysqli_query($con,$sql2);
+    
 
     $requests= mysqli_fetch_all($result,MYSQLI_ASSOC);
     $approved_requests= mysqli_fetch_all($result2,MYSQLI_ASSOC);
+    
 
     mysqli_free_result($result);
     mysqli_free_result($result2);
+  
 
     mysqli_close($con);
 
@@ -316,7 +321,7 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
   <div class=" w-100 justify-content-between">
     <img src="#" class="request_dp float-left">
 
-    <h5 class="mb-1"><b> <?php  echo htmlspecialchars($request['email']);?>,</b> is requesting for room <?php  echo htmlspecialchars($request['room_no']);?>,
+    <h5 class="mb-1"><b><?php  echo htmlspecialchars($request['email']);?>, </b> is requesting for room <?php  echo htmlspecialchars($request['room_no']);?>,
   BED- <?php  echo htmlspecialchars($request['bed']);?>,
     <?php  echo htmlspecialchars($request['level']);?>,
      <?php  echo htmlspecialchars($request['hall_name']);?> hall</h5>
@@ -395,8 +400,10 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
       <p>Search for residence or room number</p>  
       <input class="form-control" id="myInput" type="text" placeholder="Search..">
       <br>
+      
       <table class="table table-bordered table-striped">
         <thead>
+
           <tr>
             <th>Residence</th>
             <th>Room No.</th>
@@ -404,8 +411,11 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
             <th>Occupied</th>
           </tr>
         </thead>
+
+
         <tbody id="myTable"class="text-dark">
           <tr>
+          
             <td>South</td>
             <td>201</td>
             <td>abc 190042112
@@ -414,69 +424,15 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
               <p></p>abp 190046291
             </td>
             <td class="text-info"><b>Yes</b></td>
-          </tr>
-
-          <tr>
-            <td>South</td>
-            <td>202</td>
-            <td>abc 190042112
-              <p></p>xyz 190042104
-              <p></p>abd 190046291
-              <p></p>abp 190046291
-            </td>
-            <td class="text-info"><b>Yes</b></td>
-
-          </tr>
-          <tr>
-            <td>North</td>
-            <td>201</td>
-            <td>abc 190042112
-              <p></p>xyz 190042104
-              <p></p>abd 190046291
-            
-            </td>
-            <td class="text-danger"><b>No</b></td>
-
-          </tr>
-
-          <tr>
-            <td>North</td>
-            <td>202</td>
-            <td>abc 190042112
-              <p></p>xyz 190042104
-              <p></p>abd 190046291
-              <p></p>abp 190046291
-            </td>
-            <td class="text-info"><b>Yes</b></td>
-          </tr>
 
           
-          <tr>
-            <td>Female</td>
-            <td>201</td>
-            <td>abc 190042112
-              <p></p>xyz 190042104
-              <p></p>abd 190046291
-              <p></p>abp 190046291
-            </td>
-            <td class="text-info"><b>Yes</b></td>
           </tr>
 
-          
-          <tr>
-            <td>Female</td>
-            <td>202</td>
-            <td>abc 190042112
-              <p></p>xyz 190042104
-              <p></p>abd 190046291
-              <p></p>abp 190046291
-            </td>
-            <td class="text-info"><b>Yes</b></td>
-          </tr>
+        
         </tbody>
       </table>
       
-  
+    
     </div>
         
     
@@ -491,6 +447,15 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
      </div>
 
     
+
+
+
+
+
+
+
+
+
    
      <!--annnouncement modal-->
 	

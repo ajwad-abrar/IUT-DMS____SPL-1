@@ -15,17 +15,52 @@ if(isset($_POST['submit'])){
     $room_number=mysqli_real_escape_string($con, $_POST['room_number']);
     $bed_number=mysqli_real_escape_string($con, $_POST['bed_number']);
   
+$roomcount = mysqli_query($con ,"SELECT COUNT(room_no) AS count
+FROM room_request
+WHERE room_no = '$room_number' AND hall_name= '$hall_name' ;");
+//$countcheck = mysqli_query($con, $roomcount);
 
-$sql="INSERT INTO `room_request` (`request_ID`, `request_time`, `email`, `hall_name`, `level`, `room_no`, `bed`, `provost_approval`, `provost_approval_time`)
- VALUES (NULL, current_timestamp(), '$email', '$hall_name', '$floor_number', '$room_number', '$bed_number', '', NULL);";
+$row = mysqli_fetch_assoc($roomcount);
 
 
-if(mysqli_query($con, $sql)){
-    header('Location: student_room_request.php');
+if( $row['count']>=2){
+  //  header('Location: student_room_request.php');
+    echo '<script>alert("Sorry The Room Is Occupied!!! Try for another one")</script>' ;
+    
 }
+
+
 else{
-    echo'query error'.mysqli_error($con);
+    $sql="INSERT INTO `room_request` (`request_ID`, `request_time`, `email`, `hall_name`, `level`, `room_no`, `bed`, `provost_approval`, `provost_approval_time`)
+    VALUES (NULL, current_timestamp(), '$email', '$hall_name', '$floor_number', '$room_number', '$bed_number', '', NULL);";
+   
+   
+      if(mysqli_query($con, $sql)){
+         
+
+       header('Location: student_room_request.php');
+       }
+      else{
+       echo'query error'.mysqli_error($con);
+      }
+
+
 }
+  
+
+     
+    
+
+  
+    
+
+
+ 
+
+
+
+
+
 
 }
 

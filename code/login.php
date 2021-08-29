@@ -128,7 +128,8 @@
                 
                 <label><b>Role</b> </label><br> 
                 <input type="radio" class="text-danger" name="role" value="Student"/>&nbsp; Student &nbsp;
-                <input type="radio" class="text-danger" name="role" value="Provost"/>&nbsp; Provost
+                <input type="radio" class="text-danger" name="role" value="Provost"/>&nbsp; Provost &nbsp;
+                <input type="radio" class="text-danger" name="role" value="Admin"/>&nbsp; Admin
 						
 	  
 	              <br><br>
