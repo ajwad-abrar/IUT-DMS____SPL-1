@@ -275,20 +275,20 @@ session_start();
     
     <div class="modal-body">
           
-      <form class="form-horizontal" action="">
+      <form class="form-horizontal" action="student_meal.php" method="POST">
         <div class="form-group">
 
           <div class="form-floating">
               <label for="floatingTextarea1" class="meal_header">Start Date</label><br><br>
 
-              <input type="date" id="floatingTextarea1" style="height: 40px"></textarea>
+              <input type="date" id="floatingTextarea1" name="start_date" style="height: 40px"></textarea>
               
             </div>
             
             <div class="form-floating">
               <label for="floatingTextarea1" class="meal_header"> End Date</label><br><br>
 
-              <input type="date" placeholder="Leave a comment here" id="floatingTextarea1" style="height: 40px"></textarea>
+              <input type="date" placeholder="Leave a comment here" id="floatingTextarea1" name="end_date" style="height: 40px"></textarea>
               
             </div>
            <br>
@@ -297,18 +297,63 @@ session_start();
             
               <label for="floatingTextarea2" class = "meal_header">Reason for meal cancellation</label>
               <br><br><br>
-              <textarea class="form-control p-2" placeholder="Write your reason/s" id="cancel_reason" maxlength = "200"></textarea>
+              <textarea class="form-control p-2" placeholder="Write your reason/s" id="cancel_reason" name="reason" maxlength = "200"></textarea>
              
           </div>
            <br>
        
           <div class="form-group">       
             <div class="col-sm-offset-2 col-sm-10">
-              <button onclick="alert('Your meal has been cancelled for the particular day/days.')" href="#ale" type="submit"  class="btn btn-success btn-lg" id="post">Submit</button>
+              <button onclick="alert('Your meal has been cancelled for the particular day/days.')" href="#ale" type="submit"  class="btn btn-success btn-lg" id="post" name="student_cancel_meal">Submit</button>
            </div>
            </div>
       </form>
     </div>
+
+
+
+
+    	<!-- Meal Table Data Input starts -->
+
+    <?php
+
+      if(isset($_POST['student_cancel_meal'])) {
+
+          $servername = "localhost";
+          $username = "root";
+          $password = "190042106";
+          $dbname = "iut_dms";
+
+          // Create connection
+          $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+          $start_date = $_POST['start_date'];
+          $end_date = $_POST['end_date'];
+          $reason = $_POST['reason'];
+          $email = $_SESSION['email'];
+
+
+          // Check connection
+          if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+          }
+
+          $sql = "INSERT INTO student_meal (start_date, end_date, reason, s_email) VALUES ( '$start_date', '$end_date', '$reason', '$email')";
+
+          if (mysqli_query($conn, $sql)) {
+            echo "";
+          } else {
+          echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+          }
+
+
+          mysqli_close($conn);
+
+      }
+
+    ?>	
+
+      <!-- Meal Table Data Input Ends -->
    
 
 

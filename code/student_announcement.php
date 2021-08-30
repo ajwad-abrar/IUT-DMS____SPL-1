@@ -678,8 +678,10 @@ session_start();
 
 	</div>	   
 
-
 	<!-- Announcement INBOX Ends HERE -->
+
+
+	<!-- Announcement Table Data Input starts -->
 
 	<?php
 
@@ -720,7 +722,7 @@ session_start();
     ?>	
     
 
-    <!-- Announcement Table Creation Ends -->
+    <!-- Announcement Table Data Input Ends -->
 	    	
 
     <!-- Optional JavaScript -->
@@ -738,11 +740,8 @@ session_start();
 	</script>
 
 
-	<script src="JS/resource_request.js"></script>
-    
-    
-    
-    
+	<script src="JS/resource_request.js"></script>  
     
   </body>
+
 </html>
