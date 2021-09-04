@@ -2,6 +2,41 @@
 
 session_start();
 
+$con =mysqli_connect('localhost', 'root','190042106','iut_dms');
+    
+     if(!$con){
+       echo 'connection error'.mysqli_connect_error();
+     }
+
+     
+  
+
+     $sql='SELECT email,resource_type, resource_name,request_time
+     FROM `resource_request`
+     WHERE `provost_approval`= ""
+     ORDER BY request_time DESC' ;
+
+      $sql2='SELECT email,resource_type, resource_name,request_time
+      FROM `resource_request`
+      WHERE `provost_approval`= "Approved"
+      ORDER BY request_time DESC' ;
+
+  
+
+    $result1=mysqli_query($con,$sql);
+    $result2=mysqli_query($con,$sql2);
+    
+
+    $requests= mysqli_fetch_all($result1,MYSQLI_ASSOC);
+    $approved_requests= mysqli_fetch_all($result2,MYSQLI_ASSOC);
+    
+
+    mysqli_free_result($result1);
+    mysqli_free_result($result2);
+  
+
+    mysqli_close($con);
+
 ?>
 
 
@@ -83,15 +118,17 @@ session_start();
 
 
    
-   <div class="wrapper">
+<div class="wrapper">
    	<nav id="sidebar">
       
    		<div class="sidebar-header">
-               <img src="mine.jpg" class="profile_img" id="img_on_resreq_page">
 
+           <div class="container">
+            <a href="#" ><img src="mine.jpg" class="profile_img"></a>
+           </div>
+              
                <br><br><br><br>
-
-   			       <h4 class="text-center"><?php showName();  ?></h4>
+   			        <h4 class="text-center"><?php showName(); ?></h4>
 
                <button type="button" class="btn btn-light mx-5" data-toggle="modal" data-target="#try">Update</button>
 
@@ -270,94 +307,85 @@ session_start();
   </div>
   
       
-    
-     <div class="tab-content">
-      <div id="inbox" class="tab-pane active"> <!--inbox-->
-         
+  <div class="tab-content">
+       
+       <div id="inbox" class="tab-pane active">
+        
         <div class="list-group">
-          <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-            <div class=" w-100 justify-content-between">
-              <img src="#" class="request_dp float-left">
-              <h5 class="mb-1"><b>Nafisa Tabassum 190042104</b> is requesting for bedsheet</h5>
-              <small class="text-muted">3 days ago</small>
+        <?php foreach ($requests as $request):  ?>
 
-              <button onclick="alert('Request has been Rejected')" href="#ale"  type="button" class="btn btn-danger float-right mx-1">Reject</button>
-              <button onclick="alert('Request has been approved')" href="#ale"  type="submit" class="btn btn-info float-right" id="post">Approve</button>
-            </div>
-          </a>
+<a href="#" class="list-group-item list-group-item-action" aria-current="true">
+  <div class=" w-100 justify-content-between">
+    <img src="#" class="request_dp float-left">
 
+    <h5 class="mb-1"><b><?php  echo htmlspecialchars($request['email']);?>, </b> is requesting for <?php  echo htmlspecialchars($request['resource_type']);?>,
+  <?php  echo htmlspecialchars($request['resource_name']);?></h5>
+    <small class="text-muted">   <?php  echo htmlspecialchars($request['request_time']);?></small>
+   
+   
+    <form action="resource_request_approval.php" method="POST">
 
-          <a href="#" class="list-group-item list-group-item-action">
-            <div class=" w-100 justify-content-between">
-              <img src="#" class="request_dp float-left">
-              <h5 class="mb-1"><b>Ajwad Abrar 190042106</b> is requesting for chair </h5>
-              <small class="text-muted">3 days ago</small>
+    <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>
+   
+    
 
-            <button type="button" class="btn btn-danger float-right mx-1">Reject</button>
-            <button type="button" class="btn btn-info float-right">Approve</button>
-            
-
-            </div>
-          </a>
+    </form>
+  </div>
+</a>
+<?php endforeach; ?>
 
 
-          <a href="#" class="list-group-item list-group-item-action">
-            
-            <div class=" w-100 justify-content-between">
-              <img src="#" class="request_dp float-left">
-              <h5 class="mb-1"><b>Maheen Haque 190042148</b> is requesting for curtains</h5>
-              <small class="text-muted">3 days ago</small>
-
-            <button type="button" class="btn btn-danger float-right mx-1">Reject</button>
-            <button type="button" class="btn btn-info float-right">Approve</button>
-            </div>
-          </a>
+      
+        
 
         </div>
 
                
 
-
       </div>
-      <div id="archive" class="tab-pane">
 
-
-        <div class="list-group">
-          <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-            <div class=" w-100 justify-content-between">
-              <img src="#" class="request_dp float-left">
-              <h5 class="mb-1"><b>Ajwad Abrar 190042106</b> is requesting for bedsheet</h5>
-              <small class="text-muted">Approved 2 days ago</small>
-
-            
+              
+           
       
-            </div>
-          </a>
 
 
-          <a href="#" class="list-group-item list-group-item-action">
-            <div class=" w-100 justify-content-between">
-              <img src="#" class="request_dp float-left">
-              <h5 class="mb-1"><b>Abir Fuad 190042150</b> is requesting for chair </h5>
-              <small class="text-muted">Approved 3 days ago</small>
+   <div id="archive" class="tab-pane"><p></p> <!--Approved requests-->
+    <div class="list-group">
 
-            
-            
-            </div>
-          </a>
+    <?php foreach ($approved_requests as $approved_request):  ?>
 
+<a href="#" class="list-group-item list-group-item-action" aria-current="true">
+  <div class=" w-100 justify-content-between">
+    <img src="#" class="request_dp float-left">
 
-         
-        </div>
+    <h5 class="mb-1"><b> <?php  echo htmlspecialchars($approved_request['email']);?>,</b> had requested for <?php  echo htmlspecialchars($approved_request['resource_type']);?>,
+  <?php  echo htmlspecialchars($approved_request['resource_name']);?></h5>
 
+    <small class="text-muted">   <?php  echo htmlspecialchars($approved_request['request_time']);?></small>
+   
+   
+  <!--  <form action="resource_request_approval.php" method="POST">
 
+    <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>
+   
+    
 
-      </div>
-     </div>
-      
+    </form>
+    -->
   </div>
+</a>
+<?php endforeach; ?>
 
 
+     
+
+    </div>
+
+   
+  </div>  <!--jdjsjdfhbjdjbhshbj-->
+
+
+    </div>
 
  <!--Announcement modal-->
  
@@ -380,6 +408,36 @@ session_start();
 				$('#sidebar').toggleClass('active');
 			});
 		});  
+
+    
+    $(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+
+function approval(){
+  alert("Request Approved");
+
+  /*
+   var btn= document.getElementById("post");
+   
+  btn.addEventListener("click", ()=>{
+    if(btn.innerText === "Approve"){
+      btn.innerText= "Approvedddd"
+    }
+  }
+  
+
+  );
+  */
+
+  document.getElementById("post").innerHtml= "Approved";
+}
+    
 	</script>
     
     

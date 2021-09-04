@@ -23,7 +23,7 @@ session_start();
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   
 
-    <title>Room request</title>
+    <title>Resource request</title>
 
 </head>
 
@@ -251,10 +251,10 @@ session_start();
 
       <div id="inbox" class="tab-pane active jumbotron"><p></p>
 
-		  	<div id="choose_room"><h1 class="text-center">Choose a resource you want to request: </h1></div>
+		  	<div id="choose_resource"><h1 class="text-center">Choose a resource you want to request: </h1></div>
 
 
-          <form action="student_resource_request.php" method="POST">
+          <form action="resource_request_handle.php"  class="resource_rqst" method="POST">
 
 			    <div class="container mt-5">
 				  <div class="row">
@@ -264,7 +264,7 @@ session_start();
 
 						<h4 class="text-center">Resource Type</h4>
 
-						<select name="res_type" id="main_menu" class="custom-select">
+						<select name="resource_type" id="main_menu" class="custom-select">
 							
 							<option value="choose" selected>Select </option>
 							<option value="electrical">Electrical</option>
@@ -280,7 +280,7 @@ session_start();
 
 						<h4 class="text-center">Resource Name</h4>
 
-						<select name="res_name" id="sub_menu" class="custom-select">
+						<select name="resource_name" id="sub_menu" class="custom-select">
 						</select>
 		
 		
@@ -293,21 +293,60 @@ session_start();
         </div>
 
         <div class="text-center mt-5">
-          <button type="submit" class="btn btn-success btn-lg" id="submit_button" name="submit_resource">Submit</button>
-        </div>
+				<button onclick="requestSubmission()"  type="submit" name="submit" class="btn btn-success btn-lg" id="submit_button">Submit</button>
+			</div>
 
 
         </form>
 			
 
-		  </div>
+        <?php
+      
+      function showStatus(){
+        $con = mysqli_connect("localhost","root","190042106","iut_dms");
+        $email = $_SESSION['email'];
+
+        $app=" select provost_approval from resource_request where email= '$email'";
 
 
-    </div>
+        $status = mysqli_query($con, $app);
+
+        echo "<br>";
+
+        while($row = mysqli_fetch_assoc($status)){
+         
+         if($row['provost_approval'] =="Approved"){
+          
+          echo '<div class="alert alert-success p-3 text-center" role="alert"><b> Your Request Has Been Approved</b></div>';
+           
+          
+          
+         }
+          else if($row['provost_approval'] ==""){
+            echo '<div class="alert alert-warning p-3 text-center" role="alert"><b>Your Request Is Pending</b></div>';
+          }
+
+        }
+        
+          
+       
+      }
+      
+      showStatus();
+
+      ?>    
+     
+		</div>
+
+
+     </div>
+
+     
 
     
-	
-
+   
+     <!--annnouncement modal-->
+			
 
 
     <!-- Optional JavaScript -->
@@ -323,6 +362,15 @@ session_start();
 			});
 		});  
 	</script>
+
+<script>
+function requestSubmission(){
+  alert('Request Submitted');
+
+}
+
+
+</script>
 
 
 	<script src="JS/resource_request.js"></script>
