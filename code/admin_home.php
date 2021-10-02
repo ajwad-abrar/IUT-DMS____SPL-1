@@ -88,7 +88,7 @@ session_start();
 					<div class="modal-body">
 	  
 	  
-						<form action="" class="m-2 p-3 border border-warning">
+						<form action="admin_home.php" class="m-2 p-3 border border-warning" method="POST">
 	  
 							<div class="mb-3">
 
