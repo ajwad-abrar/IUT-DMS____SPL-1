@@ -22,7 +22,7 @@ session_start();
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-	<title>Home</title>
+	<title>Student Profile</title>
   </head>
 
   <body>
@@ -35,11 +35,10 @@ session_start();
 			<div class="container">
 				<a href="#"> <img src="images/ajwad_student.jpg" id="profile_picture"></a>
 			</div>
-			  
 
-   			<h4>
+            <h4>
 				   
-			   <?php
+			    <?php
 
 					function showName(){
 
@@ -66,7 +65,7 @@ session_start();
 				?>
 
 			   
-			   </h4>
+			</h4>
 
 
 			<button type="button" class="btn btn-light mx-5" data-toggle="modal" data-target="#try" id="update_button">Update</button>
@@ -177,14 +176,14 @@ session_start();
    		
    		<ul class="list-unstyled components">
    		
-   			<li class="active">
+   			<li>
    				<a href="#" >  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-house-door-fill mx-2" viewBox="0 0 16 16">
 				<path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
 		  		</svg>  Home  </a>
    		
    			</li>
 
-			<li>
+			<li class="active">
 				<a href="student_profile.php" >  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-person-fill mx-2" viewBox="0 0 16 16">
   				<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
 				</svg>  Profile </a>
@@ -237,32 +236,76 @@ session_start();
    		
    		
 	</div>
-
-  <!--<a class="navbar-brand" href="#">Navbar</a> -->
   
-</nav>
+  </nav>
+
+    <div class="container h-100">
+    	<div class="row align-items-center h-100">
+        	<div class="col-6 mx-auto">
+            	<div class="card h-100 border-primary justify-content-center">
+               		<div style="padding: 5%;">
+					   <h5 class="card-title text-center" style="color:dodgerblue; font-size: 28px; font-weight: 800;">Student Profile <br> <br></h5>
+					   <h4><?php showDetailsOfStudent(); ?></h4>
+                	</div>
+            	</div>
+        	</div>
+    	</div> 
+	</div>
 
 
 
-  <div id="welcome">
-	  <h1 class="welcome_font"> 
+     <?php
+     
+     
+        function showDetailsOfStudent(){
 
-		   <?php
+            $servername = "localhost";
+            $username = "root";
+            $password = "190042106";
+            $dbname = "iut_dms";
 
-				echo "Welcome Back, ";
+            // Create connection
+            $conn = mysqli_connect($servername, $username, $password, $dbname);
 
-				showName();
-				
-				echo "<br><br><br>Happy " . date("l");
-	 
-	 	    ?>  
-			 
 
-			
-	    </h1>
+            $mail = $_SESSION['email'];
 
-	  
-  </div>
+            $sql = "SELECT * FROM student WHERE email = '$mail'";
+
+            $result = mysqli_query($conn, $sql);
+
+            // Check connection
+            if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+            }
+
+            if (mysqli_query($conn, $sql)) {
+                // output data of each row
+                while($row = mysqli_fetch_assoc($result)) {
+                    echo "<b>Name: </b>" .$row['name'] ." <br> <br>";
+                    echo "<b>ID: </b>" .$row['student_ID'] ." <br> <br>";
+                    echo "<b>Program: </b>" .$row['programme'] ." <br> <br>";
+                    echo "<b> Gender: </b> " .$row['gender'] ." <br><br>";
+                    echo "<b> Email: </b>" .$row['email'] ." <br><br>";
+                    echo "<b> Reg Date: </b>" .date("d M, Y", strtotime($row['reg_date']))." ";
+                }
+            } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            }
+
+            mysqli_close($conn);
+
+        }          
+
+
+
+     ?>
+
+
+
+
+
+
   	
 
   
