@@ -220,32 +220,71 @@ session_start();
    		
 	</div>
 
-  <!--<a class="navbar-brand" href="#">Navbar</a> -->
-  
-</nav>
 
 
 
-  <div id="welcome">
-	  <h1 class="welcome_font"> 
-
-		   <?php
-
-				echo "Welcome Back, ";
-
-				showName();
-				
-				echo "<br><br><br>Happy " . date("l");
-	 
-	 	    ?>  
-			 
-
-			
-	    </h1>
-
-	  
-  </div>
+	<div class="container h-100">
+    	<div class="row align-items-center h-100">
+        	<div class="col-6 mx-auto">
+            	<div class="card h-100 border-primary justify-content-center">
+               		<div style="padding: 5%;">
+					   <h5 class="card-title text-center" style="color:dodgerblue; font-size: 28px; font-weight: 800;">Admin Profile <br> <br></h5>
+					   <h4><?php showDetailsOfAdmin(); ?></h4>
+                	</div>
+            	</div>
+        	</div>
+    	</div> 
+	</div>
   	
+
+   </div>
+
+
+
+   <?php
+
+    function showDetailsOfAdmin(){
+
+          $servername = "localhost";
+          $username = "root";
+          $password = "190042106";
+          $dbname = "iut_dms";
+
+          // Create connection
+          $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+
+          $mail = $_SESSION['email'];
+
+          $sql = "SELECT * FROM admin WHERE email = '$mail'";
+
+          $result = mysqli_query($conn, $sql);
+
+          // Check connection
+          if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+          }
+
+          
+
+          if (mysqli_query($conn, $sql)) {
+                // output data of each row
+                while($row = mysqli_fetch_assoc($result)) {
+                    echo "<b>Name: </b>" .$row['name'] ." <br> <br>";
+                    echo "<b> Gender: </b> " .$row['gender'] ." <br><br>";
+                    echo "<b> Email: </b>" .$row['email'] ." <br><br>";
+                    echo "<b> Reg Date: </b>" .date("d M, Y", strtotime($row['reg_date']))." ";
+                }
+          } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+          }
+
+
+          mysqli_close($conn);
+
+	}
+
+    ?>
 
   
 
