@@ -77,98 +77,44 @@ session_start();
 		   <!-- UPDATE PROFILE MODAL-->
 
 		   <div class="modal fade" id="try">
-			<div class="modal-dialog modal-dialog-centered modal-lg">
-				<div class="modal-content">
+				<div class="modal-dialog modal-dialog-centered modal-lg">
+					<div class="modal-content">
 	  
-					<div class="modal-header ">
-						<h4 class="modal-title w-100 text-center label-style">Update Information</h4>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-					</div>
-	  
-					<div class="modal-body">
-	  
-	  
-						<form action="" class="m-2 p-3 border border-warning">
-	  
-							<div class="mb-3">
+						<div class="modal-header ">
+							<h4 class="modal-title w-100 text-center label-style">Update Information</h4>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+						</div>
+		
+						<div class="modal-body">
+		
+		
+							<form action="admin_home.php" class="m-2 p-3 border border-warning" method="POST">
+			
+								<div class="mb-3">
 
-								<label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
-								<input type="file" class="form-control" id="customFile"> <br>
-	  
-								<label for="" class="label-style">Name</label>
-								<input type="text" placeholder="Enter your name" class="form-control" required> <br>
+									<label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
+									<input type="file" class="form-control" id="customFile"> <br>
 
-								<label for="" class="label-style">Student ID</label>
-								<input type="number" placeholder="Enter your ID" class="form-control" required> 
-
-								<br>
-	  
-								<label for="" class="label-style">Email</label>
-								<input type="email" placeholder="Enter your email" class="form-control" required> 
-	  
-								<small id="emailHelp" class="form-text text-muted">Make sure to enter your IUT email address.</small> 
-	  
-								<br> 
-
-								<label for="" class="label-style">Gender</label> <br>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="gender" id="gendercheck" value="option1">
-									<label class="form-check-label checkbox-style" for="inlineRadio1">Male</label>
+									<label for="" class="label-style">Name</label>
+									<input type="text" placeholder="Enter your name" class="form-control" name="admin_name" required> <br> 
+									
 								</div>
 
-								  <div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="gender" id="gendercheck" value="option2">
-									<label class="form-check-label checkbox-style" for="inlineRadio2">Female</label>
-								  </div>
+								<button class="btn btn-info" name="update_profile">Submit</button>
 
-								  <br> <br>
-								 
+
+							</form>    
+		
+						</div>
 	  
-								<label for="" class="label-style">Role</label> <br>
-	  
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-									<label class="form-check-label checkbox-style" for="inlineRadio1">Student</label>
-								</div>
-	  
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-									<label class="form-check-label checkbox-style" for="inlineRadio2">Provost</label>
-								</div>
-	  
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-									<label class="form-check-label checkbox-style" for="inlineRadio2">Admin</label>
-								</div>
-	  
-								<p></p>  
-	  
-								<label for="" class="label-style">Password</label>
-								<input type="password" placeholder="Enter your Password" class="form-control" required> <p></p>
-	  
-								<label for="" class="label-style">Confirm Password</label>
-								<input type="password" placeholder="Confirm your Password" class="form-control" required> <p></p>
-	  
-	  
-								
-	  
-							</div>
-	  
-							<button class="btn btn-info">Submit</button>
-	
-	  
-						</form>    
+						<div class="modal-footer">
+		
+				
+		
+						</div>
 	  
 					</div>
-	  
-					<div class="modal-footer">
-	  
-			  
-	  
-					</div>
-	  
 				</div>
-			</div>
 		  </div>
 
 
@@ -221,6 +167,45 @@ session_start();
    		
    		
 	</div>
+
+
+
+
+
+	<?php
+
+      if(isset($_POST['update_profile'])) {
+
+          $servername = "localhost";
+          $username = "root";
+          $password = "190042106";
+          $dbname = "iut_dms";
+
+          // Create connection
+          $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+          $name = $_POST['admin_name'];
+		  $email = $_SESSION['email'];
+
+          // Check connection
+          if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+          }
+
+          $sql = "UPDATE admin SET name = '$name' WHERE email = '$email'";
+
+          if (mysqli_query($conn, $sql)) {
+            echo "";
+          } else {
+          echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+          }
+
+
+          mysqli_close($conn);
+
+        }
+
+    ?>	
 
 
 	<!-- Optional JavaScript -->
