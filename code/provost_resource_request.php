@@ -11,18 +11,27 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
      
   
 
+<<<<<<< HEAD
      $sql='SELECT request_ID,email,resource_type,resource_name, request_time
+=======
+     $sql='SELECT email,resource_type, resource_name,request_time
+>>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
      FROM `resource_request`
      WHERE `provost_approval`= ""
      ORDER BY request_time DESC' ;
 
+<<<<<<< HEAD
       $sql2='SELECT request_ID,email,resource_type,resource_name, request_time
+=======
+      $sql2='SELECT email,resource_type, resource_name,request_time
+>>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
       FROM `resource_request`
       WHERE `provost_approval`= "Approved"
       ORDER BY request_time DESC' ;
 
   
 
+<<<<<<< HEAD
     $result=mysqli_query($con,$sql);
     $result2=mysqli_query($con,$sql2);
     
@@ -63,6 +72,22 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
     mysqli_close($con);
 
 
+=======
+    $result1=mysqli_query($con,$sql);
+    $result2=mysqli_query($con,$sql2);
+    
+
+    $requests= mysqli_fetch_all($result1,MYSQLI_ASSOC);
+    $approved_requests= mysqli_fetch_all($result2,MYSQLI_ASSOC);
+    
+
+    mysqli_free_result($result1);
+    mysqli_free_result($result2);
+  
+
+    mysqli_close($con);
+
+>>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
 ?>
 
 
@@ -144,15 +169,17 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
 
 
    
-   <div class="wrapper">
+<div class="wrapper">
    	<nav id="sidebar">
       
    		<div class="sidebar-header">
-               <img src="mine.jpg" class="profile_img" id="img_on_resreq_page">
 
+           <div class="container">
+            <a href="#" ><img src="mine.jpg" class="profile_img"></a>
+           </div>
+              
                <br><br><br><br>
-
-   			       <h4 class="text-center"><?php showName();  ?></h4>
+   			        <h4 class="text-center"><?php showName(); ?></h4>
 
                <button type="button" class="btn btn-light mx-5" data-toggle="modal" data-target="#try">Update</button>
 
@@ -172,76 +199,22 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
             <div class="modal-body">
       
       
-              <form action="" class="m-2 p-3 border border-warning">
-      
-                <div class="mb-3">
-  
-                  <label class="form-label label-style" for="customFile" style="color: black;">Upload Your Profile Picture</label> <br>
-                  <input type="file" class="form-control" id="customFile"> <br>
-      
-                  <label for="" class="label-style" style="color: black;">Name</label>
-                  <input type="text" placeholder="Enter your name" class="form-control" required> <br>
-  
-                  <label for="" class="label-style" style="color: black;">Student ID</label>
-                  <input type="number" placeholder="Enter your ID" class="form-control" required> 
-  
-                  <br>
-      
-                  <label for="" class="label-style" style="color: black;">Email</label>
-                  <input type="email" placeholder="Enter your email" class="form-control" required> 
-      
-                  <small id="emailHelp" class="form-text text-muted">Make sure to enter your IUT email address.</small> 
-      
-                  <br> 
-  
-                  <label for="" class="label-style" style="color: black;">Gender</label> <br>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="gendercheck" value="option1"">
-                    <label class="form-check-label checkbox-style" for="inlineRadio1"  style="color: crimson;">Male</label>
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST">
+          
+                  <div class="mb-3">
+
+                    <label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
+                    <input type="file" class="form-control" id="customFile"> <br>
+
+                    <label for="" class="label-style">Name</label>
+                    <input type="text" placeholder="Enter your name" class="form-control" name="admin_name" required> <br> 
+                    
                   </div>
-  
-                    <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="gendercheck" value="option2">
-                    <label class="form-check-label checkbox-style" for="inlineRadio2"  style="color: crimson;;">Female</label>
-                    </div>
-  
-                    <br> <br>
-                   
-      
-                  <label for="" class="label-style" style="color: black;">Role</label> <br>
-      
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                    <label class="form-check-label checkbox-style" for="inlineRadio1"  style="color: crimson;">Student</label>
-                  </div>
-      
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                    <label class="form-check-label checkbox-style" for="inlineRadio2"  style="color: crimson;">Provost</label>
-                  </div>
-      
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                    <label class="form-check-label checkbox-style" for="inlineRadio2"  style="color: crimson;">Admin</label>
-                  </div>
-      
-                  <p></p>  
-      
-                  <label for="" class="label-style" style="color: black;">Password</label>
-                  <input type="password" placeholder="Enter your Password" class="form-control" required> <p></p>
-      
-                  <label for="" class="label-style" style="color: black;">Confirm Password</label>
-                  <input type="password" placeholder="Confirm your Password" class="form-control" required> <p></p>
-      
-      
-                  
-      
-                </div>
-      
-                <button class="btn btn-info">Submit</button>
-    
-      
-              </form>    
+
+                  <button class="btn btn-info" name="update_provost_profile">Submit</button>
+
+
+                </form>
       
             </div>
       
@@ -259,6 +232,49 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
       <!-- Update Profile Modal ends -->
 
 
+
+
+      <!-- Update Profile PHP Code starts -->
+
+      <?php
+
+        if(isset($_POST['update_provost_profile'])) {
+
+              $servername = "localhost";
+              $username = "root";
+              $password = "190042106";
+              $dbname = "iut_dms";
+
+              // Create connection
+              $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+              $name = $_POST['admin_name'];
+              $email = $_SESSION['email'];
+
+              // Check connection
+              if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+              }
+
+              $sql = "UPDATE provost SET name = '$name' WHERE email = '$email'";
+
+              if (mysqli_query($conn, $sql)) {
+                echo "";
+              } else {
+              echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+              }
+
+
+              mysqli_close($conn);
+
+          }
+
+      ?>
+
+
+      <!-- Update Profile PHP Code ends -->
+
+
    		
    		<ul class="list-unstyled components">
    		
@@ -267,6 +283,12 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
             <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
           </svg> Home</a>
    		
+   			</li>
+
+         <li>
+				  <a href="provost_profile.php" >  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-person-fill mx-2" viewBox="0 0 16 16">
+  				<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+				  </svg>  Profile </a>
    			</li>
 
          <li>
@@ -331,18 +353,22 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
   </div>
   
       
-    
-     <div class="tab-content">
-      <div id="inbox" class="tab-pane active"> <!--inbox-->
-         
+  <div class="tab-content">
+       
+       <div id="inbox" class="tab-pane active">
+        
         <div class="list-group">
+<<<<<<< HEAD
           
+=======
+>>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
         <?php foreach ($requests as $request):  ?>
 
 <a href="#" class="list-group-item list-group-item-action" aria-current="true">
   <div class=" w-100 justify-content-between">
     <img src="#" class="request_dp float-left">
 
+<<<<<<< HEAD
     <h5 class="mb-1"><b><?php  echo htmlspecialchars($request['email']);?>, </b> is requesting for <?php  echo htmlspecialchars($request['resource_type']);?> item,
    <?php  echo htmlspecialchars($request['resource_name']);?></h5>
     
@@ -360,8 +386,25 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
     </form>
   </div>
 </a>
+=======
+    <h5 class="mb-1"><b><?php  echo htmlspecialchars($request['email']);?>, </b> is requesting for <?php  echo htmlspecialchars($request['resource_type']);?>,
+  <?php  echo htmlspecialchars($request['resource_name']);?></h5>
+    <small class="text-muted">   <?php  echo htmlspecialchars($request['request_time']);?></small>
+   
+   
+    <form action="resource_request_approval.php" method="POST">
 
+    <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>
+   
+    
+>>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
 
+    </form>
+  </div>
+</a>
+<?php endforeach; ?>
+
+<<<<<<< HEAD
 <?php endforeach; ?>
 
 
@@ -370,13 +413,18 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
 
 
          
+=======
+
+      
+        
+>>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
 
         </div>
 
                
 
-
       </div>
+<<<<<<< HEAD
 
 
 
@@ -387,11 +435,18 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
         <div class="list-group">
 
         <?php foreach ($approved_requests as $approved_request):  ?>
+=======
+
+              
+           
+      
+>>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
 
 <a href="#" class="list-group-item list-group-item-action" aria-current="true">
   <div class=" w-100 justify-content-between">
     <img src="#" class="request_dp float-left">
 
+<<<<<<< HEAD
     <h5 class="mb-1"><b> <?php  echo htmlspecialchars($approved_request['email']);?>,</b> had requested for <?php  echo htmlspecialchars($approved_request['resource_type']);?> item,
   <?php  echo htmlspecialchars($approved_request['resource_name']);?></h5>
 
@@ -412,20 +467,51 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
       
             </div>
           </a>
+=======
+   <div id="archive" class="tab-pane"><p></p> <!--Approved requests-->
+    <div class="list-group">
 
+    <?php foreach ($approved_requests as $approved_request):  ?>
+>>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
 
+<a href="#" class="list-group-item list-group-item-action" aria-current="true">
+  <div class=" w-100 justify-content-between">
+    <img src="#" class="request_dp float-left">
+
+<<<<<<< HEAD
           
          
         </div>
+=======
+    <h5 class="mb-1"><b> <?php  echo htmlspecialchars($approved_request['email']);?>,</b> had requested for <?php  echo htmlspecialchars($approved_request['resource_type']);?>,
+  <?php  echo htmlspecialchars($approved_request['resource_name']);?></h5>
+>>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
 
+    <small class="text-muted">   <?php  echo htmlspecialchars($approved_request['request_time']);?></small>
+   
+   
+  <!--  <form action="resource_request_approval.php" method="POST">
 
+    <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>
+   
+    
 
-      </div>
-     </div>
-      
+    </form>
+    -->
   </div>
+</a>
+<?php endforeach; ?>
 
 
+     
+
+    </div>
+
+   
+  </div>  <!--jdjsjdfhbjdjbhshbj-->
+
+
+    </div>
 
  <!--Announcement modal-->
  
@@ -449,7 +535,21 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
 			});
 		});  
 
+<<<<<<< HEAD
     function approval(){
+=======
+    
+    $(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+
+function approval(){
+>>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
   alert("Request Approved");
 
   /*
@@ -461,12 +561,20 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
     }
   }
   
+<<<<<<< HEAD
+=======
+
+>>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
   );
   */
 
   document.getElementById("post").innerHtml= "Approved";
 }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
 	</script>
     
     

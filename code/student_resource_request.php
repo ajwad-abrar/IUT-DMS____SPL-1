@@ -54,7 +54,7 @@ if(isset($_POST['submit'])){
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   
 
-    <title>Room request</title>
+    <title>Resource request</title>
 
 </head>
 
@@ -119,71 +119,18 @@ if(isset($_POST['submit'])){
             <div class="modal-body">
       
       
-              <form action="" class="m-2 p-3 border border-warning">
-      
+              <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST">
+			
                 <div class="mb-3">
-  
+
                   <label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
                   <input type="file" class="form-control" id="customFile"> <br>
-      
+
                   <label for="" class="label-style">Name</label>
-                  <input type="text" placeholder="Enter your name" class="form-control" required> <br>
-  
-                  <label for="" class="label-style">Student ID</label>
-                  <input type="number" placeholder="Enter your ID" class="form-control" required> 
-  
-                  <br>
-      
-                  <label for="" class="label-style">Email</label>
-                  <input type="email" placeholder="Enter your email" class="form-control" required> 
-      
-                  <small id="emailHelp" class="form-text text-muted">Make sure to enter your IUT email address.</small> 
-      
-                  <br> 
-  
-                  <label for="" class="label-style">Gender</label> <br>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="gendercheck" value="option1">
-                    <label class="form-check-label checkbox-style" for="inlineRadio1">Male</label>
-                  </div>
-  
-                    <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="gendercheck" value="option2">
-                    <label class="form-check-label checkbox-style" for="inlineRadio2">Female</label>
-                    </div>
-  
-                    <br> <br>
-                   
-      
-                  <label for="" class="label-style">Role</label> <br>
-      
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                    <label class="form-check-label checkbox-style" for="inlineRadio1">Student</label>
-                  </div>
-      
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                    <label class="form-check-label checkbox-style" for="inlineRadio2">Provost</label>
-                  </div>
-      
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                    <label class="form-check-label checkbox-style" for="inlineRadio2">Admin</label>
-                  </div>
-      
-                  <p></p>  
-      
-                  <label for="" class="label-style">Password</label>
-                  <input type="password" placeholder="Enter your Password" class="form-control" required> <p></p>
-      
-                  <label for="" class="label-style">Confirm Password</label>
-                  <input type="password" placeholder="Confirm your Password" class="form-control" required> <p></p>
-      
-      
+                  <input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
                   
-      
                 </div>
+<<<<<<< HEAD
       
                 <button class="btn btn-info">Submit</button>
     
@@ -191,6 +138,13 @@ if(isset($_POST['submit'])){
               </form> 
               
     
+=======
+
+                <button class="btn btn-info" name="update_student_profile">Submit</button>
+
+
+              </form>      
+>>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
       
             </div>
       
@@ -207,6 +161,51 @@ if(isset($_POST['submit'])){
 
         <!-- Update Profile Modal ends -->
 
+
+
+
+      <!-- Update Profile PHP Code starts -->
+
+		`<?php
+
+          if(isset($_POST['update_student_profile'])) {
+
+              $servername = "localhost";
+              $username = "root";
+              $password = "190042106";
+              $dbname = "iut_dms";
+
+              // Create connection
+              $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+              $name = $_POST['student_name'];
+              $email = $_SESSION['email'];
+
+              // Check connection
+              if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+              }
+
+              $sql = "UPDATE student SET name = '$name' WHERE email = '$email'";
+
+              if (mysqli_query($conn, $sql)) {
+                echo "";
+              } else {
+              echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+              }
+
+
+              mysqli_close($conn);
+
+          }
+
+      ?>
+
+
+
+
+      <!-- Update Profile PHP Code Ends -->
+
    		
    		<ul class="list-unstyled components">
    		
@@ -216,6 +215,12 @@ if(isset($_POST['submit'])){
           </svg>  Home</a>
    		
    			</li>
+
+        <li>
+				  <a href="student_profile.php" >  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-person-fill mx-2" viewBox="0 0 16 16">
+  				<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+				  </svg>  Profile </a>
+   			</li>   
    			
    			<li>
    				<a href="student_room_request.php"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-person-plus-fill mx-2" viewBox="0 0 16 16">
@@ -284,10 +289,10 @@ if(isset($_POST['submit'])){
 
       <div id="inbox" class="tab-pane active jumbotron"><p></p>
 
-		  	<div id="choose_room"><h1 class="text-center">Choose a resource you want to request: </h1></div>
+		  	<div id="choose_resource"><h1 class="text-center">Choose a resource you want to request: </h1></div>
 
 
-          <form action="student_resource_request.php" method="POST">
+          <form action="resource_request_handle.php"  class="resource_rqst" method="POST">
 
 			    <div class="container mt-5">
 				  <div class="row">
@@ -326,8 +331,13 @@ if(isset($_POST['submit'])){
         </div>
 
         <div class="text-center mt-5">
+<<<<<<< HEAD
           <button onclick="requestSubmission()" type="submit" class="btn btn-success btn-lg" id="submit_button" name="submit">Submit</button>
         </div>
+=======
+				<button onclick="requestSubmission()"  type="submit" name="submit" class="btn btn-success btn-lg" id="submit_button">Submit</button>
+			</div>
+>>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
 
 
         </form>
@@ -388,14 +398,53 @@ if(isset($_POST['submit'])){
       ?>    
 			
 
-		  </div>
+        <?php
+      
+      function showStatus(){
+        $con = mysqli_connect("localhost","root","190042106","iut_dms");
+        $email = $_SESSION['email'];
+
+        $app=" select provost_approval from resource_request where email= '$email'";
 
 
-    </div>
+        $status = mysqli_query($con, $app);
+
+        echo "<br>";
+
+        while($row = mysqli_fetch_assoc($status)){
+         
+         if($row['provost_approval'] =="Approved"){
+          
+          echo '<div class="alert alert-success p-3 text-center" role="alert"><b> Your Request Has Been Approved</b></div>';
+           
+          
+          
+         }
+          else if($row['provost_approval'] ==""){
+            echo '<div class="alert alert-warning p-3 text-center" role="alert"><b>Your Request Is Pending</b></div>';
+          }
+
+        }
+        
+          
+       
+      }
+      
+      showStatus();
+
+      ?>    
+     
+		</div>
+
+
+     </div>
+
+     
 
     
-	
-
+   
+     <!--annnouncement modal-->
+			
 
 
     <!-- Optional JavaScript -->
