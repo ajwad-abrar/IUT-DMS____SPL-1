@@ -11,68 +11,18 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
      
   
 
-<<<<<<< HEAD
-     $sql='SELECT request_ID,email,resource_type,resource_name, request_time
-=======
      $sql='SELECT email,resource_type, resource_name,request_time
->>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
      FROM `resource_request`
      WHERE `provost_approval`= ""
      ORDER BY request_time DESC' ;
 
-<<<<<<< HEAD
-      $sql2='SELECT request_ID,email,resource_type,resource_name, request_time
-=======
       $sql2='SELECT email,resource_type, resource_name,request_time
->>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
       FROM `resource_request`
       WHERE `provost_approval`= "Approved"
       ORDER BY request_time DESC' ;
 
   
 
-<<<<<<< HEAD
-    $result=mysqli_query($con,$sql);
-    $result2=mysqli_query($con,$sql2);
-    
-
-    $requests= mysqli_fetch_all($result,MYSQLI_ASSOC);
-    $approved_requests= mysqli_fetch_all($result2,MYSQLI_ASSOC);
-    
-    
-
-
-    mysqli_free_result($result);
-    mysqli_free_result($result2);
-
-
-    if(isset($_POST['approve'])){
-
-      //$approve=mysqli_real_escape_string($con,$_POST['approve']);
-    
-      $request_ID = $_POST['request_ID'];
-    
-      $approve_sql="UPDATE `resource_request` SET `provost_approval` = 'Approved' WHERE request_ID = '$request_ID';";
-    
-    
-    
-    if(mysqli_query($con, $approve_sql)){
-      header('Location: provost_resource_request.php');
-    }
-    else{
-      echo'query error'.mysqli_error($con);
-    }
-    
-    
-    
-    }
-
-    
-
-    mysqli_close($con);
-
-
-=======
     $result1=mysqli_query($con,$sql);
     $result2=mysqli_query($con,$sql2);
     
@@ -87,7 +37,6 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
 
     mysqli_close($con);
 
->>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
 ?>
 
 
@@ -358,134 +307,57 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
        <div id="inbox" class="tab-pane active">
         
         <div class="list-group">
-<<<<<<< HEAD
-          
-=======
->>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
         <?php foreach ($requests as $request):  ?>
 
 <a href="#" class="list-group-item list-group-item-action" aria-current="true">
   <div class=" w-100 justify-content-between">
     <img src="#" class="request_dp float-left">
 
-<<<<<<< HEAD
-    <h5 class="mb-1"><b><?php  echo htmlspecialchars($request['email']);?>, </b> is requesting for <?php  echo htmlspecialchars($request['resource_type']);?> item,
-   <?php  echo htmlspecialchars($request['resource_name']);?></h5>
-    
-
-    
-
-    <small class="text-muted">   <?php  echo htmlspecialchars($request['request_time']);?></small>
-   
-   
-    <form action="provost_resource_request.php" method="POST">
-    <input type = "hidden" name  ="request_ID" value=" <?php  echo $request['request_ID'];?>" />
-    
-    <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>
-     
-    </form>
-  </div>
-</a>
-=======
     <h5 class="mb-1"><b><?php  echo htmlspecialchars($request['email']);?>, </b> is requesting for <?php  echo htmlspecialchars($request['resource_type']);?>,
   <?php  echo htmlspecialchars($request['resource_name']);?></h5>
     <small class="text-muted">   <?php  echo htmlspecialchars($request['request_time']);?></small>
    
    
-    <form action="resource_request_approval.php" method="POST">
+    <form action="provost_resource_request.php" method="POST">
 
     <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>
    
     
->>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
 
     </form>
   </div>
 </a>
 <?php endforeach; ?>
 
-<<<<<<< HEAD
-<?php endforeach; ?>
-
-
-
-        
-
-
-         
-=======
 
       
         
->>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
 
         </div>
 
                
 
       </div>
-<<<<<<< HEAD
-
-
-
-
-      <div id="archive" class="tab-pane">
-
-
-        <div class="list-group">
-
-        <?php foreach ($approved_requests as $approved_request):  ?>
-=======
 
               
            
       
->>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
 
 <a href="#" class="list-group-item list-group-item-action" aria-current="true">
   <div class=" w-100 justify-content-between">
     <img src="#" class="request_dp float-left">
 
-<<<<<<< HEAD
-    <h5 class="mb-1"><b> <?php  echo htmlspecialchars($approved_request['email']);?>,</b> had requested for <?php  echo htmlspecialchars($approved_request['resource_type']);?> item,
-  <?php  echo htmlspecialchars($approved_request['resource_name']);?></h5>
-
-    <small class="text-muted">   <?php  echo htmlspecialchars($approved_request['request_time']);?></small>
-   
-   
-  <!--  <form action="room_request_approval.php" method="POST">
-    <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>
-   
-    
-    </form>
-    -->
-  </div>
-</a>
-<?php endforeach; ?>
-
-            
-      
-            </div>
-          </a>
-=======
    <div id="archive" class="tab-pane"><p></p> <!--Approved requests-->
     <div class="list-group">
 
     <?php foreach ($approved_requests as $approved_request):  ?>
->>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
 
 <a href="#" class="list-group-item list-group-item-action" aria-current="true">
   <div class=" w-100 justify-content-between">
     <img src="#" class="request_dp float-left">
 
-<<<<<<< HEAD
-          
-         
-        </div>
-=======
     <h5 class="mb-1"><b> <?php  echo htmlspecialchars($approved_request['email']);?>,</b> had requested for <?php  echo htmlspecialchars($approved_request['resource_type']);?>,
   <?php  echo htmlspecialchars($approved_request['resource_name']);?></h5>
->>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
 
     <small class="text-muted">   <?php  echo htmlspecialchars($approved_request['request_time']);?></small>
    
@@ -535,9 +407,6 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
 			});
 		});  
 
-<<<<<<< HEAD
-    function approval(){
-=======
     
     $(document).ready(function(){
   $("#myInput").on("keyup", function() {
@@ -549,7 +418,6 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
 });
 
 function approval(){
->>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
   alert("Request Approved");
 
   /*
@@ -561,20 +429,12 @@ function approval(){
     }
   }
   
-<<<<<<< HEAD
-=======
-
->>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
   );
   */
 
   document.getElementById("post").innerHtml= "Approved";
 }
-<<<<<<< HEAD
-
-=======
     
->>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
 	</script>
     
     

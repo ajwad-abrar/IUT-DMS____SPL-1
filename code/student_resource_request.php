@@ -130,21 +130,11 @@ if(isset($_POST['submit'])){
                   <input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
                   
                 </div>
-<<<<<<< HEAD
-      
-                <button class="btn btn-info">Submit</button>
-    
-      
-              </form> 
-              
-    
-=======
 
                 <button class="btn btn-info" name="update_student_profile">Submit</button>
 
 
               </form>      
->>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
       
             </div>
       
@@ -292,7 +282,7 @@ if(isset($_POST['submit'])){
 		  	<div id="choose_resource"><h1 class="text-center">Choose a resource you want to request: </h1></div>
 
 
-          <form action="resource_request_handle.php"  class="resource_rqst" method="POST">
+          <form action="student_resource_request.php"  class="resource_rqst" method="POST">
 
 			    <div class="container mt-5">
 				  <div class="row">
@@ -331,13 +321,8 @@ if(isset($_POST['submit'])){
         </div>
 
         <div class="text-center mt-5">
-<<<<<<< HEAD
-          <button onclick="requestSubmission()" type="submit" class="btn btn-success btn-lg" id="submit_button" name="submit">Submit</button>
-        </div>
-=======
 				<button onclick="requestSubmission()"  type="submit" name="submit" class="btn btn-success btn-lg" id="submit_button">Submit</button>
 			</div>
->>>>>>> f00d44dd05bc655c441112dbd802afbf27dae0c3
 
 
         </form>
@@ -398,41 +383,7 @@ if(isset($_POST['submit'])){
       ?>    
 			
 
-        <?php
-      
-      function showStatus(){
-        $con = mysqli_connect("localhost","root","190042106","iut_dms");
-        $email = $_SESSION['email'];
-
-        $app=" select provost_approval from resource_request where email= '$email'";
-
-
-        $status = mysqli_query($con, $app);
-
-        echo "<br>";
-
-        while($row = mysqli_fetch_assoc($status)){
-         
-         if($row['provost_approval'] =="Approved"){
-          
-          echo '<div class="alert alert-success p-3 text-center" role="alert"><b> Your Request Has Been Approved</b></div>';
-           
-          
-          
-         }
-          else if($row['provost_approval'] ==""){
-            echo '<div class="alert alert-warning p-3 text-center" role="alert"><b>Your Request Is Pending</b></div>';
-          }
-
-        }
-        
-          
        
-      }
-      
-      showStatus();
-
-      ?>    
      
 		</div>
 
