@@ -1,5 +1,68 @@
 <?php
 session_start();
+
+
+$con =mysqli_connect('localhost', 'root','190042106');
+
+mysqli_select_db($con, 'iut_dms');
+$email=$_SESSION['email'];
+//$name= $_SESSION ['name'];
+
+if(isset($_POST['submit'])){
+
+    $hall_name=mysqli_real_escape_string($con,$_POST['hall_name']);
+    $floor_number=mysqli_real_escape_string($con, $_POST['floor_number']);
+    $room_number=mysqli_real_escape_string($con, $_POST['room_number']);
+    $bed_number=mysqli_real_escape_string($con, $_POST['bed_number']);
+  
+ $roomcount = mysqli_query($con ,"SELECT COUNT(room_no) AS count
+ FROM room_request
+ WHERE room_no = '$room_number' AND hall_name= '$hall_name' ;");
+
+function showRoomfilled(){
+  echo '<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+  <strong>This room is occupied.Try for another one.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>';
+    
+}
+
+$row2 = mysqli_fetch_assoc($roomcount);
+
+if( $row2['count']>=4){
+  //  header('Location: student_room_request.php');
+  //  echo '<script>alert("Sorry The Room Is Occupied!!! Try for another one")</script>' ;
+
+  showRoomfilled();
+   
+}
+
+
+else{
+
+
+    $sql="INSERT INTO `room_request` (`request_ID`, `request_time`, `email`, `hall_name`, `level`, `room_no`, `bed`, `provost_approval`, `provost_approval_time`)
+    VALUES (NULL, current_timestamp(), '$email', '$hall_name', '$floor_number', '$room_number', '$bed_number', '', NULL);";
+   
+   
+      if(mysqli_query($con, $sql)){
+         
+
+       header('Location: student_room_request.php');
+       }
+      else{
+       echo'query error'.mysqli_error($con);
+      }
+
+    }
+
+}
+
+
+
+
 ?>
 
 
@@ -234,6 +297,7 @@ session_start();
         <button type="button" id="sidebarCollapse" class="btn btn-info">
           <i class="fa fa-align-justify"></i> <span>Menu</span>
         </button>
+        
       
    	
   
@@ -265,7 +329,7 @@ session_start();
 
            <!--FORM FOR ACTION -->
 
-   <form action="room_request_handle.php" class="room_rqst" method="POST">
+   <form action="student_room_request.php" class="room_rqst" method="POST">
 
 
    <div class="container mt-5">
@@ -341,19 +405,26 @@ session_start();
       function showStatus(){
         $con = mysqli_connect("localhost","root","190042106","iut_dms");
         $email = $_SESSION['email'];
-
         $app=" select provost_approval from room_request where email= '$email'";
+       $status = mysqli_query($con, $app);
 
-
-        $status = mysqli_query($con, $app);
+      //  $roomcount = "SELECT COUNT(room_no) AS count FROM room_request WHERE room_no = '$room_number' AND hall_name= '$hall_name'";
+      // $countcheck = mysqli_query($con, $roomcount);
+      // $row2 = mysqli_fetch_assoc($roomcount);
 
         echo "<br>";
+
+
+      
 
         while($row = mysqli_fetch_assoc($status)){
          
          if($row['provost_approval'] =="Approved"){
           
-          echo '<div class="alert alert-success p-3 text-center" role="alert"><b> Your Request Has Been Approved</b></div>';
+          echo '<div class="alert alert-success alert-dismissible text-center">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Success!</strong> Your request has been approved
+      </div>';
            
           
           
@@ -363,12 +434,16 @@ session_start();
           }
 
         }
+
+
+
         
           
        
       }
       
       showStatus();
+      
 
       ?>    
      

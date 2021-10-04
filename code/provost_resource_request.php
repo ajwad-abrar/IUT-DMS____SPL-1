@@ -2,6 +2,67 @@
 
 session_start();
 
+$con =mysqli_connect('localhost', 'root','190042106','iut_dms');
+    
+     if(!$con){
+       echo 'connection error'.mysqli_connect_error();
+     }
+
+     
+  
+
+     $sql='SELECT request_ID,email,resource_type,resource_name, request_time
+     FROM `resource_request`
+     WHERE `provost_approval`= ""
+     ORDER BY request_time DESC' ;
+
+      $sql2='SELECT request_ID,email,resource_type,resource_name, request_time
+      FROM `resource_request`
+      WHERE `provost_approval`= "Approved"
+      ORDER BY request_time DESC' ;
+
+  
+
+    $result=mysqli_query($con,$sql);
+    $result2=mysqli_query($con,$sql2);
+    
+
+    $requests= mysqli_fetch_all($result,MYSQLI_ASSOC);
+    $approved_requests= mysqli_fetch_all($result2,MYSQLI_ASSOC);
+    
+    
+
+
+    mysqli_free_result($result);
+    mysqli_free_result($result2);
+
+
+    if(isset($_POST['approve'])){
+
+      //$approve=mysqli_real_escape_string($con,$_POST['approve']);
+    
+      $request_ID = $_POST['request_ID'];
+    
+      $approve_sql="UPDATE `resource_request` SET `provost_approval` = 'Approved' WHERE request_ID = '$request_ID';";
+    
+    
+    
+    if(mysqli_query($con, $approve_sql)){
+      header('Location: provost_resource_request.php');
+    }
+    else{
+      echo'query error'.mysqli_error($con);
+    }
+    
+    
+    
+    }
+
+    
+
+    mysqli_close($con);
+
+
 ?>
 
 
@@ -275,43 +336,40 @@ session_start();
       <div id="inbox" class="tab-pane active"> <!--inbox-->
          
         <div class="list-group">
-          <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-            <div class=" w-100 justify-content-between">
-              <img src="#" class="request_dp float-left">
-              <h5 class="mb-1"><b>Nafisa Tabassum 190042104</b> is requesting for bedsheet</h5>
-              <small class="text-muted">3 days ago</small>
+          
+        <?php foreach ($requests as $request):  ?>
 
-              <button onclick="alert('Request has been Rejected')" href="#ale"  type="button" class="btn btn-danger float-right mx-1">Reject</button>
-              <button onclick="alert('Request has been approved')" href="#ale"  type="submit" class="btn btn-info float-right" id="post">Approve</button>
-            </div>
-          </a>
+<a href="#" class="list-group-item list-group-item-action" aria-current="true">
+  <div class=" w-100 justify-content-between">
+    <img src="#" class="request_dp float-left">
+
+    <h5 class="mb-1"><b><?php  echo htmlspecialchars($request['email']);?>, </b> is requesting for <?php  echo htmlspecialchars($request['resource_type']);?> item,
+   <?php  echo htmlspecialchars($request['resource_name']);?></h5>
+    
+
+    
+
+    <small class="text-muted">   <?php  echo htmlspecialchars($request['request_time']);?></small>
+   
+   
+    <form action="provost_resource_request.php" method="POST">
+    <input type = "hidden" name  ="request_ID" value=" <?php  echo $request['request_ID'];?>" />
+    
+    <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>
+     
+    </form>
+  </div>
+</a>
 
 
-          <a href="#" class="list-group-item list-group-item-action">
-            <div class=" w-100 justify-content-between">
-              <img src="#" class="request_dp float-left">
-              <h5 class="mb-1"><b>Ajwad Abrar 190042106</b> is requesting for chair </h5>
-              <small class="text-muted">3 days ago</small>
-
-            <button type="button" class="btn btn-danger float-right mx-1">Reject</button>
-            <button type="button" class="btn btn-info float-right">Approve</button>
-            
-
-            </div>
-          </a>
+<?php endforeach; ?>
 
 
-          <a href="#" class="list-group-item list-group-item-action">
-            
-            <div class=" w-100 justify-content-between">
-              <img src="#" class="request_dp float-left">
-              <h5 class="mb-1"><b>Maheen Haque 190042148</b> is requesting for curtains</h5>
-              <small class="text-muted">3 days ago</small>
 
-            <button type="button" class="btn btn-danger float-right mx-1">Reject</button>
-            <button type="button" class="btn btn-info float-right">Approve</button>
-            </div>
-          </a>
+        
+
+
+         
 
         </div>
 
@@ -319,15 +377,36 @@ session_start();
 
 
       </div>
+
+
+
+
       <div id="archive" class="tab-pane">
 
 
         <div class="list-group">
-          <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-            <div class=" w-100 justify-content-between">
-              <img src="#" class="request_dp float-left">
-              <h5 class="mb-1"><b>Ajwad Abrar 190042106</b> is requesting for bedsheet</h5>
-              <small class="text-muted">Approved 2 days ago</small>
+
+        <?php foreach ($approved_requests as $approved_request):  ?>
+
+<a href="#" class="list-group-item list-group-item-action" aria-current="true">
+  <div class=" w-100 justify-content-between">
+    <img src="#" class="request_dp float-left">
+
+    <h5 class="mb-1"><b> <?php  echo htmlspecialchars($approved_request['email']);?>,</b> had requested for <?php  echo htmlspecialchars($approved_request['resource_type']);?> item,
+  <?php  echo htmlspecialchars($approved_request['resource_name']);?></h5>
+
+    <small class="text-muted">   <?php  echo htmlspecialchars($approved_request['request_time']);?></small>
+   
+   
+  <!--  <form action="room_request_approval.php" method="POST">
+    <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>
+   
+    
+    </form>
+    -->
+  </div>
+</a>
+<?php endforeach; ?>
 
             
       
@@ -335,18 +414,7 @@ session_start();
           </a>
 
 
-          <a href="#" class="list-group-item list-group-item-action">
-            <div class=" w-100 justify-content-between">
-              <img src="#" class="request_dp float-left">
-              <h5 class="mb-1"><b>Abir Fuad 190042150</b> is requesting for chair </h5>
-              <small class="text-muted">Approved 3 days ago</small>
-
-            
-            
-            </div>
-          </a>
-
-
+          
          
         </div>
 
@@ -380,6 +448,25 @@ session_start();
 				$('#sidebar').toggleClass('active');
 			});
 		});  
+
+    function approval(){
+  alert("Request Approved");
+
+  /*
+   var btn= document.getElementById("post");
+   
+  btn.addEventListener("click", ()=>{
+    if(btn.innerText === "Approve"){
+      btn.innerText= "Approvedddd"
+    }
+  }
+  
+  );
+  */
+
+  document.getElementById("post").innerHtml= "Approved";
+}
+
 	</script>
     
     

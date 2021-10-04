@@ -11,12 +11,12 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
      
   
 
-     $sql='SELECT email,hall_name, level, room_no, bed,request_time
+     $sql='SELECT request_ID,email,hall_name, level, room_no, bed,request_time
      FROM `room_request`
      WHERE `provost_approval`= ""
      ORDER BY request_time DESC' ;
 
-      $sql2='SELECT email,hall_name, level, room_no, bed,request_time
+      $sql2='SELECT request_ID,email,hall_name, level, room_no, bed,request_time
       FROM `room_request`
       WHERE `provost_approval`= "Approved"
       ORDER BY request_time DESC' ;
@@ -30,10 +30,35 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
     $requests= mysqli_fetch_all($result,MYSQLI_ASSOC);
     $approved_requests= mysqli_fetch_all($result2,MYSQLI_ASSOC);
     
+    
+
 
     mysqli_free_result($result);
     mysqli_free_result($result2);
-  
+
+
+    if(isset($_POST['approve'])){
+
+      //$approve=mysqli_real_escape_string($con,$_POST['approve']);
+    
+      $request_ID = $_POST['request_ID'];
+    
+      $approve_sql="UPDATE `room_request` SET `provost_approval` = 'Approved' WHERE request_ID = '$request_ID';";
+    
+    
+    
+    if(mysqli_query($con, $approve_sql)){
+      header('Location: provost_room_request.php');
+    }
+    else{
+      echo'query error'.mysqli_error($con);
+    }
+    
+    
+    
+    }
+
+    
 
     mysqli_close($con);
 
@@ -89,26 +114,16 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
 
         
  <!-- <?php
-
     function showName(){
-
       $con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
-
-
       $email = $_SESSION['email'];
-
       $reg=" select name from provost where email= '$email'";
-
-
       $result = mysqli_query($con, $reg);
-
       echo "<br>";
-
       while($row = mysqli_fetch_assoc($result)){
         echo "{$row['name']}";
       }
     }
-
   ?>
   -->
 
@@ -242,6 +257,12 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
    			</li>
 
          <li>
+				  <a href="provost_profile.php" >  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-person-fill mx-2" viewBox="0 0 16 16">
+  				<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+				  </svg>  Profile </a>
+   			</li>
+
+         <li>
    				<a href="student_information.php"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-person-plus-fill mx-2" viewBox="0 0 16 16">
             <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
             <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
@@ -315,6 +336,7 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
        <div id="inbox" class="tab-pane active">
         
         <div class="list-group">
+
         <?php foreach ($requests as $request):  ?>
 
 <a href="#" class="list-group-item list-group-item-action" aria-current="true">
@@ -326,23 +348,25 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
     <?php  echo htmlspecialchars($request['level']);?>,
      <?php  echo htmlspecialchars($request['hall_name']);?> hall</h5>
 
+    
+
     <small class="text-muted">   <?php  echo htmlspecialchars($request['request_time']);?></small>
    
    
-    <form action="room_request_approval.php" method="POST">
-
-    <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>
-   
+    <form action="provost_room_request.php" method="POST">
+    <input type = "hidden" name  ="request_ID" value=" <?php  echo $request['request_ID'];?>" />
     
-
+    <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>
+     
     </form>
   </div>
 </a>
+
+
 <?php endforeach; ?>
 
 
-      
-        
+ 
 
         </div>
 
@@ -373,11 +397,9 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
    
    
   <!--  <form action="room_request_approval.php" method="POST">
-
     <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>
    
     
-
     </form>
     -->
   </div>
@@ -499,7 +521,6 @@ function approval(){
     }
   }
   
-
   );
   */
 

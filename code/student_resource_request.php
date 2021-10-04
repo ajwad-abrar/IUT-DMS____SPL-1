@@ -1,5 +1,36 @@
 <?php
 session_start();
+
+$con =mysqli_connect('localhost', 'root','190042106');
+
+mysqli_select_db($con, 'iut_dms');
+$email=$_SESSION['email'];
+//$name= $_SESSION ['name'];
+
+if(isset($_POST['submit'])){
+
+    $resource_type=mysqli_real_escape_string($con,$_POST['resource_type']);
+    $resource_name=mysqli_real_escape_string($con, $_POST['resource_name']);
+
+
+    $sql="INSERT INTO `resource_request` (`request_ID`, `request_time`, `email`, `resource_type`, `resource_name`, `provost_approval`, `provost_approval_time`)
+    VALUES (NULL, current_timestamp(), '$email', '$resource_type', '$resource_name','', NULL);";
+   
+   
+      if(mysqli_query($con, $sql)){
+         
+
+       header('Location: student_resource_request.php');
+       }
+      else{
+       echo'query error'.mysqli_error($con);
+      }
+
+
+}
+
+
+
 ?>
 
 
@@ -157,7 +188,9 @@ session_start();
                 <button class="btn btn-info">Submit</button>
     
       
-              </form>    
+              </form> 
+              
+    
       
             </div>
       
@@ -264,7 +297,7 @@ session_start();
 
 						<h4 class="text-center">Resource Type</h4>
 
-						<select name="res_type" id="main_menu" class="custom-select">
+						<select name="resource_type" id="main_menu" class="custom-select">
 							
 							<option value="choose" selected>Select </option>
 							<option value="electrical">Electrical</option>
@@ -280,7 +313,7 @@ session_start();
 
 						<h4 class="text-center">Resource Name</h4>
 
-						<select name="res_name" id="sub_menu" class="custom-select">
+						<select name="resource_name" id="sub_menu" class="custom-select">
 						</select>
 		
 		
@@ -293,11 +326,66 @@ session_start();
         </div>
 
         <div class="text-center mt-5">
-          <button type="submit" class="btn btn-success btn-lg" id="submit_button" name="submit_resource">Submit</button>
+          <button onclick="requestSubmission()" type="submit" class="btn btn-success btn-lg" id="submit_button" name="submit">Submit</button>
         </div>
 
 
         </form>
+
+        <?php
+      
+      function showStatus(){
+
+        $con = mysqli_connect("localhost","root","190042106","iut_dms");
+        $email = $_SESSION['email'];
+        $app=" select provost_approval,resource_name from resource_request where email= '$email'";
+       $status = mysqli_query($con, $app);
+
+      //  $roomcount = "SELECT COUNT(room_no) AS count FROM room_request WHERE room_no = '$room_number' AND hall_name= '$hall_name'";
+      // $countcheck = mysqli_query($con, $roomcount);
+      // $row2 = mysqli_fetch_assoc($roomcount);
+
+        echo "<br>";
+
+        while($row = mysqli_fetch_assoc($status)){
+         
+         if($row['provost_approval'] =="Approved"){
+          
+        //  echo '<div class="alert alert-success alert-dismissible fade show p-3 text-center" role="alert"><b> Your Request Has Been Approved</b></div>';
+
+
+        echo '<div class="alert alert-success alert-dismissible text-center">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Success!</strong> Your request has been approved
+      </div>';
+                   
+          
+         }
+          else if($row['provost_approval'] ==""){
+
+            echo '<div class="alert alert-warning p-3 text-center" role="alert"><b>Your request is pending</b></div>';
+            
+            // echo 'Your Request for ';
+            // echo $row['resource_name'];
+            // echo ' is pending';
+           
+          }
+
+        
+        }
+
+
+        
+          
+       
+      }
+
+
+      
+      showStatus();
+      
+
+      ?>    
 			
 
 		  </div>
@@ -323,6 +411,15 @@ session_start();
 			});
 		});  
 	</script>
+
+<script>
+function requestSubmission(){
+  alert('Request Submitted');
+
+}
+
+
+</script>
 
 
 	<script src="JS/resource_request.js"></script>
