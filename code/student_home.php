@@ -88,88 +88,78 @@ session_start();
 					<div class="modal-body">
 	  
 	  
-						<form action="" class="m-2 p-3 border border-warning">
-	  
+						<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST">
+			
 							<div class="mb-3">
 
 								<label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
 								<input type="file" class="form-control" id="customFile"> <br>
-	  
+
 								<label for="" class="label-style">Name</label>
-								<input type="text" placeholder="Enter your name" class="form-control" required> <br>
-
-								<label for="" class="label-style">Student ID</label>
-								<input type="number" placeholder="Enter your ID" class="form-control" required> 
-
-								<br>
-	  
-								<label for="" class="label-style">Email</label>
-								<input type="email" placeholder="Enter your email" class="form-control" required> 
-	  
-								<small id="emailHelp" class="form-text text-muted">Make sure to enter your IUT email address.</small> 
-	  
-								<br> 
-
-								<label for="" class="label-style">Gender</label> <br>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="gender" id="gendercheck" value="option1">
-									<label class="form-check-label checkbox-style" for="inlineRadio1">Male</label>
-								</div>
-
-								  <div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="gender" id="gendercheck" value="option2">
-									<label class="form-check-label checkbox-style" for="inlineRadio2">Female</label>
-								  </div>
-
-								  <br> <br>
-								 
-	  
-								<label for="" class="label-style">Role</label> <br>
-	  
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-									<label class="form-check-label checkbox-style" for="inlineRadio1">Student</label>
-								</div>
-	  
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-									<label class="form-check-label checkbox-style" for="inlineRadio2">Provost</label>
-								</div>
-	  
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-									<label class="form-check-label checkbox-style" for="inlineRadio2">Admin</label>
-								</div>
-	  
-								<p></p>  
-	  
-								<label for="" class="label-style">Password</label>
-								<input type="password" placeholder="Enter your Password" class="form-control" required> <p></p>
-	  
-								<label for="" class="label-style">Confirm Password</label>
-								<input type="password" placeholder="Confirm your Password" class="form-control" required> <p></p>
-	  
-	  
+								<input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
 								
-	  
 							</div>
-	  
-							<button class="btn btn-info">Submit</button>
-	
-	  
+
+							<button class="btn btn-info" name="update_student_profile">Submit</button>
+
+
 						</form>    
-	  
+		
 					</div>
 	  
 					<div class="modal-footer">
-	  
-			  
-	  
+
 					</div>
 	  
 				</div>
 			</div>
 		  </div>
+
+
+		<!-- Update Profile Modal ends -->
+
+
+
+
+		<!-- Update Profile PHP Code starts -->
+
+		<?php
+
+			if(isset($_POST['update_student_profile'])) {
+
+				$servername = "localhost";
+				$username = "root";
+				$password = "190042106";
+				$dbname = "iut_dms";
+
+				// Create connection
+				$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+				$name = $_POST['student_name'];
+				$email = $_SESSION['email'];
+
+				// Check connection
+				if (!$conn) {
+					die("Connection failed: " . mysqli_connect_error());
+				}
+
+				$sql = "UPDATE student SET name = '$name' WHERE email = '$email'";
+
+				if (mysqli_query($conn, $sql)) {
+					echo "";
+				} else {
+				echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+				}
+
+
+				mysqli_close($conn);
+
+			}
+
+		?>
+
+
+		<!-- Update Profile PHP Code ends -->
 
 
 
