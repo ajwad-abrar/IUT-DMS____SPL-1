@@ -11,12 +11,12 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
      
   
 
-     $sql='SELECT email,resource_type, resource_name,request_time
+     $sql='SELECT request_ID,email,resource_type, resource_name,request_time
      FROM `resource_request`
      WHERE `provost_approval`= ""
      ORDER BY request_time DESC' ;
 
-      $sql2='SELECT email,resource_type, resource_name,request_time
+      $sql2='SELECT request_ID,email,resource_type, resource_name,request_time
       FROM `resource_request`
       WHERE `provost_approval`= "Approved"
       ORDER BY request_time DESC' ;
@@ -34,6 +34,28 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
     mysqli_free_result($result1);
     mysqli_free_result($result2);
   
+
+    if(isset($_POST['approve'])){
+
+      //$approve=mysqli_real_escape_string($con,$_POST['approve']);
+    
+      $request_ID = $_POST['request_ID'];
+    
+      $approve_sql="UPDATE `resource_request` SET `provost_approval` = 'Approved' WHERE request_ID = '$request_ID';";
+    
+    
+    
+    if(mysqli_query($con, $approve_sql)){
+      header('Location: provost_resource_request.php');
+    }
+    else{
+      echo'query error'.mysqli_error($con);
+    }
+    
+    
+    
+    }
+
 
     mysqli_close($con);
 
@@ -313,13 +335,13 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
   <div class=" w-100 justify-content-between">
     <img src="#" class="request_dp float-left">
 
-    <h5 class="mb-1"><b><?php  echo htmlspecialchars($request['email']);?>, </b> is requesting for <?php  echo htmlspecialchars($request['resource_type']);?>,
+    <h5 class="mb-1"><b><?php  echo htmlspecialchars($request['email']);?>, </b> is requesting for <?php  echo htmlspecialchars($request['resource_type']);?> item,
   <?php  echo htmlspecialchars($request['resource_name']);?></h5>
     <small class="text-muted">   <?php  echo htmlspecialchars($request['request_time']);?></small>
    
    
     <form action="provost_resource_request.php" method="POST">
-
+    <input type = "hidden" name  ="request_ID" value=" <?php  echo $request['request_ID'];?>" />
     <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>
    
     
@@ -343,10 +365,6 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
            
       
 
-<a href="#" class="list-group-item list-group-item-action" aria-current="true">
-  <div class=" w-100 justify-content-between">
-    <img src="#" class="request_dp float-left">
-
    <div id="archive" class="tab-pane"><p></p> <!--Approved requests-->
     <div class="list-group">
 
@@ -362,14 +380,8 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
     <small class="text-muted">   <?php  echo htmlspecialchars($approved_request['request_time']);?></small>
    
    
-  <!--  <form action="resource_request_approval.php" method="POST">
 
-    <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>
-   
     
-
-    </form>
-    -->
   </div>
 </a>
 <?php endforeach; ?>
