@@ -74,7 +74,7 @@ include('student_photo.php');
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   
 
-    <title>Resource request</title>
+    <title>Resource Request</title>
 
 </head>
 
@@ -176,7 +176,7 @@ include('student_photo.php');
 
       <!-- Update Profile PHP Code starts -->
 
-		`<?php
+		<?php
 
           if(isset($_POST['update_student_profile'])) {
 

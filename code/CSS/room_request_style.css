@@ -23,20 +23,9 @@
   background:crimson;
 } 
 
-
-
 #choose_room{
   margin-bottom: 70px;
   color:orangered;
-}
-
-
-#label-style{
-  color: blue;
-  font-weight: bolder;
-  background-color: cornflowerblue;
-  background: crimson;
-  font: bolder;
 }
 
 .modal-body {
