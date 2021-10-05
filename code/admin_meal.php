@@ -1,27 +1,6 @@
 <?php
 session_start();
-
-$con =mysqli_connect('localhost', 'root','190042106');
-
-mysqli_select_db($con, 'iut_dms');
-
-if(isset($_POST['submit'])){
-
- $input_date= mysqli_real_escape_string($con,$_POST['input_date']);
-
-$query = mysqli_query($con ,"SELECT COUNT(cancel_date) AS count
- FROM meal_cancellation
- WHERE cancel_date = '$input_date' ;"); 
-
-$fetch_count = mysqli_fetch_assoc($query);
-
-echo $fetch_count['count'];
-
-
-}
- 
-
-
+	
 ?>
 
 
@@ -272,7 +251,7 @@ echo $fetch_count['count'];
 
 <div class="modal-body">
           
-      <form class="form-horizontal" action="admin_meal.php">
+      <form class="form-horizontal" action="admin_meal.php" method="POST">
         <div class="form-group">
 
           <div class="form-floating">
@@ -286,11 +265,17 @@ echo $fetch_count['count'];
            <br>
 		   <div class="form-group">       
             <div class="col-sm-offset-2 col-sm-10">
-              <button href="#ale" type="submit"  class="btn btn-success btn-lg" id="post" name="submit">Submit</button>
+              <button type="submit"  class="btn btn-success btn-lg" id="post" name="admin_meal_check">Submit</button>
            </div>
            </div>
     
       </form>
+
+
+
+
+
+	 		
 
 
        
@@ -300,9 +285,36 @@ echo $fetch_count['count'];
 
 	<div >
      <br><br>
-	<b><h5 class="font-weight-bolder">Number of students who cancelled their meal for this particular day</h5></b>
+	<b><h5 class="font-weight-bolder">Number of students who cancelled their meal for this particular day </h5></b>
     <br>
-	<div  style="height: 60px; width:700px; background-color: white; padding:15px; border-radius: 2%; border:0.5px solid black;"></div>
+
+		<div style="height: 60px; width:700px; background-color:antiquewhite; padding:15px; border-radius: 2%; border:0.5px solid black;"> 
+			<h1 style="text-align: center;">
+			
+			
+				<?php
+
+					if(isset($_POST['admin_meal_check'])) {
+
+						$con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+						$date = $_POST['input_date'];
+
+						$reg=" select COUNT(cancel_date) as COUNT from meal_cancellation where cancel_date = '$date'";
+
+						$result = mysqli_query($con, $reg);
+
+						while($row = mysqli_fetch_assoc($result)){
+							$number_of_meal =  "{$row['COUNT']}";
+						}
+
+						echo $number_of_meal;
+
+					}			
+				?>					
+					
+			</h1>
+		</div>
  
 	</div>
 	

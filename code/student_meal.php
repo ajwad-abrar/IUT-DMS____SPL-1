@@ -366,7 +366,7 @@ if(isset($_POST['submit'])){
 
     	<!-- Meal Table Data Input starts -->
 
-    <!-- <?php
+    <?php
 
       if(isset($_POST['student_cancel_meal'])) {
 
@@ -402,7 +402,7 @@ if(isset($_POST['submit'])){
 
       }
 
-    ?>	 -->
+    ?>
 
       <!-- Meal Table Data Input Ends -->
    
