@@ -165,7 +165,7 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
    		<div class="sidebar-header">
 
         <div class="container">
-            <a href="#"> <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
+           <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
         </div>
               
         <br><br><br><br>

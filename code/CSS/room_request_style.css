@@ -31,9 +31,12 @@
 }
 
 
-.label-style{
-  color: black;
-  background: blanchedalmond;
+#label-style{
+  color: blue;
+  font-weight: bolder;
+  background-color: cornflowerblue;
+  background: crimson;
+  font: bolder;
 }
 
 .modal-body {

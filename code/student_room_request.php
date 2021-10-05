@@ -115,7 +115,7 @@ include('student_photo.php');
    		<div class="sidebar-header">
 
 		  <div class="container">
-				<a href="#"> <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
+				 <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
 			</div>
               
         <h4>
@@ -174,21 +174,21 @@ include('student_photo.php');
             <div class="modal-body">
       
       
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST" enctype="multipart/form-data">
-				
-              <div class="mb-3">
+              <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST" enctype="multipart/form-data">
+          
+                <div class="mb-3">
 
-                <label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
-                <input type="file" class="form-control" id="customFile" name="stu_profile_pic"> <br>
+                  <label class="form-label" for="customFile" style="font-weight: bolder; color:black">Upload Your Profile Picture</label> <br>
+                  <input type="file" class="form-control" id="customFile" name="stu_profile_pic" required> <br>
 
-                <label for="" class="label-style">Name</label>
-                <input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
-                
-              </div>
+                  <label for="" style="font-weight: bolder; color:black">Name</label>
+                  <input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
+                  
+                </div>
 
-              <button class="btn btn-info" name="update_student_profile" value="s_up_profile">Submit</button>
+                <button class="btn btn-info" name="update_student_profile" value="s_up_profile">Submit</button>
 
-            </form>    
+              </form>    
       
             </div>
       
@@ -417,44 +417,29 @@ include('student_photo.php');
         $con = mysqli_connect("localhost","root","190042106","iut_dms");
         $email = $_SESSION['email'];
         $app=" select provost_approval from room_request where email= '$email'";
-       $status = mysqli_query($con, $app);
-
-      //  $roomcount = "SELECT COUNT(room_no) AS count FROM room_request WHERE room_no = '$room_number' AND hall_name= '$hall_name'";
-      // $countcheck = mysqli_query($con, $roomcount);
-      // $row2 = mysqli_fetch_assoc($roomcount);
+        $status = mysqli_query($con, $app);
 
         echo "<br>";
 
-
-      
-
         while($row = mysqli_fetch_assoc($status)){
          
-         if($row['provost_approval'] =="Approved"){
-          
-          echo '<div class="alert alert-success alert-dismissible text-center">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Success!</strong> Your request has been approved
-      </div>';
-           
-          
-          
-         }
-          else if($row['provost_approval'] ==""){
-            echo '<div class="alert alert-warning p-3 text-center" role="alert"><b>Your Request Is Pending</b></div>';
+          if($row['provost_approval'] =="Approved"){
+            
+                echo '<div class="alert alert-success alert-dismissible text-center">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Success!</strong> Your request has been approved
+                      </div>';    
+            
           }
+          else if($row['provost_approval'] ==""){
+              echo '<div class="alert alert-warning p-3 text-center" role="alert"><b>Your Request Is Pending</b></div>';
+            }
 
-        }
-
-
-
-        
-          
+        }       
        
       }
       
-      showStatus();
-      
+      showStatus(); 
 
       ?>    
      
