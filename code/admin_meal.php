@@ -133,7 +133,7 @@
 				<div class="modal-content">
 	  
 					<div class="modal-header ">
-						<h4 class="modal-title w-100 text-center label-style">Update Information</h4>
+						<h4 class="modal-title w-100 text-center" style="font-weight: bolder; color:black">Update Information</h4>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 					</div>
 	  
@@ -144,10 +144,10 @@
 		
 							<div class="mb-3">
 
-								<label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
+								<label class="form-label" style="font-weight: bolder; color:black" for="customFile">Upload Your Profile Picture</label> <br>
 								<input type="file" name="profile_pic" class="form-control" id="customFile"> <br>
 
-								<label for="" class="label-style">Name</label>
+								<label for="" style="font-weight: bolder; color:black">Name</label>
 								<input type="text" placeholder="Enter your name" class="form-control" name="admin_name" required> <br> 
 								
 							</div>
