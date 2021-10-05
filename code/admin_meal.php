@@ -1,5 +1,25 @@
 <?php
-session_start();
+	session_start();
+
+	include('admin_photo.php');
+
+	function getImagePath(){
+
+		$con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+
+		$email = $_SESSION['email'];
+
+		$reg= "select img_path from admin where email= '$email'";
+
+		$result = mysqli_query($con, $reg);
+
+		while($row = mysqli_fetch_assoc($result)){
+			return "{$row['img_path']}";
+		}
+	}
+
+	$imagePath = getImagePath();
 	
 ?>
 
@@ -22,7 +42,7 @@ session_start();
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-	<title>cancel meal</title>
+	<title>Admin Meal</title>
 
     <style>
       #user{
@@ -65,7 +85,7 @@ session_start();
    		<div class="sidebar-header">
 
 			<div class="container">
-				<a href="#"> <img src="images/ajwad_student.jpg" id="profile_picture"></a>
+				<a href="#"> <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
 			</div>
 			  
 
@@ -120,76 +140,22 @@ session_start();
 					<div class="modal-body">
 	  
 	  
-						<form action="" class="m-2 p-3 border border-warning">
-	  
+						<form action="admin_meal.php" class="m-2 p-3 border border-warning" method="POST" enctype="multipart/form-data">
+		
 							<div class="mb-3">
 
 								<label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
-								<input type="file" class="form-control" id="customFile"> <br>
-	  
+								<input type="file" name="profile_pic" class="form-control" id="customFile"> <br>
+
 								<label for="" class="label-style">Name</label>
-								<input type="text" placeholder="Enter your name" class="form-control" required> <br>
-
-								<label for="" class="label-style">Student ID</label>
-								<input type="number" placeholder="Enter your ID" class="form-control" required> 
-
-								<br>
-	  
-								<label for="" class="label-style">Email</label>
-								<input type="email" placeholder="Enter your email" class="form-control" required> 
-	  
-								<small id="emailHelp" class="form-text text-muted">Make sure to enter your IUT email address.</small> 
-	  
-								<br> 
-
-								<label for="" class="label-style">Gender</label> <br>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="gender" id="gendercheck" value="option1">
-									<label class="form-check-label checkbox-style" for="inlineRadio1">Male</label>
-								</div>
-
-								  <div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="gender" id="gendercheck" value="option2">
-									<label class="form-check-label checkbox-style" for="inlineRadio2">Female</label>
-								  </div>
-
-								  <br> <br>
-								 
-	  
-								<label for="" class="label-style">Role</label> <br>
-	  
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-									<label class="form-check-label checkbox-style" for="inlineRadio1">Student</label>
-								</div>
-	  
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-									<label class="form-check-label checkbox-style" for="inlineRadio2">Provost</label>
-								</div>
-	  
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-									<label class="form-check-label checkbox-style" for="inlineRadio2">Admin</label>
-								</div>
-	  
-								<p></p>  
-	  
-								<label for="" class="label-style">Password</label>
-								<input type="password" placeholder="Enter your Password" class="form-control" required> <p></p>
-	  
-								<label for="" class="label-style">Confirm Password</label>
-								<input type="password" placeholder="Confirm your Password" class="form-control" required> <p></p>
-	  
-	  
+								<input type="text" placeholder="Enter your name" class="form-control" name="admin_name" required> <br> 
 								
-	  
 							</div>
-	  
-							<button class="btn btn-info">Submit</button>
-	
-	  
-						</form>    
+
+							<button class="btn btn-info" name="update_profile" value="up_profile">Submit</button>
+
+
+						</form>       
 	  
 					</div>
 	  
@@ -215,6 +181,13 @@ session_start();
 		  		</svg>  Home  </a>
    		
    			</li>
+
+
+			<li>
+   				<a href="admin_profile.php" >  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-person-fill mx-2" viewBox="0 0 16 16">
+  				<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+				</svg>  Profile </a>
+   			</li>  
    			
    			
 
@@ -317,6 +290,49 @@ session_start();
 		</div>
  
 	</div>
+
+
+
+
+
+
+
+
+
+	<?php
+
+		if(isset($_POST['update_profile'])) {
+
+			$servername = "localhost";
+			$username = "root";
+			$password = "190042106";
+			$dbname = "iut_dms";
+
+			// Create connection
+			$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+			$name = $_POST['admin_name'];
+			$email = $_SESSION['email'];
+
+			// Check connection
+			if (!$conn) {
+			die("Connection failed: " . mysqli_connect_error());
+			}
+
+			$sql = "UPDATE admin SET name = '$name' WHERE email = '$email'";
+
+			if (mysqli_query($conn, $sql)) {
+			echo "";
+			} else {
+				echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+			}
+
+
+			mysqli_close($conn);
+
+ 	 	}
+
+	?>
 	
   	
 
