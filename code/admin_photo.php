@@ -23,15 +23,13 @@
 
 	/*-------- now insertion of image section has start -------------*/
 
-        if(file_exists($file_path)) {
-            $error = "Sorry,The <b>".$file_name."</b> image already exist.";
-        } else {
-            $result = mysqli_connect($host, $uname, $pwd) or die("Connection error: ". mysqli_error());
-            mysqli_select_db($result, $db_name) or die("Could not Connect to Database: ". mysqli_error());
-            mysqli_query($result,"UPDATE admin SET img_path = '$file_path' WHERE email = '$email'") or die ("image not inserted". mysqli_error());
-            move_uploaded_file($file_tmp, $file_path);
-            $error = "<p align=center>File ".$_FILES["profile_pic"]["name"].""."<br />Image saved into Table.";
-        }
+
+        $result = mysqli_connect($host, $uname, $pwd) or die("Connection error: ". mysqli_error());
+        mysqli_select_db($result, $db_name) or die("Could not Connect to Database: ". mysqli_error());
+        mysqli_query($result,"UPDATE admin SET img_path = '$file_path' WHERE email = '$email'") or die ("image not inserted". mysqli_error());
+        move_uploaded_file($file_tmp, $file_path);
+        $error = "<p align=center>File ".$_FILES["profile_pic"]["name"].""."<br />Image saved into Table.";
+        
     }
 	
 ?>
