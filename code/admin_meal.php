@@ -1,5 +1,27 @@
 <?php
 session_start();
+
+$con =mysqli_connect('localhost', 'root','190042106');
+
+mysqli_select_db($con, 'iut_dms');
+
+if(isset($_POST['submit'])){
+
+ $input_date= mysqli_real_escape_string($con,$_POST['input_date']);
+
+$query = mysqli_query($con ,"SELECT COUNT(cancel_date) AS count
+ FROM meal_cancellation
+ WHERE cancel_date = '$input_date' ;"); 
+
+$fetch_count = mysqli_fetch_assoc($query);
+
+echo $fetch_count['count'];
+
+
+}
+ 
+
+
 ?>
 
 
@@ -250,39 +272,40 @@ session_start();
 
 <div class="modal-body">
           
-      <form class="form-horizontal" action="">
+      <form class="form-horizontal" action="admin_meal.php">
         <div class="form-group">
 
           <div class="form-floating">
               <label for="floatingTextarea1" class="meal_header">Select a date </label><br><br>
 
-              <input type="date" id="floatingTextarea1" style="height: 40px"></textarea>
+              <input type="date" id="floatingTextarea1" name="input_date" style="height: 40px">
               
             </div>
             
             
            <br>
-            
-          <!-- <div class="form-floating">
-            
-              <label for="floatingTextarea2" class = "meal_header">Reason for meal cancellation</label>
-              <br><br><br>
-              <textarea class="form-control p-2" placeholder="Write your reason/s" id="cancel_reason" maxlength = "200"></textarea>
-             
-          </div>
-           <br>
-       
-          <div class="form-group">       
+		   <div class="form-group">       
             <div class="col-sm-offset-2 col-sm-10">
-              <button onclick="alert('Your meal has been cancelled for the particular day/days.')" href="#ale" type="submit"  class="btn btn-success btn-lg" id="post">Submit</button>
+              <button href="#ale" type="submit"  class="btn btn-success btn-lg" id="post" name="submit">Submit</button>
            </div>
-           </div> -->
+           </div>
+    
       </form>
 
 
+       
+
 
     </div>
+
+	<div >
+     <br><br>
+	<b><h5 class="font-weight-bolder">Number of students who cancelled their meal for this particular day</h5></b>
+    <br>
+	<div  style="height: 60px; width:700px; background-color: white; padding:15px; border-radius: 2%; border:0.5px solid black;"></div>
  
+	</div>
+	
   	
 
   

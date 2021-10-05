@@ -1,5 +1,60 @@
 <?php
 session_start();
+
+$con =mysqli_connect('localhost', 'root','190042106');
+
+mysqli_select_db($con, 'iut_dms');
+$email=$_SESSION['email'];
+
+
+if(isset($_POST['submit'])){
+
+  $start_date=mysqli_real_escape_string($con,$_POST['start_date']);
+  $end_date=mysqli_real_escape_string($con, $_POST['end_date']);
+  $reason = mysqli_real_escape_string($con, $_POST['reason']);
+   
+  
+
+    
+     $date1=date_create($start_date);
+     $date2=date_create($end_date);
+
+     $date_diff= date_diff($date1,$date2 );
+     $difference= $date_diff->format("%a");
+
+     $dt = date_format($date1,"Y-m-d");
+
+
+     for($i=0; $i<($difference+1); $i++){
+
+     $result_date= date("Y-m-d", strtotime("+$i day", strtotime($dt)));
+
+      $sql="INSERT INTO `meal_cancellation` (`request_ID`, `request_time`, `email`, `start_date`, `end_date`, `reason`, `cancel_date`)
+      VALUES (NULL, current_timestamp(), '$email', '$start_date', '$end_date','$reason', '$result_date');";
+
+
+     
+            if(mysqli_query($con, $sql)){
+                  
+              header('Location: student_meal.php');
+            
+              }
+            else{
+              echo'query error'.mysqli_error($con);
+            }
+
+            
+
+     }
+
+   
+         
+   
+}
+
+
+
+
 ?>
 
 
@@ -300,7 +355,7 @@ session_start();
        
           <div class="form-group">       
             <div class="col-sm-offset-2 col-sm-10">
-              <button onclick="alert('Your meal has been cancelled for the particular day/days.')" href="#ale" type="submit"  class="btn btn-success btn-lg" id="post" name="student_cancel_meal">Submit</button>
+              <button onclick="alert('Your meal has been cancelled for the particular day/days.')" href="#ale" type="submit"  class="btn btn-success btn-lg" id="post" name="submit">Submit</button>
            </div>
            </div>
       </form>
@@ -311,7 +366,7 @@ session_start();
 
     	<!-- Meal Table Data Input starts -->
 
-    <?php
+    <!-- <?php
 
       if(isset($_POST['student_cancel_meal'])) {
 
@@ -347,7 +402,7 @@ session_start();
 
       }
 
-    ?>	
+    ?>	 -->
 
       <!-- Meal Table Data Input Ends -->
    
