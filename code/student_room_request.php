@@ -6,7 +6,6 @@ $con =mysqli_connect('localhost', 'root','190042106');
 
 mysqli_select_db($con, 'iut_dms');
 $email=$_SESSION['email'];
-//$name= $_SESSION ['name'];
 
 if(isset($_POST['submit'])){
 
@@ -49,18 +48,38 @@ else{
    
       if(mysqli_query($con, $sql)){
          
-
-       header('Location: student_room_request.php');
+        header('Location: student_room_request.php');
        }
       else{
-       echo'query error'.mysqli_error($con);
+        echo'query error'.mysqli_error($con);
       }
-
     }
-
 }
 
 
+
+
+
+
+include('student_photo.php');
+
+	function getImagePath(){
+
+		$con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+
+		$email = $_SESSION['email'];
+
+		$reg= "select img_path from student where email= '$email'";
+
+		$result = mysqli_query($con, $reg);
+
+		while($row = mysqli_fetch_assoc($result)){
+			return "{$row['img_path']}";
+		}
+	}
+
+	$imagePath = getImagePath();
 
 
 ?>
@@ -95,9 +114,9 @@ else{
       
    		<div class="sidebar-header">
 
-           <div class="container">
-              <a href="#" ><img src="images/ajwad_student.jpg" id="profile_picture"></a>
-           </div>
+		  <div class="container">
+				<a href="#"> <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
+			</div>
               
         <h4>
 
@@ -155,22 +174,21 @@ else{
             <div class="modal-body">
       
       
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST">
-			
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST" enctype="multipart/form-data">
+				
               <div class="mb-3">
 
                 <label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
-                <input type="file" class="form-control" id="customFile"> <br>
+                <input type="file" class="form-control" id="customFile" name="stu_profile_pic"> <br>
 
                 <label for="" class="label-style">Name</label>
                 <input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
                 
               </div>
 
-              <button class="btn btn-info" name="update_student_profile">Submit</button>
+              <button class="btn btn-info" name="update_student_profile" value="s_up_profile">Submit</button>
 
-
-            </form>      
+            </form>    
       
             </div>
       
@@ -248,7 +266,7 @@ else{
    			
    			
    			<li class="active">
-   				<a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-person-plus-fill mx-2" viewBox="0 0 16 16">
+   				<a href="student_room_request.php"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-person-plus-fill mx-2" viewBox="0 0 16 16">
             <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
             <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
           </svg>   Room Request</a>

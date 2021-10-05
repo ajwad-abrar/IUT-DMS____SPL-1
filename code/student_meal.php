@@ -1,59 +1,74 @@
 <?php
-session_start();
 
-$con =mysqli_connect('localhost', 'root','190042106');
+  session_start();
 
-mysqli_select_db($con, 'iut_dms');
-$email=$_SESSION['email'];
+  $con =mysqli_connect('localhost', 'root','190042106');
+
+  mysqli_select_db($con, 'iut_dms');
+  $email=$_SESSION['email'];
 
 
-if(isset($_POST['submit'])){
+  if(isset($_POST['submit'])){
 
-  $start_date=mysqli_real_escape_string($con,$_POST['start_date']);
-  $end_date=mysqli_real_escape_string($con, $_POST['end_date']);
-  $reason = mysqli_real_escape_string($con, $_POST['reason']);
-   
-  
-
+      $start_date=mysqli_real_escape_string($con,$_POST['start_date']);
+      $end_date=mysqli_real_escape_string($con, $_POST['end_date']);
+      $reason = mysqli_real_escape_string($con, $_POST['reason']);
     
-     $date1=date_create($start_date);
-     $date2=date_create($end_date);
+    
 
-     $date_diff= date_diff($date1,$date2 );
-     $difference= $date_diff->format("%a");
+      
+      $date1=date_create($start_date);
+      $date2=date_create($end_date);
 
-     $dt = date_format($date1,"Y-m-d");
+      $date_diff= date_diff($date1,$date2 );
+      $difference= $date_diff->format("%a");
 
-
-     for($i=0; $i<($difference+1); $i++){
-
-     $result_date= date("Y-m-d", strtotime("+$i day", strtotime($dt)));
-
-      $sql="INSERT INTO `meal_cancellation` (`request_ID`, `request_time`, `email`, `start_date`, `end_date`, `reason`, `cancel_date`)
-      VALUES (NULL, current_timestamp(), '$email', '$start_date', '$end_date','$reason', '$result_date');";
+      $dt = date_format($date1,"Y-m-d");
 
 
-     
-            if(mysqli_query($con, $sql)){
-                  
-              header('Location: student_meal.php');
-            
-              }
-            else{
-              echo'query error'.mysqli_error($con);
+      for($i=0; $i<($difference+1); $i++){
+
+        $result_date= date("Y-m-d", strtotime("+$i day", strtotime($dt)));
+
+          $sql="INSERT INTO `meal_cancellation` (`request_ID`, `request_time`, `email`, `start_date`, `end_date`, `reason`, `cancel_date`)
+          VALUES (NULL, current_timestamp(), '$email', '$start_date', '$end_date','$reason', '$result_date');";
+
+          if(mysqli_query($con, $sql)){   
+            header('Location: student_meal.php');
             }
+          else{
+            echo'query error'.mysqli_error($con);
+          }         
+      } 
+  }
 
-            
-
-     }
-
-   
-         
-   
-}
+?>
 
 
 
+
+
+<?php
+
+	include('student_photo.php');
+
+	function getImagePath(){
+
+		$con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+
+		$email = $_SESSION['email'];
+
+		$reg= "select img_path from student where email= '$email'";
+
+		$result = mysqli_query($con, $reg);
+
+		while($row = mysqli_fetch_assoc($result)){
+			return "{$row['img_path']}";
+		}
+	}
+
+	$imagePath = getImagePath();
 
 ?>
 
@@ -125,8 +140,8 @@ if(isset($_POST['submit'])){
         <div class="sidebar-header">
 
           <div class="container">
-            <a href="#" ><img src="images/ajwad_student.jpg" id="profile_picture"></a>
-         </div>
+            <a href="#"> <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
+          </div>
             
          <h4>
 
@@ -162,10 +177,6 @@ if(isset($_POST['submit'])){
 
          <button type="button" class="btn btn-light mx-5" data-toggle="modal" data-target="#try" id="update_button">Update</button>
 
-                <!-- <img src="#">
-                <br><br><br><br>
-                <a href="#" class="text-light text-decoration-none"><h4>Nafisa Tabassum</h4></a>
-                <button type="button" class="btn btn-light mx-5" data-toggle="modal" data-target="#try" id="update_button">Update</button> -->
  
         </div>
   
@@ -184,22 +195,22 @@ if(isset($_POST['submit'])){
             <div class="modal-body">
       
       
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST">
-			
-                <div class="mb-3">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST" enctype="multipart/form-data">
+				
+              <div class="mb-3">
 
-                  <label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
-                  <input type="file" class="form-control" id="customFile"> <br>
+                <label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
+                <input type="file" class="form-control" id="customFile" name="stu_profile_pic"> <br>
 
-                  <label for="" class="label-style">Name</label>
-                  <input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
-                  
-                </div>
+                <label for="" class="label-style">Name</label>
+                <input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
+                
+              </div>
 
-                <button class="btn btn-info" name="update_student_profile">Submit</button>
+              <button class="btn btn-info" name="update_student_profile" value="s_up_profile">Submit</button>
 
 
-            </form>      
+            </form>    
       
             </div>
       
