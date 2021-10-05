@@ -1,5 +1,28 @@
 <?php
 session_start();
+
+
+
+include('provost_photo.php');
+
+	function getImagePath(){
+
+		$con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+
+		$email = $_SESSION['email'];
+
+		$reg= "select img_path from provost where email= '$email'";
+
+		$result = mysqli_query($con, $reg);
+
+		while($row = mysqli_fetch_assoc($result)){
+			return "{$row['img_path']}";
+		}
+	}
+
+	$imagePath = getImagePath();
+
 ?>
 
 <!doctype html>
@@ -38,11 +61,14 @@ session_start();
       text-decoration: underline;
       color: blue;
     }
-    .profile_img{
 
-      height: 20%;
+    #profile_picture{
+      height: 100px;
+      border: 1px solid black;
       border-radius: 50%;
-      
+      float: left;
+      padding: 1px;
+      margin-left: 50px;
     }
 
     #welcome{
@@ -72,9 +98,9 @@ session_start();
       
    		<div class="sidebar-header">
 
-        <div class="container">
-          <a href=""> <img src="mine.jpg" class="profile_img"></a>  <!---change resolution-->
-        </div>
+       <div class="container">
+				<a href="#"> <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
+			</div>
 
         <br><br><br><br>
 
@@ -103,19 +129,19 @@ session_start();
             <div class="modal-body">
       
       
-              <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST">
+              <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST" enctype="multipart/form-data">
       
                 <div class="mb-3">
 
                   <label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
-                  <input type="file" class="form-control" id="customFile"> <br>
+                  <input type="file" class="form-control" id="customFile" name="provost_profile_pic" required> <br>
 
                   <label for="" class="label-style">Name</label>
-                  <input type="text" placeholder="Enter your name" class="form-control" name="admin_name" required> <br> 
+                  <input type="text" placeholder="Enter your name" class="form-control" name="provost_name" required> <br> 
                   
                 </div>
 
-                <button class="btn btn-info" name="update_provost_profile">Submit</button>
+                <button class="btn btn-info" name="update_provost_profile" value="p_up_profile">Submit</button>
 
 
               </form>  
@@ -150,7 +176,7 @@ session_start();
               // Create connection
               $conn = mysqli_connect($servername, $username, $password, $dbname);
 
-              $name = $_POST['admin_name'];
+              $name = $_POST['provost_name'];
               $email = $_SESSION['email'];
 
               // Check connection
@@ -182,7 +208,7 @@ session_start();
    		<ul class="list-unstyled components">
    		
    			<li class="active">
-   				<a href="#" ><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-house-door-fill mx-2" viewBox="0 0 16 16">
+   				<a href="provost_home.php" ><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-house-door-fill mx-2" viewBox="0 0 16 16">
             <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
           </svg>  Home</a>
    		

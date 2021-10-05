@@ -17,14 +17,12 @@ if(isset($_POST['submit'])){
     VALUES (NULL, current_timestamp(), '$email', '$resource_type', '$resource_name','', NULL);";
    
    
-      if(mysqli_query($con, $sql)){
-         
-
+    if(mysqli_query($con, $sql)){   
        header('Location: student_resource_request.php');
-       }
-      else{
+    }
+    else{
        echo'query error'.mysqli_error($con);
-      }
+    }
 }
 
 

@@ -1,5 +1,26 @@
 <?php
 session_start();
+
+include('provost_photo.php');
+
+	function getImagePath(){
+
+		$con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+
+		$email = $_SESSION['email'];
+
+		$reg= "select img_path from provost where email= '$email'";
+
+		$result = mysqli_query($con, $reg);
+
+		while($row = mysqli_fetch_assoc($result)){
+			return "{$row['img_path']}";
+		}
+	}
+
+	$imagePath = getImagePath();
+
 ?>
 
 <!doctype html>
@@ -46,24 +67,36 @@ session_start();
     }
 
     #welcome{
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
   
-}
+    }
 
-.welcome_font{
-  font-size: 4rem;
-  color: aliceblue;
-}
+    #profile_picture{
+      height: 100px;
+      border: 1px solid black;
+      border-radius: 50%;
+      float: left;
+      padding: 1px;
+      margin-left: 50px;
+    }
+
+    .welcome_font{
+      font-size: 4rem;
+      color: aliceblue;
+    }
 
     
     
        
   </style>
+
+
+
   <body>
 
    
@@ -72,9 +105,9 @@ session_start();
       
    		<div class="sidebar-header">
 
-        <div class="container">
-          <a href=""> <img src="mine.jpg" class="profile_img"></a>  <!---change resolution-->
-        </div>
+       <div class="container">
+				<a href="#"> <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
+			 </div>
 
         <br><br><br><br>
 
@@ -103,22 +136,22 @@ session_start();
             <div class="modal-body">
       
       
-              <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST" enctype="multipart/form-data">
       
-                <div class="mb-3">
+              <div class="mb-3">
 
-                  <label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
-                  <input type="file" class="form-control" id="customFile"> <br>
+                <label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
+                <input type="file" class="form-control" id="customFile" name="provost_profile_pic" required> <br>
 
-                  <label for="" class="label-style">Name</label>
-                  <input type="text" placeholder="Enter your name" class="form-control" name="admin_name" required> <br> 
-                  
-                </div>
+                <label for="" class="label-style">Name</label>
+                <input type="text" placeholder="Enter your name" class="form-control" name="provost_name" required> <br> 
+                
+              </div>
 
-                <button class="btn btn-info" name="update_provost_profile">Submit</button>
+              <button class="btn btn-info" name="update_provost_profile" value="p_up_profile">Submit</button>
 
 
-              </form>    
+            </form>   
       
             </div>
       
@@ -151,7 +184,7 @@ session_start();
               // Create connection
               $conn = mysqli_connect($servername, $username, $password, $dbname);
 
-              $name = $_POST['admin_name'];
+              $name = $_POST['provost_name'];
               $email = $_SESSION['email'];
 
               // Check connection

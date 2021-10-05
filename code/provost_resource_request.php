@@ -59,6 +59,29 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
 
     mysqli_close($con);
 
+
+
+
+    include('provost_photo.php');
+
+    function getImagePath(){
+
+      $con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+
+      $email = $_SESSION['email'];
+
+      $reg= "select img_path from provost where email= '$email'";
+
+      $result = mysqli_query($con, $reg);
+
+      while($row = mysqli_fetch_assoc($result)){
+        return "{$row['img_path']}";
+      }
+    }
+
+    $imagePath = getImagePath();
+
 ?>
 
 
@@ -82,7 +105,7 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
     <style>
 
 
-#user{
+        #user{
             margin-left: 3px;
             float: left;
         }
@@ -91,23 +114,32 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
           width: 100%;
         }
         .modal-title-ann{
-      text-decoration: underline;
-      color: blue;
-    }
+          text-decoration: underline;
+          color: blue;
+        }
 
-    .request_dp{
+        .request_dp{
           border: 2px solid black;
           border-radius: 50%;
           padding: 5px;
           margin-right: 3px;
         }
       
-      #img_on_resreq_page{
-        margin-top: -5px;
-      
-      }
+        #img_on_resreq_page{
+          margin-top: -5px;
+        }
+
+        #profile_picture{
+          height: 100px;
+          border: 1px solid black;
+          border-radius: 50%;
+          float: left;
+          padding: 1px;
+          margin-left: 50px;
+        }
 
     </style>
+
   </head>
   <body>
 
@@ -145,14 +177,14 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
       
    		<div class="sidebar-header">
 
-           <div class="container">
-            <a href="#" ><img src="mine.jpg" class="profile_img"></a>
-           </div>
+        <div class="container">
+          <a href="#"> <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
+        </div>
               
-               <br><br><br><br>
-   			        <h4 class="text-center"><?php showName(); ?></h4>
+        <br><br><br><br>
+        <h4 class="text-center"><?php showName(); ?></h4>
 
-               <button type="button" class="btn btn-light mx-5" data-toggle="modal" data-target="#try">Update</button>
+        <button type="button" class="btn btn-light mx-5" data-toggle="modal" data-target="#try">Update</button>
 
    		</div>
  
@@ -170,23 +202,23 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
             <div class="modal-body">
       
       
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST">
-          
-                  <div class="mb-3">
+              <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST" enctype="multipart/form-data">
+        
+                <div class="mb-3">
 
-                    <label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
-                    <input type="file" class="form-control" id="customFile"> <br>
+                  <label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
+                  <input type="file" class="form-control" id="customFile" name="provost_profile_pic" required> <br>
 
-                    <label for="" class="label-style">Name</label>
-                    <input type="text" placeholder="Enter your name" class="form-control" name="admin_name" required> <br> 
-                    
-                  </div>
+                  <label for="" class="label-style">Name</label>
+                  <input type="text" placeholder="Enter your name" class="form-control" name="provost_name" required> <br> 
+                  
+                </div>
 
-                  <button class="btn btn-info" name="update_provost_profile">Submit</button>
+                <button class="btn btn-info" name="update_provost_profile" value="p_up_profile">Submit</button>
 
 
-                </form>
-      
+              </form>   
+        
             </div>
       
             <div class="modal-footer">
@@ -219,7 +251,7 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
               // Create connection
               $conn = mysqli_connect($servername, $username, $password, $dbname);
 
-              $name = $_POST['admin_name'];
+              $name = $_POST['provost_name'];
               $email = $_SESSION['email'];
 
               // Check connection
@@ -283,7 +315,7 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
    				
    			</li>
    			<li  class="active">
-   				<a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-patch-check-fill mx-2" viewBox="0 0 16 16">
+   				<a href="provost_resource_request.php"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-patch-check-fill mx-2" viewBox="0 0 16 16">
             <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
           </svg> Resource Request</a>
    			</li>
