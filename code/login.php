@@ -126,7 +126,7 @@
 								<input type="text" name="name" placeholder="Enter your name" class="form-control" required> <br>
 
                 
-                <label><b>Role</b> </label><br> 
+                <label class="label-style"><b>Role</b> </label><br> 
                 <input type="radio" class="text-danger" name="role" value="Student"/>&nbsp; Student &nbsp;
                 <input type="radio" class="text-danger" name="role" value="Provost"/>&nbsp; Provost &nbsp;
                 <input type="radio" class="text-danger" name="role" value="Admin"/>&nbsp; Admin
@@ -157,7 +157,7 @@
 	  
 								<br><br>
 
-						    <label><b>Gender</b> </label><br> 
+						    <label class="label-style"><b>Gender</b> </label><br> 
                 <input type="radio" class="text-danger" name="gender" value="Male"/> &nbsp; Male &nbsp;
                 <input type="radio" class="text-danger" name="gender" value="Female"/ >&nbsp; Female
 								
@@ -167,7 +167,7 @@
 						
 	  
 								<label for="" class="label-style">Password</label>
-								<input type="password" name="pwd" placeholder="Enter your Password" class="form-control" required> <p></p>
+								<input type="password" name="pwd" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="At least one number & one uppercase & lowercase letter, & at least 8 or more characters" placeholder="Enter your Password" class="form-control" required> <p></p>
 	  
 								<label for="" class="label-style">Confirm Password</label>
 								<input type="password" name="cpwd" placeholder="Confirm your Password" class="form-control" required> <p></p>
@@ -202,4 +202,3 @@
 
 </html>
  
-
