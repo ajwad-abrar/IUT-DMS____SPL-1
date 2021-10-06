@@ -281,27 +281,40 @@
 
             $mail = $_SESSION['email'];
 
-            $sql = "SELECT * FROM student WHERE email = '$mail'";
+            $sql1 = "SELECT * FROM student S WHERE S.email = '$mail'";
+            $sql2 = "SELECT * FROM room_request R WHERE R.email = '$mail' AND provost_approval = 'Approved'";
 
-            $result = mysqli_query($conn, $sql);
+            $result1 = mysqli_query($conn, $sql1);
+            $result2 = mysqli_query($conn, $sql2);
 
             // Check connection
             if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
+            	die("Connection failed: " . mysqli_connect_error());
             }
 
-            if (mysqli_query($conn, $sql)) {
+            if (mysqli_query($conn, $sql1)) {
                 // output data of each row
-                while($row = mysqli_fetch_assoc($result)) {
+                while($row = mysqli_fetch_assoc($result1)) {
                     echo "<b>Name: </b>" .$row['name'] ." <br> <br>";
                     echo "<b>ID: </b>" .$row['student_ID'] ." <br> <br>";
                     echo "<b>Program: </b>" .$row['programme'] ." <br> <br>";
                     echo "<b> Gender: </b> " .$row['gender'] ." <br><br>";
                     echo "<b> Email: </b>" .$row['email'] ." <br><br>";
-                    echo "<b> Reg Date: </b>" .date("d M, Y", strtotime($row['reg_date']))." ";
+                    // echo "<b> Reg Date: </b>" .date("d M, Y", strtotime($row['reg_date']))." ";   //Not needed rn
                 }
             } else {
-                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                echo "Error: " . $sql1 . "<br>" . mysqli_error($conn);
+            }
+
+			if (mysqli_query($conn, $sql2)) {
+                // output data of each row
+                while($row = mysqli_fetch_assoc($result2)) {
+					echo "<b> Hall: </b>" .$row['hall_name'] ." <br><br>";
+                    echo "<b> Floor: </b>" .$row['level'] ." <br><br>";
+                    echo "<b> Room No: </b>" .$row['room_no'] ." <br><br>";
+                }
+            } else {
+                echo "Error: " . $sql1 . "<br>" . mysqli_error($conn);
             }
 
             mysqli_close($conn);
