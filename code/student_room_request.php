@@ -7,54 +7,74 @@ $con =mysqli_connect('localhost', 'root','190042106');
 mysqli_select_db($con, 'iut_dms');
 $email=$_SESSION['email'];
 
+
+
 if(isset($_POST['submit'])){
 
-    $hall_name=mysqli_real_escape_string($con,$_POST['hall_name']);
-    $floor_number=mysqli_real_escape_string($con, $_POST['floor_number']);
-    $room_number=mysqli_real_escape_string($con, $_POST['room_number']);
-    $bed_number=mysqli_real_escape_string($con, $_POST['bed_number']);
-  
- $roomcount = mysqli_query($con ,"SELECT COUNT(room_no) AS count
- FROM room_request
- WHERE room_no = '$room_number' AND hall_name= '$hall_name' ;");
+  $hall_name=mysqli_real_escape_string($con,$_POST['hall_name']);
+  $floor_number=mysqli_real_escape_string($con, $_POST['floor_number']);
+  $room_number=mysqli_real_escape_string($con, $_POST['room_number']);
+  $bed_number=mysqli_real_escape_string($con, $_POST['bed_number']);
 
-function showRoomfilled(){
-  echo '<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-  <strong>This room is occupied.Try for another one.
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>';
-    
-}
+    $roomcount = mysqli_query($con ,"SELECT COUNT(room_no) AS count
+    FROM room_request
+    WHERE room_no = '$room_number' AND hall_name= '$hall_name' ;");
 
-$row2 = mysqli_fetch_assoc($roomcount);
+          function showRoomfilled(){
+          echo '<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+          <strong>This room is occupied.Try for another one.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          </div>';
+            
+          }
 
-if( $row2['count']>=4){
-  //  header('Location: student_room_request.php');
-  //  echo '<script>alert("Sorry The Room Is Occupied!!! Try for another one")</script>' ;
-
-  showRoomfilled();
-   
-}
+  $row2 = mysqli_fetch_assoc($roomcount);
+  //check double request
+  $check_double_request = mysqli_query($con, " select * from room_request where email = '$email' ");
+  $check_num = mysqli_num_rows($check_double_request);
 
 
-else{
 
+      if( $row2['count']>=4){
+      
+      showRoomfilled();
 
-    $sql="INSERT INTO `room_request` (`request_ID`, `request_time`, `email`, `hall_name`, `level`, `room_no`, `bed`, `provost_approval`, `provost_approval_time`)
-    VALUES (NULL, current_timestamp(), '$email', '$hall_name', '$floor_number', '$room_number', '$bed_number', '', NULL);";
-   
-   
-      if(mysqli_query($con, $sql)){
-         
-        header('Location: student_room_request.php');
-       }
-      else{
-        echo'query error'.mysqli_error($con);
       }
-    }
+      
+      else if($check_num==1){
+        echo '<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+          <strong>You have already requested for a room.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          </div>';
+
+      }
+
+
+      else{
+
+
+        $sql="INSERT INTO `room_request` (`request_ID`, `request_time`, `email`, `hall_name`, `level`, `room_no`, `bed`, `provost_approval`, `provost_approval_time`)
+        VALUES (NULL, current_timestamp(), '$email', '$hall_name', '$floor_number', '$room_number', '$bed_number', '', NULL);";
+
+
+          if(mysqli_query($con, $sql)){
+            
+            header('Location: student_room_request.php');
+          }
+          else{
+            echo'query error'.mysqli_error($con);
+          }
+        }
 }
+     
+
+
+
+         
 
 
 

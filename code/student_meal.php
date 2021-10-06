@@ -90,6 +90,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <title>Meal cancellation</title>
 
@@ -342,16 +347,20 @@
         <div class="form-group">
 
           <div class="form-floating">
-              <label for="floatingTextarea1" class="meal_header">Start Date</label><br><br>
-
-              <input type="date" id="floatingTextarea1" name="start_date" style="height: 40px"></textarea>
+              <label for="floatingTextarea1" class="meal_header">Start Date</label>
+              <br>
+               &nbsp;   &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;
+               
+              <input type="text" id="floatingTextarea1" name="start_date" class="datepicker" autocomplete="off" style="height: 40px;" >
+              <br><br>
               
             </div>
             
             <div class="form-floating">
-              <label for="floatingTextarea1" class="meal_header"> End Date</label><br><br>
+              <label for="floatingTextarea1" class="meal_header"> End Date</label><br>
 
-              <input type="date" placeholder="Leave a comment here" id="floatingTextarea1" name="end_date" style="height: 40px"></textarea>
+              &nbsp;   &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;
+              <input type="text" id="floatingTextarea1" name="end_date" class="datepicker" autocomplete="off" style="height: 40px"></textarea>
               
             </div>
            <br>
@@ -419,7 +428,13 @@
       <!-- Meal Table Data Input Ends -->
    
 
-
+      <script type="text/javascript">
+   
+   $('.datepicker').datepicker({ 
+       startDate: new Date()
+   });
+ 
+</script>
         
   	  <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -434,6 +449,9 @@
 			});
 		});  
 	</script>
+
+
+
     
     </body>
    
