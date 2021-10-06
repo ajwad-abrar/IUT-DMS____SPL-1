@@ -384,50 +384,61 @@ include('provost_photo.php');
 
     <?php
 
-    function searchDetailsOfTheStudent(){
+      function searchDetailsOfTheStudent(){
 
-      if(isset($_POST['student_email_search'])) {
+        if(isset($_POST['student_email_search'])) {
 
-          $servername = "localhost";
-          $username = "root";
-          $password = "190042106";
-          $dbname = "iut_dms";
+            $servername = "localhost";
+            $username = "root";
+            $password = "190042106";
+            $dbname = "iut_dms";
 
-          // Create connection
-          $conn = mysqli_connect($servername, $username, $password, $dbname);
+            // Create connection
+            $conn = mysqli_connect($servername, $username, $password, $dbname);
 
 
-          $mail = $_POST['stu_mail'];
+            $mail = $_POST['stu_mail'];
 
-          $sql = "SELECT * FROM student WHERE email = '$mail'";
+            $sql1 = "SELECT * FROM student S WHERE S.email = '$mail'";
+            $sql2 = "SELECT * FROM room_request R WHERE R.email = '$mail' AND provost_approval = 'Approved'";
 
-          $result = mysqli_query($conn, $sql);
+            $result1 = mysqli_query($conn, $sql1);
+            $result2 = mysqli_query($conn, $sql2);
 
-          // Check connection
-          if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
-          }
+            // Check connection
+            if (!$conn) {
+              die("Connection failed: " . mysqli_connect_error());
+            }
 
-          
-
-          if (mysqli_query($conn, $sql)) {
+            if (mysqli_query($conn, $sql1)) {
                 // output data of each row
-                while($row = mysqli_fetch_assoc($result)) {
-                    echo "Name: " .$row['name'] ." <br> <br>";
-                    echo "Student ID: " .$row['student_ID'] ." <br><br>";
-                    echo "Gender: " .$row['gender'] ." <br><br>";
-                    echo "Programme: " .$row['programme'] ."<br><br>";
-                    echo "Reg Date: " .date("d M, Y", strtotime($row['reg_date']))." ";
+                while($row = mysqli_fetch_assoc($result1)) {
+                    echo "<b>Name: </b>" .$row['name'] ." <br> <br>";
+                    echo "<b>ID: </b>" .$row['student_ID'] ." <br> <br>";
+                    echo "<b>Program: </b>" .$row['programme'] ." <br> <br>";
+                    echo "<b> Gender: </b> " .$row['gender'] ." <br><br>";
+                    echo "<b> Email: </b>" .$row['email'] ." <br><br>";
+                    // echo "<b> Reg Date: </b>" .date("d M, Y", strtotime($row['reg_date']))." ";   //Not needed rn
                 }
-          } else {
-                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-          }
+            } else {
+                echo "Error: " . $sql1 . "<br>" . mysqli_error($conn);
+            }
 
+            if (mysqli_query($conn, $sql2)) {
+                // output data of each row
+                while($row = mysqli_fetch_assoc($result2)) {
+                    echo "<b> Hall: </b>" .$row['hall_name'] ." <br><br>";
+                    echo "<b> Floor: </b>" .$row['level'] ." <br><br>";
+                    echo "<b> Room No: </b>" .$row['room_no'] ." <br><br>";
+                }
+            } else {
+                echo "Error: " . $sql1 . "<br>" . mysqli_error($conn);
+            }
 
-          mysqli_close($conn);
+            mysqli_close($conn);
 
-        }
-    }    
+            }
+      }    
 
     ?>	
 
