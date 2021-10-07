@@ -80,9 +80,13 @@
 			if (mysqli_num_rows($result) > 0) {
 
 			// output data of each row
+				
 				while($row = mysqli_fetch_assoc($result)) {
-					echo "" .$row['subject'] .str_repeat("&nbsp;", 10). "[ " .date("d M, Y", strtotime($row['date'])) ." ] <br>";
-				}
+					$date_post =date("d M, Y", strtotime($row['date']));
+					echo "" ."<b>" .$row['subject']. "</b>" ;
+					echo "<h6 align='right'>"."[". $date_post."]"."</h6>"; 
+					
+					}
 			} 	
 			else {
 				echo "0 results";
@@ -155,7 +159,6 @@
 			// output data of each row
 				while($row = mysqli_fetch_assoc($result)) {
 				$date_post =date("d M, Y", strtotime($row['date']));
-				//	echo "" .$row['subject'] .str_repeat("&nbsp;", 10). "<h6 align='right'>[</h6> " .date("d M, Y", strtotime($row['date']))." ] <br>";
 				echo "" ."<b>" .$row['subject']. "</b>" ;
 				echo "<h6 align='right'>"."[". $date_post."]"."</h6>"; 
 				
