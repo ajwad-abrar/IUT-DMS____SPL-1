@@ -169,7 +169,7 @@ include('provost_photo.php');
           // output data of each row
             while($row = mysqli_fetch_assoc($result)) {
               echo "" .$row['announcement_text'] ."<br><br><br>";
-              echo "<iframe src=\"".$row['pdf_path'] ."\" width=\"90%\" style=\"height:600px\"></iframe>";
+              echo "<iframe src=\"".$row['pdf_path'] ."\" width=\"100%\" style=\"height:600px\"></iframe>";
             }
           } 	
           else {
