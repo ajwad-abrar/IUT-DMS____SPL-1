@@ -14,12 +14,12 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
     
   
 
-     $sql='SELECT request_ID,email,hall_name, level, room_no, bed,request_time
+     $sql='SELECT request_ID,email,hall_name, level, room_no,request_time
      FROM `room_request`
      WHERE `provost_approval`= ""
      ORDER BY request_time DESC' ;
 
-      $sql2='SELECT request_ID,email,hall_name, level, room_no, bed,request_time
+      $sql2='SELECT request_ID,email,hall_name, level, room_no,request_time
       FROM `room_request`
       WHERE `provost_approval`= "Approved"
       ORDER BY request_time DESC' ;
@@ -370,7 +370,6 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
     <img src="images/prianka.jpg" class="request_dp float-left " style="width:80px;height:80px;"> 
     
     <h5 class="mb-1"><b>&nbsp;<?php  echo htmlspecialchars($request['email']);?>, </b> is requesting for room <?php  echo htmlspecialchars($request['room_no']);?>,
-  BED- <?php  echo htmlspecialchars($request['bed']);?>,
     <?php  echo htmlspecialchars($request['level']);?>,
      <?php  echo htmlspecialchars($request['hall_name']);?> hall</h5>
 
@@ -419,7 +418,6 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
     <img src="images/prianka.jpg" class="request_dp float-left" style="width:80px;height:80px;">
 
     <h5 class="mb-1"><b>&nbsp; <?php  echo htmlspecialchars($approved_request['email']);?>,</b> had requested for room <?php  echo htmlspecialchars($approved_request['room_no']);?>,
-  BED- <?php  echo htmlspecialchars($approved_request['bed']);?>,
     <?php  echo htmlspecialchars($approved_request['level']);?>,
      <?php  echo htmlspecialchars($approved_request['hall_name']);?> hall</h5>
 

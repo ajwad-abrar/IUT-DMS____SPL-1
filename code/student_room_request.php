@@ -14,7 +14,7 @@ if(isset($_POST['submit'])){
   $hall_name=mysqli_real_escape_string($con,$_POST['hall_name']);
   $floor_number=mysqli_real_escape_string($con, $_POST['floor_number']);
   $room_number=mysqli_real_escape_string($con, $_POST['room_number']);
-  $bed_number=mysqli_real_escape_string($con, $_POST['bed_number']);
+  
 
     $roomcount = mysqli_query($con ,"SELECT COUNT(room_no) AS count
     FROM room_request
@@ -57,8 +57,8 @@ if(isset($_POST['submit'])){
       else{
 
 
-        $sql="INSERT INTO `room_request` (`request_ID`, `request_time`, `email`, `hall_name`, `level`, `room_no`, `bed`, `provost_approval`, `provost_approval_time`)
-        VALUES (NULL, current_timestamp(), '$email', '$hall_name', '$floor_number', '$room_number', '$bed_number', '', NULL);";
+        $sql="INSERT INTO `room_request` (`request_ID`, `request_time`, `email`, `hall_name`, `level`, `room_no`, `provost_approval`, `provost_approval_time`)
+        VALUES (NULL, current_timestamp(), '$email', '$hall_name', '$floor_number', '$room_number', '', NULL);";
 
 
           if(mysqli_query($con, $sql)){
@@ -369,7 +369,7 @@ include('student_photo.php');
 						<h5>Dynamic Drop down</h5>
 					</div> -->
 
-					<div class="col-md-3">
+					<div class="col-md-4">
 
 						<h4 class="text-center">Hall Name</h4>
 
@@ -385,7 +385,7 @@ include('student_photo.php');
 
 					</div>
 
-					<div class="col-md-3">
+					<div class="col-md-4">
 
 						<h4 class="text-center">Floor</h4>
 
@@ -396,7 +396,7 @@ include('student_photo.php');
 					</div>
 		
 		
-					<div class="col-md-3">
+					<div class="col-md-4">
 
 						<h4 class="text-center">Room Number</h4>
 
@@ -410,7 +410,7 @@ include('student_photo.php');
 		
 					</div>
 		
-					<div class="col-md-3 ">
+					<!-- <div class="col-md-3 ">
 
 						<h4 class="text-center">Bed Number</h4>
 
@@ -419,7 +419,7 @@ include('student_photo.php');
 						</select>
 		
 		
-					</div>
+					</div> -->
 				</div>
 		
 			</div>
@@ -436,7 +436,7 @@ include('student_photo.php');
       function showStatus(){
         $con = mysqli_connect("localhost","root","190042106","iut_dms");
         $email = $_SESSION['email'];
-        $app=" select provost_approval from room_request where email= '$email'";
+        $app=" select room_no,hall_name,provost_approval from room_request where email= '$email'";
         $status = mysqli_query($con, $app);
 
         echo "<br>";
@@ -446,13 +446,17 @@ include('student_photo.php');
           if($row['provost_approval'] =="Approved"){
             
                 echo '<div class="alert alert-success alert-dismissible text-center">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <strong>Success!</strong> Your request has been approved
-                      </div>';    
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>'.
+                        '<strong>Success!</strong>'. " Your request for ". "<b>"."Room ".$row['room_no'].", ".$row['hall_name']." Hall".'</b>'. " has been approved".
+                      '</div>';    
             
           }
           else if($row['provost_approval'] ==""){
-              echo '<div class="alert alert-warning p-3 text-center" role="alert"><b>Your Request Is Pending</b></div>';
+             // echo '<div class="alert alert-warning p-3 text-center" role="alert"><b>Your Request Is Pending</b></div>';
+            echo '<div class="alert alert-warning alert-dismissible text-center">'. 
+            " Your request for ". "<b>"."Room ".$row['room_no'].", ".$row['hall_name']." Hall".'</b>'. " is pending".
+           '</div>'; 
+
             }
 
         }       

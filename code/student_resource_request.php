@@ -367,23 +367,22 @@ include('student_photo.php');
          if($row['provost_approval'] =="Approved"){
           
         //  echo '<div class="alert alert-success alert-dismissible fade show p-3 text-center" role="alert"><b> Your Request Has Been Approved</b></div>';
-
+            
 
         echo '<div class="alert alert-success alert-dismissible text-center">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Success!</strong> Your request has been approved
-      </div>';
+        <button type="button" class="close" data-dismiss="alert">&times;</button>'.
+        '<strong>Success!</strong>'. " Your request for ". "<b>".$row['resource_name']."</b>". " has been approved".
+      '</div>';
                    
           
          }
           else if($row['provost_approval'] ==""){
 
-            echo '<div class="alert alert-warning p-3 text-center" role="alert"><b>Your request is pending</b></div>';
+            // echo '<div class="alert alert-warning p-3 text-center" role="alert"><b>Your request is pending</b></div>';
             
-            // echo 'Your Request for ';
-            // echo $row['resource_name'];
-            // echo ' is pending';
-           
+            echo '<div class="alert alert-warning alert-dismissible text-center">'.
+         " Your request for ". "<b>".$row['resource_name']."</b>". " is pending".
+      '</div>';
           }
 
         
