@@ -5,8 +5,8 @@ body{
     font-family: 'Poppins', sans-serif;
      background: #fafafa;
      align-content: center;
-     height: 100%;
-     overflow: hidden;   /*This two lines make sure not to scroll*/
+     /* height: 100%;
+     overflow: hidden;   This two lines make sure not to scroll */
 }
 
 p{

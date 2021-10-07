@@ -347,20 +347,20 @@
         <div class="form-group">
 
           <div class="form-floating">
-              <label for="floatingTextarea1" class="meal_header">Start Date</label>
+              <label for="floatingTextarea1" class="meal_header" style="padding-top: 25px; font-size: 22px">Start Date</label>
               <br>
                &nbsp;   &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;
                
-              <input type="text" id="floatingTextarea1" name="start_date" class="datepicker" autocomplete="off" style="height: 40px;" >
+              <input placeholder="Select Start Date" type="text" id="floatingTextarea1" name="start_date" class="datepicker" autocomplete="off" style="height: 40px;" >
               <br><br>
               
             </div>
             
             <div class="form-floating">
-              <label for="floatingTextarea1" class="meal_header"> End Date</label><br>
+              <label for="floatingTextarea1" class="meal_header" style="padding-top: 25px; font-size: 22px"> End Date</label><br>
 
               &nbsp;   &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;
-              <input type="text" id="floatingTextarea1" name="end_date" class="datepicker" autocomplete="off" style="height: 40px"></textarea>
+              <input placeholder="Select End Date" type="text" id="floatingTextarea1" name="end_date" class="datepicker" autocomplete="off" style="height: 40px"></textarea>
               
             </div>
            <br>

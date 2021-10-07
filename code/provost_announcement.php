@@ -168,7 +168,8 @@ include('provost_photo.php');
     
           // output data of each row
             while($row = mysqli_fetch_assoc($result)) {
-              echo "" .$row['announcement_text'] ."<br>";
+              echo "" .$row['announcement_text'] ."<br><br><br>";
+              echo "<iframe src=\"".$row['pdf_path'] ."\" width=\"90%\" style=\"height:600px\"></iframe>";
             }
           } 	
           else {
@@ -381,7 +382,7 @@ include('provost_photo.php');
             <!-- Modal body -->
             <div class="modal-body">
             
-              <form class="form-horizontal" action="provost_announcement.php" method="POST">
+              <form class="form-horizontal" action="provost_announcement.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
   
                   <div class="form-floating">
@@ -426,7 +427,7 @@ include('provost_photo.php');
                    <br>
 
                    <label class="form-label label-style" for="customFile" style="font-weight: 700;">Upload Relevant Attachment</label> <br>
-                   <input type="file" class="form-control" id="customFile"> 
+                   <input type="file" class="form-control" id="customFile" name="pro_pdf"> 
                   
 
                    <br> <br>
@@ -438,7 +439,7 @@ include('provost_photo.php');
                     <br><br>
                 <div class="form-group">        
                   <div class="col-sm-offset-2 col-sm-10">
-                    <button onclick="alert('Your announcement has been posted')" href="#ale" type="submit" class="btn btn-info" name="provost_post_announcement">Post</button>
+                    <button onclick="alert('Your announcement has been posted')" href="#ale" type="submit" class="btn btn-info" name="provost_post_announcement" value="up_announcement">Post</button>
   
                     
                   </div>
@@ -566,18 +567,28 @@ include('provost_photo.php');
           $email = $_SESSION['email'];
 
 
+          $file_tmp = $_FILES["pro_pdf"]["tmp_name"];
+		      $file_name = $_FILES["pro_pdf"]["name"];
+
+          //image directory where actual image will be store
+		      $file_path = "provost_pdf/".$file_name;	
+
+
           // Check connection
           if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
           }
 
-          $sql = "INSERT INTO provost_announcement (subject, announcement_text, p_email) VALUES ( '$sub', '$message', '$email')";
+          $sql = "INSERT INTO provost_announcement (subject, announcement_text, p_email, pdf_path) VALUES ( '$sub', '$message', '$email', '$file_path')";
 
           if (mysqli_query($conn, $sql)) {
             echo "";
           } else {
           echo "Error: " . $sql . "<br>" . mysqli_error($conn);
           }
+
+
+          move_uploaded_file($file_tmp, $file_path);
 
 
           mysqli_close($conn);
