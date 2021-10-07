@@ -73,6 +73,19 @@
       #floatingTextarea2{
         border: solid 2px rgb(153, 116, 14);
       }
+
+
+
+	  table, th, td {	  
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding :3px;
+  
+}
+
+   th,td{
+	background-color: #96D4D4;
+   }
      
     </style>
   </head>
@@ -227,18 +240,23 @@
       <form class="form-horizontal" action="admin_meal.php" method="POST">
         <div class="form-group">
 
-          <div class="form-floating">
-              <label for="floatingTextarea1" class="meal_header">Select a date </label><br><br>
 
+          <div class="form-floating">
+		  &nbsp;
+              <label for="floatingTextarea1" class="meal_header">Select a date </label>
+			      &nbsp;  &nbsp;  &nbsp; 
               <input type="date" id="floatingTextarea1" name="input_date" style="height: 40px">
+			  &nbsp;  &nbsp;  &nbsp; 
+			  <button type="submit"  class="btn btn-success btn-lg" id="post" name="admin_meal_check">Submit</button>
+			 
               
             </div>
             
             
-           <br>
+           
 		   <div class="form-group">       
-            <div class="col-sm-offset-2 col-sm-10">
-              <button type="submit"  class="btn btn-success btn-lg" id="post" name="admin_meal_check">Submit</button>
+		      <div class="col-sm-offset-2 col-sm-10">
+            
            </div>
            </div>
     
@@ -258,35 +276,189 @@
 
 	<div >
      <br><br>
-	<b><h5 class="font-weight-bolder">Number of students who cancelled their meal for this particular day </h5></b>
+	<b><h5 class="font-weight-bolder">Students who cancelled their meal for this particular day </h5></b>
     <br>
 
-		<div style="height: 60px; width:700px; background-color:antiquewhite; padding:15px; border-radius: 2%; border:0.5px solid black;"> 
-			<h1 style="text-align: center;">
+		<div style=" width:100%; background-color:antiquewhite; padding:15px; border-radius: 2%; border:0.5px solid black;"> 
+
+
+			<h3 style="text-align: center;">
 			
+			 <table style="width:100%">
+             <b> <?php
+			   if(isset($_POST['admin_meal_check'])) {
+
+				$con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+				
+				$date = $_POST['input_date'];
+				
+				$reg=" select COUNT(cancel_date) as COUNT from meal_cancellation where cancel_date = '$date'";
+				$pepole=" select email from meal_cancellation where cancel_date = '$date'";
+				
+				
+				$result = mysqli_query($con, $reg);
+				$show_people =mysqli_query($con, $pepole);
+				
+				
+				while($row = mysqli_fetch_assoc($result)){
+					$number_of_meal =  "{$row['COUNT']}";
+				}
+				
+					echo $number_of_meal;
+					echo " students";
+					echo "<br>";
+					echo "<br>";
+				
+				}		
+	
+           ?></b>
+
 			
+			 <tr>
+				<th>Name</th>
+				<th>Student ID</th>
+				<th>Reason</th>
+			</tr>
+
+			<tr>
+                <td>
 				<?php
+			   if(isset($_POST['admin_meal_check'])) {
 
-					if(isset($_POST['admin_meal_check'])) {
-
-						$con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
-
-						$date = $_POST['input_date'];
-
-						$reg=" select COUNT(cancel_date) as COUNT from meal_cancellation where cancel_date = '$date'";
-
-						$result = mysqli_query($con, $reg);
-
-						while($row = mysqli_fetch_assoc($result)){
-							$number_of_meal =  "{$row['COUNT']}";
-						}
-
-						echo $number_of_meal;
-
-					}			
-				?>					
+				$con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+				
+				$date = $_POST['input_date'];
+				
+				
+				$pepole=" select email from meal_cancellation where cancel_date = '$date'";
+				$show_people =mysqli_query($con, $pepole);
+				
+		
+				while($row2=mysqli_fetch_assoc($show_people)){
+					$email_of_student= $row2['email'];
+				//	echo $row2['email'];
 					
-			</h1>
+				
+					$pepole_data= "SELECT S.name, S.student_ID, M.reason FROM student S, meal_cancellation M WHERE S.email = '$email_of_student' AND M.email = '$email_of_student' AND M.cancel_date = '$date'	";
+					$show_data =mysqli_query($con, $pepole_data);
+					$row3 =mysqli_fetch_assoc($show_data);
+				
+					echo $row3['name'] ;
+					echo " ";
+					// echo $row3['student_ID'];
+					// echo " ";
+				
+					echo "<br>";
+					
+					
+				
+				
+				}
+				
+				
+				
+				
+				
+				}		
+	
+           ?>
+				</td>
+
+				<td>
+				<?php
+			   if(isset($_POST['admin_meal_check'])) {
+
+				$con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+				
+				$date = $_POST['input_date'];
+				
+				
+				$pepole=" select email from meal_cancellation where cancel_date = '$date'";
+				
+				
+
+				$show_people =mysqli_query($con, $pepole);
+			
+				
+				while($row2=mysqli_fetch_assoc($show_people)){
+					$email_of_student= $row2['email'];
+				//	echo $row2['email'];
+					
+				
+					$pepole_data= "SELECT S.name, S.student_ID, M.reason FROM student S, meal_cancellation M WHERE S.email = '$email_of_student' AND M.email = '$email_of_student' AND M.cancel_date = '$date'	";
+					$show_data =mysqli_query($con, $pepole_data);
+					$row3 =mysqli_fetch_assoc($show_data);
+				
+					
+					echo $row3['student_ID'];
+					echo " ";
+				
+					echo "<br>";
+					
+				
+				
+				}
+				
+				
+				
+				
+				
+				}		
+	
+           ?>
+
+		     	</td>
+				 
+				<td>
+				<?php
+			   if(isset($_POST['admin_meal_check'])) {
+
+				$con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+				
+				$date = $_POST['input_date'];
+			
+				$pepole=" select email from meal_cancellation where cancel_date = '$date'";
+				$show_people =mysqli_query($con, $pepole);
+				
+				
+			
+				
+				while($row2=mysqli_fetch_assoc($show_people)){
+					$email_of_student= $row2['email'];
+				//	echo $row2['email'];
+					
+				
+					$pepole_data= "SELECT S.name, S.student_ID, M.reason FROM student S, meal_cancellation M WHERE S.email = '$email_of_student' AND M.email = '$email_of_student' AND M.cancel_date = '$date'	";
+					$show_data =mysqli_query($con, $pepole_data);
+					$row3 =mysqli_fetch_assoc($show_data);
+				
+					echo $row3['reason'] ;
+					echo " ";
+					// echo $row3['student_ID'];
+					// echo " ";
+				
+					echo "<br>";
+					
+				
+				
+				}
+				
+				
+				
+				
+				
+				}		
+	
+           ?>
+				</td> 
+
+		    </tr>	
+		 
+
+			</table>
+									
+					
+			</h3>
 		</div>
  
 	</div>

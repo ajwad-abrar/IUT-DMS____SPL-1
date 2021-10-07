@@ -8,7 +8,10 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
        echo 'connection error'.mysqli_connect_error();
      }
 
-     
+    //  $sql=' SELECT S.name, S.student_ID,R.request_ID,R.email,R.hall_name,R.level,R.room_no, R.bed,R.request_time
+    //  FROM student S, room_request R WHERE WHERE R.provost_approval= ""
+    //   ORDER BY R.request_time DESC';
+    
   
 
      $sql='SELECT request_ID,email,hall_name, level, room_no, bed,request_time
