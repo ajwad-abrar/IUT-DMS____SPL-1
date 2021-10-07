@@ -197,7 +197,7 @@
 				<div class="col-10 mx-auto">
 					<div class="card h-100 justify-content-center">
 						<div style="padding: 7%;" class="text-center">
-							<img src="images/prianka.jpg" style="height: 250px; width: 220px;margin:0 auto; border-radius: 50%; padding-bottom: 20px" alt="">
+							<img src="<?php echo $imagePath ?>" style="height: 250px; width: 220px;margin:0 auto; border-radius: 50%; padding-bottom: 20px border:1px solid black;" alt="Admin">
 							<h5 class="card-title text-center" style="color:dodgerblue; font-size: 30px; font-weight: 800; margin-bottom: -5px;">Admin Profile <br> <br></h5>
 							<h4 class="text-left"><?php showDetailsOfAdmin(); ?></h4>
 						</div>
