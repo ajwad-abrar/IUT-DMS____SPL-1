@@ -1,5 +1,75 @@
 <?php
-session_start();
+
+  session_start();
+
+  $con =mysqli_connect('localhost', 'root','190042106');
+
+  mysqli_select_db($con, 'iut_dms');
+  $email=$_SESSION['email'];
+
+
+  if(isset($_POST['submit'])){
+
+      $start_date=mysqli_real_escape_string($con,$_POST['start_date']);
+      $end_date=mysqli_real_escape_string($con, $_POST['end_date']);
+      $reason = mysqli_real_escape_string($con, $_POST['reason']);
+    
+    
+
+      
+      $date1=date_create($start_date);
+      $date2=date_create($end_date);
+
+      $date_diff= date_diff($date1,$date2 );
+      $difference= $date_diff->format("%a");
+
+      $dt = date_format($date1,"Y-m-d");
+
+
+      for($i=0; $i<($difference+1); $i++){
+
+        $result_date= date("Y-m-d", strtotime("+$i day", strtotime($dt)));
+
+          $sql="INSERT INTO `meal_cancellation` (`request_ID`, `request_time`, `email`, `start_date`, `end_date`, `reason`, `cancel_date`)
+          VALUES (NULL, current_timestamp(), '$email', '$start_date', '$end_date','$reason', '$result_date');";
+
+          if(mysqli_query($con, $sql)){   
+            header('Location: student_meal.php');
+            }
+          else{
+            echo'query error'.mysqli_error($con);
+          }         
+      } 
+  }
+
+?>
+
+
+
+
+
+<?php
+
+	include('student_photo.php');
+
+	function getImagePath(){
+
+		$con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+
+		$email = $_SESSION['email'];
+
+		$reg= "select img_path from student where email= '$email'";
+
+		$result = mysqli_query($con, $reg);
+
+		while($row = mysqli_fetch_assoc($result)){
+			return "{$row['img_path']}";
+		}
+	}
+
+	$imagePath = getImagePath();
+
 ?>
 
 
@@ -20,23 +90,29 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <title>Meal cancellation</title>
 
 
     <style>
-      #user{
-            margin-left: 3px;
-            float: left;
-        }
 
-        #prb{
+      #user{
+          margin-left: 3px;
+          float: left;
+      }
+
+      #prb{
           width: 100%;
-        }
-        .modal-title-ann{
-      text-decoration: underline;
-      color: rgb(71, 71, 201);
-        }
+      }
+      .modal-title-ann{
+          text-decoration: underline;
+          color: rgb(71, 71, 201);
+      }
 
       #post{
         border: none;
@@ -47,6 +123,7 @@ session_start();
         transition: 0.5s;
         margin-left: -15px;
       }
+
       #post:hover{
         background-color:crimson;
       }
@@ -56,11 +133,7 @@ session_start();
      
     </style>
 
-
-
   </head>
-
-
 
   
   <body>
@@ -70,8 +143,8 @@ session_start();
         <div class="sidebar-header">
 
           <div class="container">
-            <a href="#" ><img src="images/ajwad_student.jpg" id="profile_picture"></a>
-         </div>
+            <a href="#"> <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
+          </div>
             
          <h4>
 
@@ -107,10 +180,6 @@ session_start();
 
          <button type="button" class="btn btn-light mx-5" data-toggle="modal" data-target="#try" id="update_button">Update</button>
 
-                <!-- <img src="#">
-                <br><br><br><br>
-                <a href="#" class="text-light text-decoration-none"><h4>Nafisa Tabassum</h4></a>
-                <button type="button" class="btn btn-light mx-5" data-toggle="modal" data-target="#try" id="update_button">Update</button> -->
  
         </div>
   
@@ -129,22 +198,22 @@ session_start();
             <div class="modal-body">
       
       
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST">
-			
-                <div class="mb-3">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST" enctype="multipart/form-data">
+				
+              <div class="mb-3">
 
-                  <label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
-                  <input type="file" class="form-control" id="customFile"> <br>
+                <label class="form-label" for="customFile" style="font-weight: bolder; color:black">Upload Your Profile Picture</label> <br>
+                <input type="file" class="form-control" id="customFile" name="stu_profile_pic"> <br>
 
-                  <label for="" class="label-style">Name</label>
-                  <input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
-                  
-                </div>
+                <label for="" style="font-weight: bolder; color:black">Name</label>
+                <input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
+                
+              </div>
 
-                <button class="btn btn-info" name="update_student_profile">Submit</button>
+              <button class="btn btn-info" name="update_student_profile" value="s_up_profile">Submit</button>
 
 
-            </form>      
+            </form>    
       
             </div>
       
@@ -219,10 +288,10 @@ session_start();
           </li>
 
           <li>
-				    <a href="student_profile.php" >  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-person-fill mx-2" viewBox="0 0 16 16">
-  				  <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-				    </svg>  Profile </a>
-   			  </li>   
+            <a href="student_profile.php" class="text-light text-decoration-none">  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-person-fill mx-2" viewBox="0 0 16 16">
+            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+            </svg>  Profile </a>
+          </li>   
    			
           
           <li>
@@ -231,28 +300,31 @@ session_start();
              <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
            </svg>  Room Request</a>
           </li>
+
           <li>
             <a href="student_announcement.php" class="text-light text-decoration-none"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-megaphone-fill mx-2" viewBox="0 0 16 16">
              <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"/>
-           </svg> Announcement</a>
-            
+           </svg> Announcement</a>  
           </li>
-           <li>
+
+          <li>
              <a href="student_resource_request.php" class="text-light text-decoration-none"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-patch-check-fill mx-2" viewBox="0 0 16 16">
              <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
             </svg> Resource Request</a>
           </li>
+
           <li class="active">
             <a href="student_meal.php" class="text-light text-decoration-none"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-x-circle-fill mx-2" viewBox="0 0 16 16">
               <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
             </svg> Meal Cancellation </a>
-         </li>
-                <li>
-                 <a href="logout.php" class="text-light text-decoration-none"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-box-arrow-left mx-2" viewBox="0 0 16 16">
-                   <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
-                   <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
-                 </svg>  Logout</a>
-             </li>
+          </li>
+
+          <li>
+            <a href="logout.php" class="text-light text-decoration-none"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-box-arrow-left mx-2" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+              <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+            </svg>  Logout </a>
+          </li>
           
         </ul>
         
@@ -275,16 +347,20 @@ session_start();
         <div class="form-group">
 
           <div class="form-floating">
-              <label for="floatingTextarea1" class="meal_header">Start Date</label><br><br>
-
-              <input type="date" id="floatingTextarea1" name="start_date" style="height: 40px"></textarea>
+              <label for="floatingTextarea1" class="meal_header" style="padding-top: 25px; font-size: 22px">Start Date</label>
+              <br>
+               &nbsp;   &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;
+               
+              <input placeholder="Select Start Date" type="text" id="floatingTextarea1" name="start_date" class="datepicker" autocomplete="off" style="height: 40px;" >
+              <br><br>
               
             </div>
             
             <div class="form-floating">
-              <label for="floatingTextarea1" class="meal_header"> End Date</label><br><br>
+              <label for="floatingTextarea1" class="meal_header" style="padding-top: 25px; font-size: 22px"> End Date</label><br>
 
-              <input type="date" placeholder="Leave a comment here" id="floatingTextarea1" name="end_date" style="height: 40px"></textarea>
+              &nbsp;   &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;
+              <input placeholder="Select End Date" type="text" id="floatingTextarea1" name="end_date" class="datepicker" autocomplete="off" style="height: 40px"></textarea>
               
             </div>
            <br>
@@ -300,7 +376,7 @@ session_start();
        
           <div class="form-group">       
             <div class="col-sm-offset-2 col-sm-10">
-              <button onclick="alert('Your meal has been cancelled for the particular day/days.')" href="#ale" type="submit"  class="btn btn-success btn-lg" id="post" name="student_cancel_meal">Submit</button>
+              <button onclick="alert('Your meal has been cancelled for the particular day/days.')" href="#ale" type="submit"  class="btn btn-success btn-lg" id="post" name="submit">Submit</button>
            </div>
            </div>
       </form>
@@ -347,12 +423,18 @@ session_start();
 
       }
 
-    ?>	
+    ?>
 
       <!-- Meal Table Data Input Ends -->
    
 
-
+      <script type="text/javascript">
+   
+   $('.datepicker').datepicker({ 
+       startDate: new Date()
+   });
+ 
+</script>
         
   	  <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -367,6 +449,9 @@ session_start();
 			});
 		});  
 	</script>
+
+
+
     
     </body>
    
