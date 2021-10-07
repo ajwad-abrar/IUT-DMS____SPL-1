@@ -1,5 +1,27 @@
 <?php
 session_start();
+
+include('provost_photo.php');
+
+    function getImagePath(){
+
+      $con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+
+      $email = $_SESSION['email'];
+
+      $reg= "select img_path from provost where email= '$email'";
+
+      $result = mysqli_query($con, $reg);
+
+      while($row = mysqli_fetch_assoc($result)){
+        return "{$row['img_path']}";
+      }
+    }
+
+    $imagePath = getImagePath();
+
+
 ?>
 
 
@@ -23,20 +45,31 @@ session_start();
 
     <style>
       
-      #user{
-            margin-left: 3px;
-            float: left;
+        #user{
+              margin-left: 3px;
+              float: left;
         }
 
         #prb{
-          width: 100%;
+            width: 100%;
         }
-       
-      
+        
+        
         .modal-title-ann{
-      text-decoration: underline;
-      color: blue;
-    }
+          text-decoration: underline;
+          color: blue;
+        }
+
+        #profile_picture{
+          height: 100px;
+          border: 1px solid black;
+          border-radius: 50%;
+          float: left;
+          padding: 1px;
+          margin-left: 50px;
+        }
+
+
     </style>
 
 
@@ -135,7 +168,8 @@ session_start();
     
           // output data of each row
             while($row = mysqli_fetch_assoc($result)) {
-              echo "" .$row['announcement_text'] ."<br>";
+              echo "" .$row['announcement_text'] ."<br><br><br>";
+              echo "<iframe src=\"".$row['pdf_path'] ."\" width=\"100%\" style=\"height:600px\"></iframe>";
             }
           } 	
           else {
@@ -156,10 +190,9 @@ session_start();
       
    		<div class="sidebar-header">
 
-         <div class="container">
-          
-            <a href="#" ><img src="mine.jpg" class="profile_img"></a>
-         </div>
+       <div class="container">
+          <a href="#"> <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
+        </div>
               
           <br><br><br><br>
 
@@ -187,22 +220,22 @@ session_start();
             <div class="modal-body">
       
       
-              <form action="provost_announcement.php" class="m-2 p-3 border border-warning" method="POST">
-      
+              <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST" enctype="multipart/form-data">
+          
                 <div class="mb-3">
 
-                  <label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
-                  <input type="file" class="form-control" id="customFile"> <br>
+                  <label class="form-label"  style="font-weight: bolder; color:black" for="customFile">Upload Your Profile Picture</label> <br>
+                  <input type="file" class="form-control" id="customFile" name="provost_profile_pic" required> <br>
 
-                  <label for="" class="label-style">Name</label>
-                  <input type="text" placeholder="Enter your name" class="form-control" name="admin_name" required> <br> 
+                  <label for="" style="font-weight: bolder; color:black">Name</label>
+                  <input type="text" placeholder="Enter your name" class="form-control" name="provost_name" required> <br> 
                   
                 </div>
 
-                <button class="btn btn-info" name="update_provost_profile">Submit</button>
+                <button class="btn btn-info" name="update_provost_profile" value="p_up_profile">Submit</button>
 
 
-              </form>      
+              </form>       
       
             </div>
       
@@ -235,7 +268,7 @@ session_start();
               // Create connection
               $conn = mysqli_connect($servername, $username, $password, $dbname);
 
-              $name = $_POST['admin_name'];
+              $name = $_POST['provost_name'];
               $email = $_SESSION['email'];
 
               // Check connection
@@ -294,7 +327,7 @@ session_start();
           </svg>  Room Request</a>
    			</li>
    			<li  class="active">
-   				<a href="#" ><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-megaphone-fill mx-2" viewBox="0 0 16 16">
+   				<a href="provost_announcement.php" ><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-megaphone-fill mx-2" viewBox="0 0 16 16">
             <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"/>
           </svg> Announcement</a>
    				
@@ -349,7 +382,7 @@ session_start();
             <!-- Modal body -->
             <div class="modal-body">
             
-              <form class="form-horizontal" action="provost_announcement.php" method="POST">
+              <form class="form-horizontal" action="provost_announcement.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
   
                   <div class="form-floating">
@@ -394,7 +427,7 @@ session_start();
                    <br>
 
                    <label class="form-label label-style" for="customFile" style="font-weight: 700;">Upload Relevant Attachment</label> <br>
-                   <input type="file" class="form-control" id="customFile"> 
+                   <input type="file" class="form-control" id="customFile" name="pro_pdf"> 
                   
 
                    <br> <br>
@@ -406,7 +439,7 @@ session_start();
                     <br><br>
                 <div class="form-group">        
                   <div class="col-sm-offset-2 col-sm-10">
-                    <button onclick="alert('Your announcement has been posted')" href="#ale" type="submit" class="btn btn-info" name="provost_post_announcement">Post</button>
+                    <button onclick="alert('Your announcement has been posted')" href="#ale" type="submit" class="btn btn-info" name="provost_post_announcement" value="up_announcement">Post</button>
   
                     
                   </div>
@@ -534,12 +567,19 @@ session_start();
           $email = $_SESSION['email'];
 
 
+          $file_tmp = $_FILES["pro_pdf"]["tmp_name"];
+		      $file_name = $_FILES["pro_pdf"]["name"];
+
+          //image directory where actual image will be store
+		      $file_path = "provost_pdf/".$file_name;	
+
+
           // Check connection
           if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
           }
 
-          $sql = "INSERT INTO provost_announcement (subject, announcement_text, p_email) VALUES ( '$sub', '$message', '$email')";
+          $sql = "INSERT INTO provost_announcement (subject, announcement_text, p_email, pdf_path) VALUES ( '$sub', '$message', '$email', '$file_path')";
 
           if (mysqli_query($conn, $sql)) {
             echo "";
@@ -548,9 +588,12 @@ session_start();
           }
 
 
+          move_uploaded_file($file_tmp, $file_path);
+
+
           mysqli_close($conn);
 
-        }
+      }
 
     ?>	
     

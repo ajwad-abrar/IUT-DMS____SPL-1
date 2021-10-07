@@ -17,17 +17,37 @@ if(isset($_POST['submit'])){
     VALUES (NULL, current_timestamp(), '$email', '$resource_type', '$resource_name','', NULL);";
    
    
-      if(mysqli_query($con, $sql)){
-         
-
+    if(mysqli_query($con, $sql)){   
        header('Location: student_resource_request.php');
-       }
-      else{
+    }
+    else{
        echo'query error'.mysqli_error($con);
-      }
-
-
+    }
 }
+
+
+
+
+
+include('student_photo.php');
+
+	function getImagePath(){
+
+		$con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+
+		$email = $_SESSION['email'];
+
+		$reg= "select img_path from student where email= '$email'";
+
+		$result = mysqli_query($con, $reg);
+
+		while($row = mysqli_fetch_assoc($result)){
+			return "{$row['img_path']}";
+		}
+	}
+
+	$imagePath = getImagePath();
 
 
 
@@ -54,7 +74,7 @@ if(isset($_POST['submit'])){
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   
 
-    <title>Resource request</title>
+    <title>Resource Request</title>
 
 </head>
 
@@ -65,9 +85,9 @@ if(isset($_POST['submit'])){
       
    		<div class="sidebar-header">
 
-           <div class="container">
-              <a href="#" ><img src="images/ajwad_student.jpg" id="profile_picture"></a>
-           </div>
+       <div class="container">
+				  <a href="#"> <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
+			 </div>
               
            <h4>
 
@@ -119,22 +139,22 @@ if(isset($_POST['submit'])){
             <div class="modal-body">
       
       
-              <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST">
-			
-                <div class="mb-3">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST" enctype="multipart/form-data">
+				
+              <div class="mb-3">
 
-                  <label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
-                  <input type="file" class="form-control" id="customFile"> <br>
+                <label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
+                <input type="file" class="form-control" id="customFile" name="stu_profile_pic"> <br>
 
-                  <label for="" class="label-style">Name</label>
-                  <input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
-                  
-                </div>
+                <label for="" class="label-style">Name</label>
+                <input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
+                
+              </div>
 
-                <button class="btn btn-info" name="update_student_profile">Submit</button>
+              <button class="btn btn-info" name="update_student_profile" value="s_up_profile">Submit</button>
 
 
-              </form>      
+            </form>
       
             </div>
       
@@ -156,7 +176,7 @@ if(isset($_POST['submit'])){
 
       <!-- Update Profile PHP Code starts -->
 
-		`<?php
+		<?php
 
           if(isset($_POST['update_student_profile'])) {
 

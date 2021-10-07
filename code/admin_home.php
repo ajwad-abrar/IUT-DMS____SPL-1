@@ -1,6 +1,27 @@
-
+<!-- Admin HOME -->
 <?php
-session_start();
+	session_start();
+
+	include('admin_photo.php');
+
+	function getImagePath(){
+
+		$con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+
+		$email = $_SESSION['email'];
+
+		$reg= "select img_path from admin where email= '$email'";
+
+		$result = mysqli_query($con, $reg);
+
+		while($row = mysqli_fetch_assoc($result)){
+			return "{$row['img_path']}";
+		}
+	}
+
+	$imagePath = getImagePath();
+
 ?>
 
 
@@ -33,7 +54,7 @@ session_start();
    		<div class="sidebar-header">
 
 			<div class="container">
-				<a href="#"> <img src="images/ajwad_student.jpg" id="profile_picture"></a>
+				<a href="#"> <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
 			</div>
 			  
 
@@ -88,19 +109,19 @@ session_start();
 					<div class="modal-body">
 	  
 	  
-						<form action="admin_home.php" class="m-2 p-3 border border-warning" method="POST">
+						<form action="admin_home.php" class="m-2 p-3 border border-warning" method="POST" enctype="multipart/form-data">
 	  
 							<div class="mb-3">
 
 								<label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
-								<input type="file" class="form-control" id="customFile"> <br>
+								<input type="file" name="profile_pic" class="form-control" id="customFile"> <br>
 	  
 								<label for="" class="label-style">Name</label>
 								<input type="text" placeholder="Enter your name" class="form-control" name="admin_name" required> <br> 
 								 
 							</div>
 	  
-							<button class="btn btn-info" name="update_profile">Submit</button>
+							<button class="btn btn-info" name="update_profile" value="up_profile">Submit</button>
 	
 	  
 						</form>    
@@ -221,7 +242,7 @@ session_start();
           if (mysqli_query($conn, $sql)) {
             echo "";
           } else {
-          echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+          	echo "Error: " . $sql . "<br>" . mysqli_error($conn);
           }
 
 

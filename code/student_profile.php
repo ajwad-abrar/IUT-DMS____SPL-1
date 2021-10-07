@@ -1,6 +1,28 @@
+<!-- Student Profile -->
 
 <?php
-session_start();
+	session_start();
+
+	include('student_photo.php');
+
+	function getImagePath(){
+
+		$con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+
+		$email = $_SESSION['email'];
+
+		$reg= "select img_path from student where email= '$email'";
+
+		$result = mysqli_query($con, $reg);
+
+		while($row = mysqli_fetch_assoc($result)){
+			return "{$row['img_path']}";
+		}
+	}
+
+	$imagePath = getImagePath();
+
 ?>
 
 
@@ -32,8 +54,8 @@ session_start();
 	  
    		<div class="sidebar-header">
 
-			<div class="container">
-				<a href="#"> <img src="images/ajwad_student.jpg" id="profile_picture"></a>
+		   <div class="container">
+				<a href="#"> <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
 			</div>
 
             <h4>
@@ -87,22 +109,22 @@ session_start();
 					<div class="modal-body">
 	  
 	  
-					<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST">
-			
+					<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST" enctype="multipart/form-data">
+				
 						<div class="mb-3">
 
 							<label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
-							<input type="file" class="form-control" id="customFile"> <br>
+							<input type="file" class="form-control" id="customFile" name="stu_profile_pic"> <br>
 
 							<label for="" class="label-style">Name</label>
 							<input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
 							
 						</div>
 
-						<button class="btn btn-info" name="update_student_profile">Submit</button>
+						<button class="btn btn-info" name="update_student_profile" value="s_up_profile">Submit</button>
 
 
-					</form>      
+					</form>    
 	  
 					</div>
 	  
@@ -259,27 +281,40 @@ session_start();
 
             $mail = $_SESSION['email'];
 
-            $sql = "SELECT * FROM student WHERE email = '$mail'";
+            $sql1 = "SELECT * FROM student S WHERE S.email = '$mail'";
+            $sql2 = "SELECT * FROM room_request R WHERE R.email = '$mail' AND provost_approval = 'Approved'";
 
-            $result = mysqli_query($conn, $sql);
+            $result1 = mysqli_query($conn, $sql1);
+            $result2 = mysqli_query($conn, $sql2);
 
             // Check connection
             if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
+            	die("Connection failed: " . mysqli_connect_error());
             }
 
-            if (mysqli_query($conn, $sql)) {
+            if (mysqli_query($conn, $sql1)) {
                 // output data of each row
-                while($row = mysqli_fetch_assoc($result)) {
+                while($row = mysqli_fetch_assoc($result1)) {
                     echo "<b>Name: </b>" .$row['name'] ." <br> <br>";
                     echo "<b>ID: </b>" .$row['student_ID'] ." <br> <br>";
                     echo "<b>Program: </b>" .$row['programme'] ." <br> <br>";
                     echo "<b> Gender: </b> " .$row['gender'] ." <br><br>";
                     echo "<b> Email: </b>" .$row['email'] ." <br><br>";
-                    echo "<b> Reg Date: </b>" .date("d M, Y", strtotime($row['reg_date']))." ";
+                    // echo "<b> Reg Date: </b>" .date("d M, Y", strtotime($row['reg_date']))." ";   //Not needed rn
                 }
             } else {
-                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                echo "Error: " . $sql1 . "<br>" . mysqli_error($conn);
+            }
+
+			if (mysqli_query($conn, $sql2)) {
+                // output data of each row
+                while($row = mysqli_fetch_assoc($result2)) {
+					echo "<b> Hall: </b>" .$row['hall_name'] ." <br><br>";
+                    echo "<b> Floor: </b>" .$row['level'] ." <br><br>";
+                    echo "<b> Room No: </b>" .$row['room_no'] ." <br><br>";
+                }
+            } else {
+                echo "Error: " . $sql1 . "<br>" . mysqli_error($conn);
             }
 
             mysqli_close($conn);

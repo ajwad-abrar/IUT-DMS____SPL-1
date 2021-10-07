@@ -6,61 +6,100 @@ $con =mysqli_connect('localhost', 'root','190042106');
 
 mysqli_select_db($con, 'iut_dms');
 $email=$_SESSION['email'];
-//$name= $_SESSION ['name'];
+
+
 
 if(isset($_POST['submit'])){
 
-    $hall_name=mysqli_real_escape_string($con,$_POST['hall_name']);
-    $floor_number=mysqli_real_escape_string($con, $_POST['floor_number']);
-    $room_number=mysqli_real_escape_string($con, $_POST['room_number']);
-    $bed_number=mysqli_real_escape_string($con, $_POST['bed_number']);
-  
- $roomcount = mysqli_query($con ,"SELECT COUNT(room_no) AS count
- FROM room_request
- WHERE room_no = '$room_number' AND hall_name= '$hall_name' ;");
+  $hall_name=mysqli_real_escape_string($con,$_POST['hall_name']);
+  $floor_number=mysqli_real_escape_string($con, $_POST['floor_number']);
+  $room_number=mysqli_real_escape_string($con, $_POST['room_number']);
+  $bed_number=mysqli_real_escape_string($con, $_POST['bed_number']);
 
-function showRoomfilled(){
-  echo '<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-  <strong>This room is occupied.Try for another one.
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>';
-    
-}
+    $roomcount = mysqli_query($con ,"SELECT COUNT(room_no) AS count
+    FROM room_request
+    WHERE room_no = '$room_number' AND hall_name= '$hall_name' ;");
 
-$row2 = mysqli_fetch_assoc($roomcount);
+          function showRoomfilled(){
+          echo '<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+          <strong>This room is occupied.Try for another one.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          </div>';
+            
+          }
 
-if( $row2['count']>=4){
-  //  header('Location: student_room_request.php');
-  //  echo '<script>alert("Sorry The Room Is Occupied!!! Try for another one")</script>' ;
-
-  showRoomfilled();
-   
-}
+  $row2 = mysqli_fetch_assoc($roomcount);
+  //check double request
+  $check_double_request = mysqli_query($con, " select * from room_request where email = '$email' ");
+  $check_num = mysqli_num_rows($check_double_request);
 
 
-else{
 
+      if( $row2['count']>=4){
+      
+      showRoomfilled();
 
-    $sql="INSERT INTO `room_request` (`request_ID`, `request_time`, `email`, `hall_name`, `level`, `room_no`, `bed`, `provost_approval`, `provost_approval_time`)
-    VALUES (NULL, current_timestamp(), '$email', '$hall_name', '$floor_number', '$room_number', '$bed_number', '', NULL);";
-   
-   
-      if(mysqli_query($con, $sql)){
-         
+      }
+      
+      else if($check_num==1){
+        echo '<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+          <strong>You have already requested for a room.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          </div>';
 
-       header('Location: student_room_request.php');
-       }
-      else{
-       echo'query error'.mysqli_error($con);
       }
 
-    }
 
+      else{
+
+
+        $sql="INSERT INTO `room_request` (`request_ID`, `request_time`, `email`, `hall_name`, `level`, `room_no`, `bed`, `provost_approval`, `provost_approval_time`)
+        VALUES (NULL, current_timestamp(), '$email', '$hall_name', '$floor_number', '$room_number', '$bed_number', '', NULL);";
+
+
+          if(mysqli_query($con, $sql)){
+            
+            header('Location: student_room_request.php');
+          }
+          else{
+            echo'query error'.mysqli_error($con);
+          }
+        }
 }
+     
 
 
+
+         
+
+
+
+
+
+
+include('student_photo.php');
+
+	function getImagePath(){
+
+		$con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+
+		$email = $_SESSION['email'];
+
+		$reg= "select img_path from student where email= '$email'";
+
+		$result = mysqli_query($con, $reg);
+
+		while($row = mysqli_fetch_assoc($result)){
+			return "{$row['img_path']}";
+		}
+	}
+
+	$imagePath = getImagePath();
 
 
 ?>
@@ -95,9 +134,9 @@ else{
       
    		<div class="sidebar-header">
 
-           <div class="container">
-              <a href="#" ><img src="images/ajwad_student.jpg" id="profile_picture"></a>
-           </div>
+		  <div class="container">
+				 <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
+			</div>
               
         <h4>
 
@@ -155,22 +194,21 @@ else{
             <div class="modal-body">
       
       
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST">
-			
-              <div class="mb-3">
+              <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST" enctype="multipart/form-data">
+          
+                <div class="mb-3">
 
-                <label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
-                <input type="file" class="form-control" id="customFile"> <br>
+                  <label class="form-label" for="customFile" style="font-weight: bolder; color:black">Upload Your Profile Picture</label> <br>
+                  <input type="file" class="form-control" id="customFile" name="stu_profile_pic" required> <br>
 
-                <label for="" class="label-style">Name</label>
-                <input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
-                
-              </div>
+                  <label for="" style="font-weight: bolder; color:black">Name</label>
+                  <input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
+                  
+                </div>
 
-              <button class="btn btn-info" name="update_student_profile">Submit</button>
+                <button class="btn btn-info" name="update_student_profile" value="s_up_profile">Submit</button>
 
-
-            </form>      
+              </form>    
       
             </div>
       
@@ -248,7 +286,7 @@ else{
    			
    			
    			<li class="active">
-   				<a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-person-plus-fill mx-2" viewBox="0 0 16 16">
+   				<a href="student_room_request.php"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-person-plus-fill mx-2" viewBox="0 0 16 16">
             <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
             <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
           </svg>   Room Request</a>
@@ -399,44 +437,29 @@ else{
         $con = mysqli_connect("localhost","root","190042106","iut_dms");
         $email = $_SESSION['email'];
         $app=" select provost_approval from room_request where email= '$email'";
-       $status = mysqli_query($con, $app);
-
-      //  $roomcount = "SELECT COUNT(room_no) AS count FROM room_request WHERE room_no = '$room_number' AND hall_name= '$hall_name'";
-      // $countcheck = mysqli_query($con, $roomcount);
-      // $row2 = mysqli_fetch_assoc($roomcount);
+        $status = mysqli_query($con, $app);
 
         echo "<br>";
 
-
-      
-
         while($row = mysqli_fetch_assoc($status)){
          
-         if($row['provost_approval'] =="Approved"){
-          
-          echo '<div class="alert alert-success alert-dismissible text-center">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Success!</strong> Your request has been approved
-      </div>';
-           
-          
-          
-         }
-          else if($row['provost_approval'] ==""){
-            echo '<div class="alert alert-warning p-3 text-center" role="alert"><b>Your Request Is Pending</b></div>';
+          if($row['provost_approval'] =="Approved"){
+            
+                echo '<div class="alert alert-success alert-dismissible text-center">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Success!</strong> Your request has been approved
+                      </div>';    
+            
           }
+          else if($row['provost_approval'] ==""){
+              echo '<div class="alert alert-warning p-3 text-center" role="alert"><b>Your Request Is Pending</b></div>';
+            }
 
-        }
-
-
-
-        
-          
+        }       
        
       }
       
-      showStatus();
-      
+      showStatus(); 
 
       ?>    
      

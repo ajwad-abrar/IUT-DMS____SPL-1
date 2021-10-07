@@ -1,5 +1,26 @@
 <?php
-session_start();
+	session_start();
+
+	include('admin_photo.php');
+
+	function getImagePath(){
+
+		$con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+
+		$email = $_SESSION['email'];
+
+		$reg= "select img_path from admin where email= '$email'";
+
+		$result = mysqli_query($con, $reg);
+
+		while($row = mysqli_fetch_assoc($result)){
+			return "{$row['img_path']}";
+		}
+	}
+
+	$imagePath = getImagePath();
+	
 ?>
 
 
@@ -21,7 +42,7 @@ session_start();
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-	<title>cancel meal</title>
+	<title>Admin Meal</title>
 
     <style>
       #user{
@@ -52,6 +73,19 @@ session_start();
       #floatingTextarea2{
         border: solid 2px rgb(153, 116, 14);
       }
+
+
+
+	  table, th, td {	  
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding :3px;
+  
+}
+
+   th,td{
+	background-color: #96D4D4;
+   }
      
     </style>
   </head>
@@ -64,7 +98,7 @@ session_start();
    		<div class="sidebar-header">
 
 			<div class="container">
-				<a href="#"> <img src="images/ajwad_student.jpg" id="profile_picture"></a>
+				<a href="#"> <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
 			</div>
 			  
 
@@ -112,83 +146,29 @@ session_start();
 				<div class="modal-content">
 	  
 					<div class="modal-header ">
-						<h4 class="modal-title w-100 text-center label-style">Update Information</h4>
+						<h4 class="modal-title w-100 text-center" style="font-weight: bolder; color:black">Update Information</h4>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 					</div>
 	  
 					<div class="modal-body">
 	  
 	  
-						<form action="" class="m-2 p-3 border border-warning">
-	  
+						<form action="admin_meal.php" class="m-2 p-3 border border-warning" method="POST" enctype="multipart/form-data">
+		
 							<div class="mb-3">
 
-								<label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
-								<input type="file" class="form-control" id="customFile"> <br>
-	  
-								<label for="" class="label-style">Name</label>
-								<input type="text" placeholder="Enter your name" class="form-control" required> <br>
+								<label class="form-label" style="font-weight: bolder; color:black" for="customFile">Upload Your Profile Picture</label> <br>
+								<input type="file" name="profile_pic" class="form-control" id="customFile"> <br>
 
-								<label for="" class="label-style">Student ID</label>
-								<input type="number" placeholder="Enter your ID" class="form-control" required> 
-
-								<br>
-	  
-								<label for="" class="label-style">Email</label>
-								<input type="email" placeholder="Enter your email" class="form-control" required> 
-	  
-								<small id="emailHelp" class="form-text text-muted">Make sure to enter your IUT email address.</small> 
-	  
-								<br> 
-
-								<label for="" class="label-style">Gender</label> <br>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="gender" id="gendercheck" value="option1">
-									<label class="form-check-label checkbox-style" for="inlineRadio1">Male</label>
-								</div>
-
-								  <div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="gender" id="gendercheck" value="option2">
-									<label class="form-check-label checkbox-style" for="inlineRadio2">Female</label>
-								  </div>
-
-								  <br> <br>
-								 
-	  
-								<label for="" class="label-style">Role</label> <br>
-	  
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-									<label class="form-check-label checkbox-style" for="inlineRadio1">Student</label>
-								</div>
-	  
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-									<label class="form-check-label checkbox-style" for="inlineRadio2">Provost</label>
-								</div>
-	  
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-									<label class="form-check-label checkbox-style" for="inlineRadio2">Admin</label>
-								</div>
-	  
-								<p></p>  
-	  
-								<label for="" class="label-style">Password</label>
-								<input type="password" placeholder="Enter your Password" class="form-control" required> <p></p>
-	  
-								<label for="" class="label-style">Confirm Password</label>
-								<input type="password" placeholder="Confirm your Password" class="form-control" required> <p></p>
-	  
-	  
+								<label for="" style="font-weight: bolder; color:black">Name</label>
+								<input type="text" placeholder="Enter your name" class="form-control" name="admin_name" required> <br> 
 								
-	  
 							</div>
-	  
-							<button class="btn btn-info">Submit</button>
-	
-	  
-						</form>    
+
+							<button class="btn btn-info" name="update_profile" value="up_profile">Submit</button>
+
+
+						</form>       
 	  
 					</div>
 	  
@@ -214,6 +194,13 @@ session_start();
 		  		</svg>  Home  </a>
    		
    			</li>
+
+
+			<li>
+   				<a href="admin_profile.php" >  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-person-fill mx-2" viewBox="0 0 16 16">
+  				<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+				</svg>  Profile </a>
+   			</li>  
    			
    			
 
@@ -250,39 +237,275 @@ session_start();
 
 <div class="modal-body">
           
-      <form class="form-horizontal" action="">
+      <form class="form-horizontal" action="admin_meal.php" method="POST">
         <div class="form-group">
 
-          <div class="form-floating">
-              <label for="floatingTextarea1" class="meal_header">Select a date </label><br><br>
 
-              <input type="date" id="floatingTextarea1" style="height: 40px"></textarea>
+          <div class="form-floating">
+		  &nbsp;
+              <label for="floatingTextarea1" class="meal_header">Select a date </label>
+			      &nbsp;  &nbsp;  &nbsp; 
+              <input type="date" id="floatingTextarea1" name="input_date" style="height: 40px">
+			  &nbsp;  &nbsp;  &nbsp; 
+			  <button type="submit"  class="btn btn-success btn-lg" id="post" name="admin_meal_check">Submit</button>
+			 
               
             </div>
             
             
-           <br>
+           
+		   <div class="form-group">       
+		      <div class="col-sm-offset-2 col-sm-10">
             
-          <!-- <div class="form-floating">
-            
-              <label for="floatingTextarea2" class = "meal_header">Reason for meal cancellation</label>
-              <br><br><br>
-              <textarea class="form-control p-2" placeholder="Write your reason/s" id="cancel_reason" maxlength = "200"></textarea>
-             
-          </div>
-           <br>
-       
-          <div class="form-group">       
-            <div class="col-sm-offset-2 col-sm-10">
-              <button onclick="alert('Your meal has been cancelled for the particular day/days.')" href="#ale" type="submit"  class="btn btn-success btn-lg" id="post">Submit</button>
            </div>
-           </div> -->
+           </div>
+    
       </form>
 
 
 
+
+
+	 		
+
+
+       
+
+
     </div>
+
+	<div >
+     <br><br>
+	<b><h5 class="font-weight-bolder">Students who cancelled their meal for this particular day </h5></b>
+    <br>
+
+		<div style=" width:100%; background-color:antiquewhite; padding:15px; border-radius: 2%; border:0.5px solid black;"> 
+
+
+			<h3 style="text-align: center;">
+			
+			 <table style="width:100%">
+             <b> <?php
+			   if(isset($_POST['admin_meal_check'])) {
+
+				$con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+				
+				$date = $_POST['input_date'];
+				
+				$reg=" select COUNT(cancel_date) as COUNT from meal_cancellation where cancel_date = '$date'";
+				$pepole=" select email from meal_cancellation where cancel_date = '$date'";
+				
+				
+				$result = mysqli_query($con, $reg);
+				$show_people =mysqli_query($con, $pepole);
+				
+				
+				while($row = mysqli_fetch_assoc($result)){
+					$number_of_meal =  "{$row['COUNT']}";
+				}
+				
+					echo $number_of_meal;
+					echo " students";
+					echo "<br>";
+					echo "<br>";
+				
+				}		
+	
+           ?></b>
+
+			
+			 <tr>
+				<th>Name</th>
+				<th>Student ID</th>
+				<th>Reason</th>
+			</tr>
+
+			<tr>
+                <td>
+				<?php
+			   if(isset($_POST['admin_meal_check'])) {
+
+				$con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+				
+				$date = $_POST['input_date'];
+				
+				
+				$pepole=" select email from meal_cancellation where cancel_date = '$date'";
+				$show_people =mysqli_query($con, $pepole);
+				
+		
+				while($row2=mysqli_fetch_assoc($show_people)){
+					$email_of_student= $row2['email'];
+				//	echo $row2['email'];
+					
+				
+					$pepole_data= "SELECT S.name, S.student_ID, M.reason FROM student S, meal_cancellation M WHERE S.email = '$email_of_student' AND M.email = '$email_of_student' AND M.cancel_date = '$date'	";
+					$show_data =mysqli_query($con, $pepole_data);
+					$row3 =mysqli_fetch_assoc($show_data);
+				
+					echo $row3['name'] ;
+					echo " ";
+					// echo $row3['student_ID'];
+					// echo " ";
+				
+					echo "<br>";
+					
+					
+				
+				
+				}
+				
+				
+				
+				
+				
+				}		
+	
+           ?>
+				</td>
+
+				<td>
+				<?php
+			   if(isset($_POST['admin_meal_check'])) {
+
+				$con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+				
+				$date = $_POST['input_date'];
+				
+				
+				$pepole=" select email from meal_cancellation where cancel_date = '$date'";
+				
+				
+
+				$show_people =mysqli_query($con, $pepole);
+			
+				
+				while($row2=mysqli_fetch_assoc($show_people)){
+					$email_of_student= $row2['email'];
+				//	echo $row2['email'];
+					
+				
+					$pepole_data= "SELECT S.name, S.student_ID, M.reason FROM student S, meal_cancellation M WHERE S.email = '$email_of_student' AND M.email = '$email_of_student' AND M.cancel_date = '$date'	";
+					$show_data =mysqli_query($con, $pepole_data);
+					$row3 =mysqli_fetch_assoc($show_data);
+				
+					
+					echo $row3['student_ID'];
+					echo " ";
+				
+					echo "<br>";
+					
+				
+				
+				}
+				
+				
+				
+				
+				
+				}		
+	
+           ?>
+
+		     	</td>
+				 
+				<td>
+				<?php
+			   if(isset($_POST['admin_meal_check'])) {
+
+				$con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+				
+				$date = $_POST['input_date'];
+			
+				$pepole=" select email from meal_cancellation where cancel_date = '$date'";
+				$show_people =mysqli_query($con, $pepole);
+				
+				
+			
+				
+				while($row2=mysqli_fetch_assoc($show_people)){
+					$email_of_student= $row2['email'];
+				//	echo $row2['email'];
+					
+				
+					$pepole_data= "SELECT S.name, S.student_ID, M.reason FROM student S, meal_cancellation M WHERE S.email = '$email_of_student' AND M.email = '$email_of_student' AND M.cancel_date = '$date'	";
+					$show_data =mysqli_query($con, $pepole_data);
+					$row3 =mysqli_fetch_assoc($show_data);
+				
+					echo $row3['reason'] ;
+					echo " ";
+					// echo $row3['student_ID'];
+					// echo " ";
+				
+					echo "<br>";
+					
+				
+				
+				}
+				
+				
+				
+				
+				
+				}		
+	
+           ?>
+				</td> 
+
+		    </tr>	
+		 
+
+			</table>
+									
+					
+			</h3>
+		</div>
  
+	</div>
+
+
+
+
+
+
+
+
+
+	<?php
+
+		if(isset($_POST['update_profile'])) {
+
+			$servername = "localhost";
+			$username = "root";
+			$password = "190042106";
+			$dbname = "iut_dms";
+
+			// Create connection
+			$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+			$name = $_POST['admin_name'];
+			$email = $_SESSION['email'];
+
+			// Check connection
+			if (!$conn) {
+			die("Connection failed: " . mysqli_connect_error());
+			}
+
+			$sql = "UPDATE admin SET name = '$name' WHERE email = '$email'";
+
+			if (mysqli_query($conn, $sql)) {
+			echo "";
+			} else {
+				echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+			}
+
+
+			mysqli_close($conn);
+
+ 	 	}
+
+	?>
+	
   	
 
   

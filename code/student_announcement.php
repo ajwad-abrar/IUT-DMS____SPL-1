@@ -1,6 +1,29 @@
+<!-- Student Announcement -->
 <?php
-session_start();
+	session_start();
+
+	include('student_photo.php');
+
+	function getImagePath(){
+
+		$con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+
+		$email = $_SESSION['email'];
+
+		$reg= "select img_path from student where email= '$email'";
+
+		$result = mysqli_query($con, $reg);
+
+		while($row = mysqli_fetch_assoc($result)){
+			return "{$row['img_path']}";
+		}
+	}
+
+	$imagePath = getImagePath();
+
 ?>
+
 
 
 <!doctype html>
@@ -94,7 +117,8 @@ session_start();
 
 			// output data of each row
 				while($row = mysqli_fetch_assoc($result)) {
-					echo "" .$row['announcement_text'] ."<br>";
+					echo "" .$row['announcement_text'] ."<br><br><br>";
+					echo "<iframe src=\"".$row['pdf_path'] ."\" width=\"100%\" style=\"height:600px\"></iframe>";				
 				}
 			} 	
 			else {
@@ -166,7 +190,8 @@ session_start();
 
 			// output data of each row
 				while($row = mysqli_fetch_assoc($result)) {
-					echo "" .$row['announcement_text'] ."<br>";
+					echo "" .$row['announcement_text'] ."<br> <br> <br>";
+					echo "<iframe src=\"".$row['pdf_path'] ."\" width=\"100%\" style=\"height:600px\"></iframe>";
 				}
 			} 	
 			else {
@@ -212,9 +237,9 @@ session_start();
       
    		<div class="sidebar-header">
 
-           <div class="container">
-              <a href="#" ><img src="images/ajwad_student.jpg" id="profile_picture"></a>
-           </div>
+		   <div class="container">
+				<a href="#"> <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
+			</div>
               
 		   <h4>
 
@@ -247,19 +272,19 @@ session_start();
             <div class="modal-body">
       
       
-				<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST">
-		
+				<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="m-2 p-3 border border-warning" method="POST" enctype="multipart/form-data">
+				
 					<div class="mb-3">
 
 						<label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
-						<input type="file" class="form-control" id="customFile"> <br>
+						<input type="file" class="form-control" id="customFile" name="stu_profile_pic"> <br>
 
 						<label for="" class="label-style">Name</label>
 						<input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
 						
 					</div>
 
-					<button class="btn btn-info" name="update_student_profile">Submit</button>
+					<button class="btn btn-info" name="update_student_profile" value="s_up_profile">Submit</button>
 
 
 				</form>
@@ -409,7 +434,7 @@ session_start();
 			  <!-- Modal body -->
 			  	<div class="modal-body">
 			  
-					<form class="form-horizontal" action="student_announcement.php" method="POST">
+					<form class="form-horizontal" action="student_announcement.php" method="POST" enctype="multipart/form-data">
 
 						<div class="form-group">
 			
@@ -446,7 +471,7 @@ session_start();
 							</div> <br>
 					
 							<label class="form-label label-style" for="customFile">Upload relevant Attachment</label> <br>
-							<input type="file" class="form-control" id="customFile"> 
+							<input type="file" class="form-control" id="customFile" name="stu_pdf"> 
 		
 							<br> <br>
 
@@ -682,39 +707,46 @@ session_start();
 
 	<?php
 
-      if(isset($_POST['student_post_announcement'])) {
+		if(isset($_POST['student_post_announcement'])) {
 
-          $servername = "localhost";
-          $username = "root";
-          $password = "190042106";
-          $dbname = "iut_dms";
+			$servername = "localhost";
+			$username = "root";
+			$password = "190042106";
+			$dbname = "iut_dms";
 
-          // Create connection
-          $conn = mysqli_connect($servername, $username, $password, $dbname);
+			// Create connection
+			$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-          $date = $_POST['date_of_post'];
-          $sub = $_POST['subject_of_post'];
-          $message = $_POST['message_of_post'];
-          $email = $_SESSION['email'];
-
-
-          // Check connection
-          if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
-          }
-
-          $sql = "INSERT INTO student_announcement (subject, announcement_text, s_email) VALUES ( '$sub', '$message', '$email')";
-
-          if (mysqli_query($conn, $sql)) {
-            echo "";
-          } else {
-          echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-          }
+			$date = $_POST['date_of_post'];
+			$sub = $_POST['subject_of_post'];
+			$message = $_POST['message_of_post'];
+			$email = $_SESSION['email'];
 
 
-          mysqli_close($conn);
+			$file_tmp = $_FILES["stu_pdf"]["tmp_name"];
+			$file_name = $_FILES["stu_pdf"]["name"];
 
-        }
+			//image directory where actual image will be store
+			$file_path = "student_pdf/".$file_name;	
+
+			// Check connection
+			if (!$conn) {
+				die("Connection failed: " . mysqli_connect_error());
+			}
+
+			$sql = "INSERT INTO student_announcement (subject, announcement_text, s_email, pdf_path) VALUES ( '$sub', '$message', '$email', '$file_path')";
+
+			if (mysqli_query($conn, $sql)) {
+				echo "";
+			} else {
+				echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+			}
+
+			move_uploaded_file($file_tmp, $file_path);
+
+			mysqli_close($conn);
+
+		}
 
     ?>	
     

@@ -5,8 +5,8 @@ body{
     font-family: 'Poppins', sans-serif;
      background: #fafafa;
      align-content: center;
-     height: 100%;
-     overflow: hidden;   /*This two lines make sure not to scroll*/
+     /* height: 100%;
+     overflow: hidden;   This two lines make sure not to scroll */
 }
 
 p{
@@ -157,7 +157,6 @@ a.article, a.article:hover {
     float: left;
     padding: 1px;
     margin-left: 50px;
-    
 }
 
 

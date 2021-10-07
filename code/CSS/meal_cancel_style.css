@@ -1,11 +1,3 @@
-.label-style{
-    color: black;
-    background-color: blue;
-}
-
-
-
-
 #cancel_reason{
     resize: none;
     color: red;
@@ -15,8 +7,10 @@
 }
 
 .meal_header{
+    
     font-weight: 700;
     font-size: 1.3rem;
+    float: left;
     
 }
 
