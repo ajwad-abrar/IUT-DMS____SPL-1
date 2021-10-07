@@ -143,7 +143,7 @@
         <div class="sidebar-header">
 
           <div class="container">
-            <a href="#"> <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
+             <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
           </div>
             
          <h4>
@@ -336,7 +336,7 @@
           <i class="fa fa-align-justify"></i> <span>Menu</span>
         </button>
         
-   <!--<a class="navbar-brand" href="#">Navbar</a> -->
+  
    
  </nav>
 
@@ -367,7 +367,7 @@
             
           <div class="form-floating">
             
-              <label for="floatingTextarea2" class = "meal_header">Reason for meal cancellation</label>
+              <label for="floatingTextarea2" class = "meal_header" style="padding-top: 25px; font-size: 22px">Reason for Meal Cancellation</label>
               <br><br><br>
               <textarea class="form-control p-2" placeholder="Write your reason/s" id="cancel_reason" name="reason" maxlength = "200"></textarea>
              

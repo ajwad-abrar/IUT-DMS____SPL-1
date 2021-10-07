@@ -450,7 +450,7 @@
 										style="
 										
 										resize: none;
-										color: red;
+										color :black;
 										border:royalblue solid;
 										height: 50px;"   ></textarea>					
 							</div><br>
