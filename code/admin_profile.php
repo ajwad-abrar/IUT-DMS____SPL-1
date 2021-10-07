@@ -45,6 +45,8 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 	<title>Admin Profile</title>
+
+	<style>body{background:whitesmoke;}</style>
   </head>
 
   <body>
@@ -188,24 +190,22 @@
    		
 	</div>
 
+					
+			
+		<div class="container h-100">
+			<div class="row align-items-center h-100">
+				<div class="col-10 mx-auto">
+					<div class="card h-100 justify-content-center">
+						<div style="padding: 7%;" class="text-center">
+							<img src="images/prianka.jpg" style="height: 250px; width: 220px;margin:0 auto; border-radius: 50%; padding-bottom: 20px" alt="">
+							<h5 class="card-title text-center" style="color:dodgerblue; font-size: 30px; font-weight: 800; margin-bottom: -5px;">Admin Profile <br> <br></h5>
+							<h4 class="text-left"><?php showDetailsOfAdmin(); ?></h4>
+						</div>
+					</div>
+				</div>
+			</div> 
+		</div>	
 
-
-
-	<div class="container h-100">
-    	<div class="row align-items-center h-100">
-        	<div class="col-6 mx-auto">
-            	<div class="card h-100 border-primary justify-content-center">
-               		<div style="padding: 5%;">
-					   <h5 class="card-title text-center" style="color:dodgerblue; font-size: 28px; font-weight: 800;">Admin Profile <br> <br></h5>
-					   <h4><?php showDetailsOfAdmin(); ?></h4>
-                	</div>
-            	</div>
-        	</div>
-    	</div> 
-	</div>
-  	
-
-   </div>
 
 
 

@@ -47,6 +47,9 @@
 	<title>Student Profile</title>
   </head>
 
+  <style>body{background:whitesmoke;}</style>
+
+
   <body>
    
    <div class="wrapper">
@@ -252,11 +255,12 @@
 
     <div class="container h-100">
     	<div class="row align-items-center h-100">
-        	<div class="col-6 mx-auto">
-            	<div class="card h-100 border-primary justify-content-center">
-               		<div style="padding: 5%;">
-					   <h5 class="card-title text-center" style="color:dodgerblue; font-size: 28px; font-weight: 800;">Student Profile <br> <br></h5>
-					   <h4><?php showDetailsOfStudent(); ?></h4>
+        	<div class="col-10 mx-auto">
+            	<div class="card h-100 justify-content-center">
+               		<div style="padding: 5%;" class="text-center">
+					   <img src="images/prianka.jpg" style="height: 250px; width: 220px;margin:0 auto; border-radius: 50%; padding-bottom: 20px" alt="">
+					   <h5 class="card-title text-center" style="color:dodgerblue; font-size: 28px; font-weight: 800; margin-bottom: -5px;">Student Profile <br> <br></h5>
+					   <h4 class="text-left"><?php showDetailsOfStudent(); ?></h4>
                 	</div>
             	</div>
         	</div>

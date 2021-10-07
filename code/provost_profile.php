@@ -42,7 +42,7 @@ include('provost_photo.php');
   <style>
   
     body{
-          background-image: linear-gradient(rgba(4, 9, 30, .7), rgba(4, 9, 30, .7)), url(https://media-exp1.licdn.com/dms/image/C561BAQGebLXz4Vsb7Q/company-background_10000/0/1604332697852?e=2159024400&v=beta&t=JhWNFCWHKAW8raBfl4JvI12nTD8BWSMMWBHTckYOONE);
+          background: whitesmoke;
           background-size: cover;
           background-repeat: no-repeat;
           background-position: center center;
@@ -282,18 +282,19 @@ include('provost_photo.php');
 
 
 
-<div class="container h-100">
-    	<div class="row align-items-center h-100">
-        	<div class="col-6 mx-auto">
-            	<div class="card h-100 border-primary justify-content-center">
-               		<div style="padding: 5%;">
-					   <h5 class="card-title text-center" style="color:dodgerblue; font-size: 28px; font-weight: 800;">Provost Profile <br> <br></h5>
-					   <h4><?php showDetailsOfProvost(); ?></h4>
-                	</div>
-            	</div>
-        	</div>
-    	</div> 
-	</div>
+    <div class="container h-100">
+          <div class="row align-items-center h-100">
+              <div class="col-10 mx-auto">
+                  <div class="card h-100 justify-content-center">
+                      <div style="padding: 5%;" class="text-center">
+                        <img src="images/prianka.jpg" style="height: 250px; width: 220px;margin:0 auto; border-radius: 50%; padding-bottom: 20px" alt="">
+                        <h5 class="card-title text-center" style="color:dodgerblue; font-size: 28px; font-weight: 800; margin-bottom: -5px;">Provost Profile <br> <br></h5>
+                        <h4 class="text-left"><?php showDetailsOfProvost(); ?></h4>
+                      </div>
+                  </div>
+              </div>
+          </div> 
+      </div>
   
       
     <?php
