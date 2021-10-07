@@ -190,7 +190,8 @@
 
 			// output data of each row
 				while($row = mysqli_fetch_assoc($result)) {
-					echo "" .$row['announcement_text'] ."<br>";
+					echo "" .$row['announcement_text'] ."<br> <br> <br>";
+					echo "<iframe src=\"".$row['pdf_path'] ."\" width=\"90%\" style=\"height:600px\"></iframe>";
 				}
 			} 	
 			else {
@@ -433,7 +434,7 @@
 			  <!-- Modal body -->
 			  	<div class="modal-body">
 			  
-					<form class="form-horizontal" action="student_announcement.php" method="POST">
+					<form class="form-horizontal" action="student_announcement.php" method="POST" enctype="multipart/form-data">
 
 						<div class="form-group">
 			
@@ -470,7 +471,7 @@
 							</div> <br>
 					
 							<label class="form-label label-style" for="customFile">Upload relevant Attachment</label> <br>
-							<input type="file" class="form-control" id="customFile"> 
+							<input type="file" class="form-control" id="customFile" name="stu_pdf"> 
 		
 							<br> <br>
 
@@ -706,39 +707,46 @@
 
 	<?php
 
-      if(isset($_POST['student_post_announcement'])) {
+		if(isset($_POST['student_post_announcement'])) {
 
-          $servername = "localhost";
-          $username = "root";
-          $password = "190042106";
-          $dbname = "iut_dms";
+			$servername = "localhost";
+			$username = "root";
+			$password = "190042106";
+			$dbname = "iut_dms";
 
-          // Create connection
-          $conn = mysqli_connect($servername, $username, $password, $dbname);
+			// Create connection
+			$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-          $date = $_POST['date_of_post'];
-          $sub = $_POST['subject_of_post'];
-          $message = $_POST['message_of_post'];
-          $email = $_SESSION['email'];
-
-
-          // Check connection
-          if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
-          }
-
-          $sql = "INSERT INTO student_announcement (subject, announcement_text, s_email) VALUES ( '$sub', '$message', '$email')";
-
-          if (mysqli_query($conn, $sql)) {
-            echo "";
-          } else {
-          echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-          }
+			$date = $_POST['date_of_post'];
+			$sub = $_POST['subject_of_post'];
+			$message = $_POST['message_of_post'];
+			$email = $_SESSION['email'];
 
 
-          mysqli_close($conn);
+			$file_tmp = $_FILES["stu_pdf"]["tmp_name"];
+			$file_name = $_FILES["stu_pdf"]["name"];
 
-        }
+			//image directory where actual image will be store
+			$file_path = "student_pdf/".$file_name;	
+
+			// Check connection
+			if (!$conn) {
+				die("Connection failed: " . mysqli_connect_error());
+			}
+
+			$sql = "INSERT INTO student_announcement (subject, announcement_text, s_email, pdf_path) VALUES ( '$sub', '$message', '$email', '$file_path')";
+
+			if (mysqli_query($conn, $sql)) {
+				echo "";
+			} else {
+				echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+			}
+
+			move_uploaded_file($file_tmp, $file_path);
+
+			mysqli_close($conn);
+
+		}
 
     ?>	
     

@@ -593,7 +593,7 @@ include('provost_photo.php');
 
           mysqli_close($conn);
 
-        }
+      }
 
     ?>	
     
