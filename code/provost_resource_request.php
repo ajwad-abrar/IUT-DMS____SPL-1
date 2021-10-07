@@ -121,7 +121,7 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
         .request_dp{
           border: 2px solid black;
           border-radius: 50%;
-          padding: 5px;
+          padding: 1px;
           margin-right: 3px;
         }
       
@@ -137,6 +137,9 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
           padding: 1px;
           margin-left: 50px;
         }
+        #request_of_resource:hover{
+     background-color: cornsilk;
+      }
 
     </style>
 
@@ -360,16 +363,17 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
        
        <div id="inbox" class="tab-pane active">
         
-        <div class="list-group">
+        <div class="list-group p-3">
         <?php foreach ($requests as $request):  ?>
 
-<a href="#" class="list-group-item list-group-item-action" aria-current="true">
-  <div class=" w-100 justify-content-between">
-    <img src="#" class="request_dp float-left">
+<a href="#" class="list-group-item list-group-item-action" aria-current="true" id="request_of_resource">
+  <div class=" w-100 justify-content-between p-2">
+    <img src="images/prianka.jpg" class="request_dp float-left" style="width:80px;height:80px;">
 
-    <h5 class="mb-1"><b><?php  echo htmlspecialchars($request['email']);?>, </b> is requesting for <?php  echo htmlspecialchars($request['resource_type']);?> item,
+    <h5 class="mb-1"><b>&nbsp;<?php  echo htmlspecialchars($request['email']);?>, </b> is requesting for <?php  echo htmlspecialchars($request['resource_type']);?> item,
   <?php  echo htmlspecialchars($request['resource_name']);?></h5>
-    <small class="text-muted">   <?php  echo htmlspecialchars($request['request_time']);?></small>
+  <br>
+    <small class="text-muted"> &nbsp;  <?php  echo htmlspecialchars($request['request_time']);?></small>
    
    
     <form action="provost_resource_request.php" method="POST">
@@ -398,18 +402,18 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
       
 
    <div id="archive" class="tab-pane"><p></p> <!--Approved requests-->
-    <div class="list-group">
+    <div class="list-group p-3">
 
     <?php foreach ($approved_requests as $approved_request):  ?>
 
-<a href="#" class="list-group-item list-group-item-action" aria-current="true">
-  <div class=" w-100 justify-content-between">
-    <img src="#" class="request_dp float-left">
+<a href="#" class="list-group-item list-group-item-action" aria-current="true" id="request_of_resource">
+  <div class=" w-100 justify-content-between p-2">
+    <img src="images/prianka.jpg" class="request_dp float-left" style="width:80px;height:80px;">
 
-    <h5 class="mb-1"><b> <?php  echo htmlspecialchars($approved_request['email']);?>,</b> had requested for <?php  echo htmlspecialchars($approved_request['resource_type']);?>,
+    <h5 class="mb-1"><b> &nbsp;<?php  echo htmlspecialchars($approved_request['email']);?>,</b> had requested for <?php  echo htmlspecialchars($approved_request['resource_type']);?>,
   <?php  echo htmlspecialchars($approved_request['resource_name']);?></h5>
-
-    <small class="text-muted">   <?php  echo htmlspecialchars($approved_request['request_time']);?></small>
+     <br>
+    <small class="text-muted"> &nbsp;  <?php  echo htmlspecialchars($approved_request['request_time']);?></small>
    
    
 
