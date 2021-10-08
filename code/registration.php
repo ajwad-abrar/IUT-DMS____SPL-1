@@ -80,7 +80,7 @@ mysqli_select_db($con, 'iut_dms');
 		}
 
 		else{
-			echo "ERROR!!!";
+		  echo "password does not match";
 		}
 		 
 	 }
