@@ -16,6 +16,11 @@
 		$result = mysqli_query($con, $reg);
 
 		while($row = mysqli_fetch_assoc($result)){
+
+			if($row['img_path'] == ""){
+				return "profile_picture/admin_default.png";
+			}
+			
 			return "{$row['img_path']}";
 		}
 	}

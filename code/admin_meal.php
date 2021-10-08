@@ -15,6 +15,11 @@
 		$result = mysqli_query($con, $reg);
 
 		while($row = mysqli_fetch_assoc($result)){
+
+			if($row['img_path'] == ""){
+				return "profile_picture/admin_default.png";
+			}
+			
 			return "{$row['img_path']}";
 		}
 	}
@@ -45,47 +50,60 @@
 	<title>Admin Meal</title>
 
     <style>
-      #user{
-            margin-left: 3px;
-            float: left;
-        }
+
+		#user{
+			margin-left: 3px;
+			float: left;
+		}
 
         #prb{
           width: 100%;
         }
+
         .modal-title-ann{
-      text-decoration: underline;
-      color: rgb(71, 71, 201);
+			text-decoration: underline;
+			color: rgb(71, 71, 201);
         }
 
-      #post{
-        border: none;
-        outline: none;
-        border-radius:50px;
-        background-color: rgb(63, 148, 63);
-        color: white;
-        transition: 0.5s;
-        margin-left: -15px;
-      }
-      #post:hover{
-        background-color:crimson;
-      }
-      #floatingTextarea2{
-        border: solid 2px rgb(153, 116, 14);
-      }
+		#post{
+			border: none;
+			outline: none;
+			border-radius:50px;
+			background-color: rgb(63, 148, 63);
+			color: white;
+			transition: 0.5s;
+			margin-left: -15px;
+		}
+
+		#post:hover{
+			background-color:crimson;
+		}
+
+		#floatingTextarea2{
+			border: solid 2px rgb(153, 116, 14);
+		}
 
 
 
-	  table, th, td {	  
-  border: 1px solid black;
-  border-collapse: collapse;
-  padding :3px;
+	  	table, th, td {	  
+			border: 3px solid black;
+			/* border-collapse: collapse; */
+			padding :3px;
   
-}
+		}
 
-   th,td{
-	background-color: #96D4D4;
-   }
+		th{
+			color:dodgerblue;
+		}
+
+		th, tr, td{
+			background-color:blanchedalmond;
+			border-top: 3px black solid;
+		}
+
+		td{
+			padding-top: 10px;
+		}
      
     </style>
   </head>
@@ -241,15 +259,13 @@
         <div class="form-group">
 
 
-          <div class="form-floating">
-		  &nbsp;
-              <label for="floatingTextarea1" class="meal_header">Select a date </label>
-			      &nbsp;  &nbsp;  &nbsp; 
-              <input type="date" id="floatingTextarea1" name="input_date" style="height: 40px">
-			  &nbsp;  &nbsp;  &nbsp; 
-			  <button type="submit"  class="btn btn-success btn-lg" id="post" name="admin_meal_check">Submit</button>
-			 
-              
+          	<div class="form-floating">
+		  		&nbsp;
+              	<label for="floatingTextarea1" class="meal_header">Select a date </label>
+			    &nbsp;  &nbsp;  &nbsp; 
+              	<input type="date" id="floatingTextarea1" name="input_date" style="height: 40px">
+			 	 &nbsp;  &nbsp;  &nbsp; 
+			  	<button type="submit"  class="btn btn-success btn-lg" id="post" name="admin_meal_check">Submit</button>  
             </div>
             
             
@@ -279,7 +295,7 @@
 	<b><h5 class="font-weight-bolder">Students who cancelled their meal for this particular day </h5></b>
     <br>
 
-		<div style=" width:100%; background-color:antiquewhite; padding:15px; border-radius: 2%; border:0.5px solid black;"> 
+		<div style=" width:100%; background-color:snow; padding:15px; border-radius: 2%; border:0.5px solid black;"> 
 
 
 			<h3 style="text-align: center;">
@@ -330,13 +346,13 @@
 
 						if(isset($_POST['admin_meal_check'])) {
 
-							$con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+							$con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
 							
 							$date = $_POST['input_date'];
 							
 							
 							$pepole=" select email from meal_cancellation where cancel_date = '$date'";
-							$show_people =mysqli_query($con, $pepole);
+							$show_people = mysqli_query($con, $pepole);
 							
 					
 							while($row2=mysqli_fetch_assoc($show_people)){
@@ -393,7 +409,7 @@
 
 		     	</td>
 				 
-				<td style=" border: 2px solid black;">
+				<td>
 
 				<?php
 

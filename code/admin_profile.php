@@ -2,6 +2,8 @@
 <?php
 	session_start();
 
+	$flag = 0;
+
 	include('admin_photo.php');
 
 	function getImagePath(){
@@ -11,16 +13,24 @@
 
 		$email = $_SESSION['email'];
 
-		$reg= "select img_path from admin where email= '$email'";
+		$reg = "select img_path from admin where email= '$email'";
 
 		$result = mysqli_query($con, $reg);
 
 		while($row = mysqli_fetch_assoc($result)){
+
+			if($row['img_path'] == ""){
+				return "profile_picture/admin_default.png";
+			}
+			
 			return "{$row['img_path']}";
 		}
+
 	}
 
 	$imagePath = getImagePath();
+
+	
 
 ?>
 
@@ -57,7 +67,7 @@
    		<div class="sidebar-header">
 
 			<div class="container">
-				<a href="#"> <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
+				 <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
 			</div>
 			  
 
