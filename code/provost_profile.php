@@ -14,12 +14,17 @@ include('provost_photo.php');
 
 		$result = mysqli_query($con, $reg);
 
-		while($row = mysqli_fetch_assoc($result)){
-			return "{$row['img_path']}";
-		}
-	}
+    while($row = mysqli_fetch_assoc($result)){
 
-	$imagePath = getImagePath();
+      if($row['img_path'] == ""){
+        return "provost_profile_picture/provost_default.png";
+      }
+
+      return "{$row['img_path']}";
+    }
+  }
+
+  $imagePath = getImagePath();
 
 ?>
 
