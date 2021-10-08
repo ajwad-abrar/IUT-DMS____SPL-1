@@ -203,10 +203,10 @@
               <div class="mb-3">
 
                 <label class="form-label" for="customFile" style="font-weight: bolder; color:black">Upload Your Profile Picture</label> <br>
-                <input type="file" class="form-control" id="customFile" name="stu_profile_pic"> <br>
+                <input type="file" accept="image/*" class="form-control" id="customFile" name="stu_profile_pic" required> <br>
 
-                <label for="" style="font-weight: bolder; color:black">Name</label>
-                <input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
+                <!-- <label for="" style="font-weight: bolder; color:black">Name</label>
+                <input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br>  -->
                 
               </div>
 
@@ -236,7 +236,7 @@
       <!-- Update Profile PHP Code starts -->
 
 		<?php
-
+        /*
         if(isset($_POST['update_student_profile'])) {
 
           $servername = "localhost";
@@ -266,7 +266,7 @@
 
           mysqli_close($conn);
 
-        }
+        }     */
 
       ?>
 
@@ -351,7 +351,7 @@
               <br>
                &nbsp;   &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;
                
-              <input placeholder="Select Start Date" type="text" id="floatingTextarea1" name="start_date" class="datepicker" autocomplete="off" style="height: 40px;" >
+              <input placeholder="Select Start Date" type="text" id="floatingTextarea1" name="start_date" required class="datepicker" autocomplete="off" style="height: 40px;" >
               <br><br>
               
             </div>
@@ -360,7 +360,7 @@
               <label for="floatingTextarea1" class="meal_header" style="padding-top: 25px; font-size: 22px"> End Date</label><br>
 
               &nbsp;   &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;
-              <input placeholder="Select End Date" type="text" id="floatingTextarea1" name="end_date" class="datepicker" autocomplete="off" style="height: 40px"></textarea>
+              <input placeholder="Select End Date" type="text" id="floatingTextarea1" name="end_date" required class="datepicker" autocomplete="off" style="height: 40px"></textarea>
               
             </div>
            <br>
@@ -369,7 +369,7 @@
             
               <label for="floatingTextarea2" class = "meal_header" style="padding-top: 25px; font-size: 22px">Reason for Meal Cancellation</label>
               <br><br><br>
-              <textarea class="form-control p-2" placeholder="Write your reason/s" id="cancel_reason" name="reason" maxlength = "200"></textarea>
+              <textarea class="form-control p-2" placeholder="Write your reason/s" id="cancel_reason" required name="reason" maxlength = "150"></textarea>
              
           </div>
            <br>

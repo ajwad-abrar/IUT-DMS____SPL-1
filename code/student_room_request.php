@@ -199,10 +199,10 @@ include('student_photo.php');
                 <div class="mb-3">
 
                   <label class="form-label" for="customFile" style="font-weight: bolder; color:black">Upload Your Profile Picture</label> <br>
-                  <input type="file" class="form-control" id="customFile" name="stu_profile_pic" required> <br>
+                  <input type="file" accept="image/*" class="form-control" id="customFile" name="stu_profile_pic" required> <br>
 
-                  <label for="" style="font-weight: bolder; color:black">Name</label>
-                  <input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
+                  <!-- <label for="" style="font-weight: bolder; color:black">Name</label>
+                  <input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br>  -->
                   
                 </div>
 
@@ -233,7 +233,7 @@ include('student_photo.php');
       <!-- Update Profile PHP Code starts -->
 
 		<?php
-
+        /*
         if(isset($_POST['update_student_profile'])) {
 
           $servername = "localhost";
@@ -263,7 +263,7 @@ include('student_photo.php');
 
           mysqli_close($conn);
 
-        }
+        }         */
 
     ?>
   
@@ -363,7 +363,7 @@ include('student_photo.php');
    <form action="student_room_request.php" class="room_rqst" method="POST">
 
 
-   <div class="container mt-5">
+    <div class="container mt-5">
 				  <div class="row">
 					<!-- <div class="col-md-2">
 						<h5>Dynamic Drop down</h5>
@@ -375,7 +375,7 @@ include('student_photo.php');
 
 						<select name="hall_name" id="main_menu" class="custom-select">
 							
-							<option value="choose" selected>Select </option>
+							<option value="selected" selected> Select </option>
 							<option value="north">North Hall</option>
 							<option value="south">South Hall</option>
 							<option value="female">Female Hall</option>
@@ -390,6 +390,7 @@ include('student_photo.php');
 						<h4 class="text-center">Floor</h4>
 
 						<select name="floor_number" id="sub_menu" class="custom-select">
+              <!-- <option value="choose" selected>Select </option> -->
 						</select>
 		
 		
@@ -401,9 +402,6 @@ include('student_photo.php');
 						<h4 class="text-center">Room Number</h4>
 
 						<select name="room_number" id="sub_menu2" class="custom-select">
-		       <?php
-           
-             ?>
              
 						</select>
 		

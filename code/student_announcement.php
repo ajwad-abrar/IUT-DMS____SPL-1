@@ -122,7 +122,12 @@
 			// output data of each row
 				while($row = mysqli_fetch_assoc($result)) {
 					echo "" .$row['announcement_text'] ."<br><br><br>";
-					echo "<iframe src=\"".$row['pdf_path'] ."\" width=\"100%\" style=\"height:600px\"></iframe>";				
+					
+					$pdf_path = $row['pdf_path'];
+
+					if($pdf_path != 'provost_pdf/'){
+					  echo "<iframe src=\"".$row['pdf_path'] ."\" width=\"100%\" style=\"height:600px\"></iframe>";
+					}				
 				}
 			} 	
 			else {
@@ -198,7 +203,12 @@
 			// output data of each row
 				while($row = mysqli_fetch_assoc($result)) {
 					echo "" .$row['announcement_text'] ."<br> <br> <br>";
-					echo "<iframe src=\"".$row['pdf_path'] ."\" width=\"100%\" style=\"height:600px\"></iframe>";
+
+					$pdf_path = $row['pdf_path'];
+
+					if($pdf_path != 'student_pdf/'){
+					  echo "<iframe src=\"".$row['pdf_path'] ."\" width=\"100%\" style=\"height:600px\"></iframe>";
+					}
 				}
 			} 	
 			else {
@@ -284,10 +294,10 @@
 					<div class="mb-3">
 
 						<label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
-						<input type="file" class="form-control" id="customFile" name="stu_profile_pic"> <br>
+						<input type="file" accept="image/*" class="form-control" id="customFile" name="stu_profile_pic" required> <br>
 
-						<label for="" class="label-style">Name</label>
-						<input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
+						<!-- <label for="" class="label-style">Name</label>
+						<input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br>  -->
 						
 					</div>
 
@@ -317,6 +327,8 @@
 		<!-- Update Profile PHP Code starts -->
 
 		<?php
+
+			/*
 
 			if(isset($_POST['update_student_profile'])) {
 
@@ -348,6 +360,8 @@
 				mysqli_close($conn);
 
 			}
+
+			*/
 
 		?>
 

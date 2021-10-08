@@ -210,10 +210,10 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
                 <div class="mb-3">
 
                   <label class="form-label" style="font-weight: bolder; color:black" for="customFile">Upload Your Profile Picture</label> <br>
-                  <input type="file" class="form-control" id="customFile" name="provost_profile_pic" required> <br>
+                  <input type="file" accept="image/*" class="form-control" id="customFile" name="provost_profile_pic" required> <br>
 
-                  <label for="" style="font-weight: bolder; color:black">Name</label>
-                  <input type="text" placeholder="Enter your name" class="form-control" name="provost_name" required> <br> 
+                  <!-- <label for="" style="font-weight: bolder; color:black">Name</label>
+                  <input type="text" placeholder="Enter your name" class="form-control" name="provost_name" required> <br>  -->
                   
                 </div>
 
@@ -243,7 +243,7 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
       <!-- Update Profile PHP Code starts -->
 
       <?php
-
+        /*
         if(isset($_POST['update_provost_profile'])) {
 
               $servername = "localhost";
@@ -274,6 +274,8 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
               mysqli_close($conn);
 
           }
+
+          */
 
       ?>
 
@@ -361,73 +363,90 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
       
   <div class="tab-content">
        
-       <div id="inbox" class="tab-pane active">
+      <div id="inbox" class="tab-pane active">
         
         <div class="list-group p-3">
-        <?php foreach ($requests as $request):  ?>
 
-<a href="#" class="list-group-item list-group-item-action" aria-current="true" id="request_of_resource">
-  <div class=" w-100 justify-content-between p-2">
-    <img src="images/prianka.jpg" class="request_dp float-left" style="width:80px;height:80px;">
+          <?php foreach ($requests as $request):  ?>
 
-    <h5 class="mb-1"><b>&nbsp;<?php  echo htmlspecialchars($request['email']);?>, </b> is requesting for <?php  echo htmlspecialchars($request['resource_type']);?> item,
-  <?php  echo htmlspecialchars($request['resource_name']);?></h5>
-  <br>
-    <small class="text-muted"> &nbsp;  <?php  echo htmlspecialchars($request['request_time']);?></small>
-   
-   
-    <form action="provost_resource_request.php" method="POST">
-    <input type = "hidden" name  ="request_ID" value=" <?php  echo $request['request_ID'];?>" />
-    <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>
-   
-    
+          <a href="#" class="list-group-item list-group-item-action" aria-current="true" id="request_of_resource">
 
-    </form>
-  </div>
-</a>
-<?php endforeach; ?>
+            <div class=" w-100 justify-content-between p-2">
 
+                <?php
+                    
+                    $mail = $request['email'];
 
-      
-        
+                    $con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+                    $reg= "select img_path from student where email= '$mail'";
+
+                    $result = mysqli_query($con, $reg);
+
+                    while($row = mysqli_fetch_assoc($result)){
+                      $path = "{$row['img_path']}";
+                    }
+                ?>
+
+                <img src="<?php echo $path ?>" class="request_dp float-left" style="width:80px;height:80px;">
+
+                <h5 class="mb-1"><b>&nbsp;<?php  echo htmlspecialchars($request['email']);?>, </b> is requesting for <?php  echo htmlspecialchars($request['resource_type']);?> item,
+                <?php  echo htmlspecialchars($request['resource_name']);?></h5>
+                <br>
+                <small class="text-muted"> &nbsp;  <?php  echo htmlspecialchars($request['request_time']);?></small>
+
+                <form action="provost_resource_request.php" method="POST">
+                  <input type = "hidden" name  ="request_ID" value=" <?php  echo $request['request_ID'];?>" />
+                  <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>    
+                </form>
+            </div>
+
+          </a>
+
+          <?php endforeach; ?>     
 
         </div>
 
-               
-
       </div>
 
-              
-           
-      
+         
 
    <div id="archive" class="tab-pane"><p></p> <!--Approved requests-->
-    <div class="list-group p-3">
+      <div class="list-group p-3">
 
-    <?php foreach ($approved_requests as $approved_request):  ?>
+        <?php foreach ($approved_requests as $approved_request):  ?>
 
-<a href="#" class="list-group-item list-group-item-action" aria-current="true" id="request_of_resource">
-  <div class=" w-100 justify-content-between p-2">
-    <img src="images/prianka.jpg" class="request_dp float-left" style="width:80px;height:80px;">
+        <a href="#" class="list-group-item list-group-item-action" aria-current="true" id="request_of_resource">
 
-    <h5 class="mb-1"><b> &nbsp;<?php  echo htmlspecialchars($approved_request['email']);?>,</b> had requested for <?php  echo htmlspecialchars($approved_request['resource_type']);?>,
-  <?php  echo htmlspecialchars($approved_request['resource_name']);?></h5>
-     <br>
-    <small class="text-muted"> &nbsp;  <?php  echo htmlspecialchars($approved_request['request_time']);?></small>
-   
-   
-
-    
-  </div>
-</a>
-<?php endforeach; ?>
+            <div class=" w-100 justify-content-between p-2">
 
 
-     
+              <?php
+                  
+                  $mail = $approved_request['email'];
 
+                  $con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+                  $reg= "select img_path from student where email= '$mail'";
+
+                  $result = mysqli_query($con, $reg);
+
+                  while($row = mysqli_fetch_assoc($result)){
+                    $path = "{$row['img_path']}";
+                  }
+              ?>
+
+              <img src="<?php echo $path ?>" class="request_dp float-left" style="width:80px;height:80px;">
+
+              <h5 class="mb-1"><b> &nbsp;<?php  echo htmlspecialchars($approved_request['email']);?>,</b> had requested for <?php  echo htmlspecialchars($approved_request['resource_type']);?>,
+              <?php  echo htmlspecialchars($approved_request['resource_name']);?></h5>
+              <br>
+              <small class="text-muted"> &nbsp;  <?php  echo htmlspecialchars($approved_request['request_time']);?></small>
+            
+            </div>
+        </a>
+        <?php endforeach; ?>
     </div>
-
-   
   </div>  <!--jdjsjdfhbjdjbhshbj-->
 
 

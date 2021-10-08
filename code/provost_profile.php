@@ -141,10 +141,10 @@ include('provost_photo.php');
               <div class="mb-3">
 
                 <label class="form-label" style="font-weight: bolder; color:black" for="customFile">Upload Your Profile Picture</label> <br>
-                <input type="file" class="form-control" id="customFile" name="provost_profile_pic" required> <br>
+                <input type="file" accept="image/*" class="form-control" id="customFile" name="provost_profile_pic" required> <br>
 
-                <label for="" style="font-weight: bolder; color:black">Name</label>
-                <input type="text" placeholder="Enter your name" class="form-control" name="provost_name" required> <br> 
+                <!-- <label for="" style="font-weight: bolder; color:black">Name</label>
+                <input type="text" placeholder="Enter your name" class="form-control" name="provost_name" required> <br>  -->
                 
               </div>
 
@@ -173,7 +173,7 @@ include('provost_photo.php');
       <!-- Update Profile PHP Code starts -->
 
       <?php
-
+        /*
         if(isset($_POST['update_provost_profile'])) {
 
               $servername = "localhost";
@@ -204,6 +204,8 @@ include('provost_photo.php');
               mysqli_close($conn);
 
           }
+
+          */
 
       ?>
 
@@ -287,7 +289,7 @@ include('provost_photo.php');
               <div class="col-10 mx-auto">
                   <div class="card h-100 justify-content-center">
                       <div style="padding: 5%;" class="text-center">
-                        <img src="images/prianka.jpg" style="height: 250px; width: 220px;margin:0 auto; border-radius: 50%; padding-bottom: 20px" alt="">
+                        <img src="<?php echo $imagePath ?>" style="height: 250px; width: 220px;margin:0 auto; border-radius: 50%; padding-bottom: 20px" alt="">
                         <h5 class="card-title text-center" style="color:dodgerblue; font-size: 28px; font-weight: 800; margin-bottom: -5px;">Provost Profile <br> <br></h5>
                         <h4 class="text-left"><?php showDetailsOfProvost(); ?></h4>
                       </div>

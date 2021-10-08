@@ -8,12 +8,6 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
        echo 'connection error'.mysqli_connect_error();
      }
 
-    //  $sql=' SELECT S.name, S.student_ID,R.request_ID,R.email,R.hall_name,R.level,R.room_no, R.bed,R.request_time
-    //  FROM student S, room_request R WHERE WHERE R.provost_approval= ""
-    //   ORDER BY R.request_time DESC';
-    
-  
-
      $sql='SELECT request_ID,email,hall_name, level, room_no,request_time
      FROM `room_request`
      WHERE `provost_approval`= ""
@@ -33,11 +27,9 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
     $requests= mysqli_fetch_all($result,MYSQLI_ASSOC);
     $approved_requests= mysqli_fetch_all($result2,MYSQLI_ASSOC);
     
-    
-
-
     mysqli_free_result($result);
     mysqli_free_result($result2);
+
 
 
     if(isset($_POST['approve'])){
@@ -201,10 +193,10 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
                 <div class="mb-3">
 
                   <label class="form-label" style="font-weight: bolder; color:black" for="customFile">Upload Your Profile Picture</label> <br>
-                  <input type="file" class="form-control" id="customFile" name="provost_profile_pic" accept="image/*" required> <br>
+                  <input type="file" accept="image/*" class="form-control" id="customFile" name="provost_profile_pic" required> <br>
 
-                  <label for="" style="font-weight: bolder; color:black">Name</label>
-                  <input type="text" placeholder="Enter your name" class="form-control" name="provost_name" required> <br> 
+                  <!-- <label for="" style="font-weight: bolder; color:black">Name</label>
+                  <input type="text" placeholder="Enter your name" class="form-control" name="provost_name" required> <br>  -->
                   
                 </div>
 
@@ -234,7 +226,7 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
       <!-- Update Profile PHP Code starts -->
 
       <?php
-
+        /*
         if(isset($_POST['update_provost_profile'])) {
 
               $servername = "localhost";
@@ -265,7 +257,7 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
               mysqli_close($conn);
 
           }
-
+        */  
       ?>
 
 
@@ -333,8 +325,6 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
       
    	
   
-  <!--<a class="navbar-brand" href="#">Navbar</a> -->
-  
       </nav>
   
 
@@ -361,88 +351,108 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
        
        <div id="inbox" class="tab-pane active">
         
-        <div class="list-group p-3">
+          <div class="list-group p-3">
         
-        <?php foreach ($requests as $request):  ?>
+            <?php foreach ($requests as $request):  ?>
         
-        <a href="#" class="list-group-item list-group-item-action" aria-current="true" id="request_of_room">
-  <div class=" w-100 justify-content-between p-2">
-    <img src="images/prianka.jpg" class="request_dp float-left " style="width:80px;height:80px;"> 
-    
-    <h5 class="mb-1"><b>&nbsp;<?php  echo htmlspecialchars($request['email']);?>, </b> is requesting for room <?php  echo htmlspecialchars($request['room_no']);?>,
-    <?php  echo htmlspecialchars($request['level']);?>,
-     <?php  echo htmlspecialchars($request['hall_name']);?> hall</h5>
+              <a href="#" class="list-group-item list-group-item-action" aria-current="true" id="request_of_room">
 
-    
-    <br>
-    <small class="text-muted">&nbsp;   <?php  echo htmlspecialchars($request['request_time']);?></small>
-   
-   
-    <form action="provost_room_request.php" method="POST">
-    <input type = "hidden" name  ="request_ID" value=" <?php  echo $request['request_ID'];?>" />
-    
-    <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>
-     
-    </form>
-  </div>
-</a>
+                    <div class=" w-100 justify-content-between p-2">
 
+                    <?php
+                    
+                        $mail = $request['email'];
 
-        
+                        $con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+                        $reg= "select img_path from student where email= '$mail'";
+
+                        $result = mysqli_query($con, $reg);
+
+                        while($row = mysqli_fetch_assoc($result)){
+                          $path = "{$row['img_path']}";
+                        }
+                    ?>
 
 
 
-<?php endforeach; ?>
+                        <img src="<?php echo $path ?>" class="request_dp float-left " style="width:80px;height:80px;"> 
+              
+                        <h5 class="mb-1"><b>&nbsp;<?php  echo htmlspecialchars($request['email']);?>, </b> is requesting for room <?php  echo htmlspecialchars($request['room_no']);?>,
+                        <?php  echo htmlspecialchars($request['level']);?>,
+                        <?php  echo htmlspecialchars($request['hall_name']);?> hall</h5>
 
+                        
+              
+                        <br>
+                          <small class="text-muted">&nbsp;   <?php  echo htmlspecialchars($request['request_time']);?></small>
+                        
+                        
+                          <form action="provost_room_request.php" method="POST">
 
- 
+                            <input type = "hidden" name  ="request_ID" value=" <?php  echo $request['request_ID'];?>" />
+                            
+                            <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>
+                          
+                          </form>
+                    </div>
+              </a>
+
+            <?php endforeach; ?>
+
+          </div>            
 
         </div>
 
-               
-
-      </div>
-
-                 
-           
-      
+                    
 
 
-   <div id="archive" class="tab-pane"><p></p> <!--Approved requests-->
-    <div class="list-group p-3">
+        <div id="archive" class="tab-pane"><p></p> <!--Approved requests-->
 
-    <?php foreach ($approved_requests as $approved_request):  ?>
+          <div class="list-group p-3">
 
-<a href="#" class="list-group-item list-group-item-action" aria-current="true" id="request_of_room">
-  <div class=" w-100 justify-content-between p-2">
-    <img src="images/prianka.jpg" class="request_dp float-left" style="width:80px;height:80px;">
+            <?php foreach ($approved_requests as $approved_request):  ?>
 
-    <h5 class="mb-1"><b>&nbsp; <?php  echo htmlspecialchars($approved_request['email']);?>,</b> had requested for room <?php  echo htmlspecialchars($approved_request['room_no']);?>,
-    <?php  echo htmlspecialchars($approved_request['level']);?>,
-     <?php  echo htmlspecialchars($approved_request['hall_name']);?> hall</h5>
+              <a href="#" class="list-group-item list-group-item-action" aria-current="true" id="request_of_room">
+                <div class=" w-100 justify-content-between p-2">
 
-     <br>
 
-    <small class="text-muted"> &nbsp;  <?php  echo htmlspecialchars($approved_request['request_time']);?></small>
+                <?php
+                    
+                    $mail = $approved_request['email'];
+
+                    $con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+
+                    $reg= "select img_path from student where email= '$mail'";
+
+                    $result = mysqli_query($con, $reg);
+
+                    while($row = mysqli_fetch_assoc($result)){
+                      $path = "{$row['img_path']}";
+                    }
+                ?>
+
+
+
+                  <img src="<?php echo $path ?>" class="request_dp float-left" style="width:80px;height:80px;">
+
+                  <h5 class="mb-1"><b>&nbsp; <?php  echo htmlspecialchars($approved_request['email']);?>,</b> had requested for room <?php  echo htmlspecialchars($approved_request['room_no']);?>,
+                  <?php  echo htmlspecialchars($approved_request['level']);?>,
+                  <?php  echo htmlspecialchars($approved_request['hall_name']);?> hall</h5>
+
+                  <br>
+
+                  <small class="text-muted"> &nbsp;  <?php  echo htmlspecialchars($approved_request['request_time']);?></small>
+                  
+                </div>
+              </a>
+
+            <?php endforeach; ?>
+
+
+            </div>
    
-   
-  <!--  <form action="room_request_approval.php" method="POST">
-    <button   value="Approved" type="submit" class="btn btn-info float-right" id="post" name="approve" onclick="approval()">Approve</button>
-   
-    
-    </form>
-    -->
-  </div>
-</a>
-<?php endforeach; ?>
-
-
-     
-
-    </div>
-
-   
-  </div>  <!--jdjsjdfhbjdjbhshbj-->
+        </div> 
 
 
   <div id="sent" class="tab-pane">
@@ -497,15 +507,6 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
 
 
      </div>
-
-    
-
-
-
-
-
-
-
 
 
    

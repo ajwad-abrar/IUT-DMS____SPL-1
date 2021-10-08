@@ -176,7 +176,12 @@ include('provost_photo.php');
           // output data of each row
             while($row = mysqli_fetch_assoc($result)) {
               echo "" .$row['announcement_text'] ."<br><br><br>";
-              echo "<iframe src=\"".$row['pdf_path'] ."\" width=\"100%\" style=\"height:600px\"></iframe>";
+
+              $pdf_path = $row['pdf_path'];
+
+              if($pdf_path != 'provost_pdf/'){
+                echo "<iframe src=\"".$row['pdf_path'] ."\" width=\"100%\" style=\"height:600px\"></iframe>";
+              }
             }
           } 	
           else {
@@ -232,10 +237,10 @@ include('provost_photo.php');
                 <div class="mb-3">
 
                   <label class="form-label"  style="font-weight: bolder; color:black" for="customFile">Upload Your Profile Picture</label> <br>
-                  <input type="file" class="form-control" id="customFile" name="provost_profile_pic" required> <br>
+                  <input type="file" accept="image/*" class="form-control" id="customFile" name="provost_profile_pic" required> <br>
 
-                  <label for="" style="font-weight: bolder; color:black">Name</label>
-                  <input type="text" placeholder="Enter your name" class="form-control" name="provost_name" required> <br> 
+                  <!-- <label for="" style="font-weight: bolder; color:black">Name</label>
+                  <input type="text" placeholder="Enter your name" class="form-control" name="provost_name" required> <br>  -->
                   
                 </div>
 
@@ -264,7 +269,7 @@ include('provost_photo.php');
       <!-- Update Profile PHP Code starts -->
 
       <?php
-
+        /*
         if(isset($_POST['update_provost_profile'])) {
 
               $servername = "localhost";
@@ -295,6 +300,8 @@ include('provost_photo.php');
               mysqli_close($conn);
 
           }
+
+          */
 
       ?>
 
