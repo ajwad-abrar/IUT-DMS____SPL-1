@@ -353,12 +353,10 @@ include('student_photo.php');
 
         $con = mysqli_connect("localhost","root","190042106","iut_dms");
         $email = $_SESSION['email'];
-        $app=" select provost_approval,resource_name from resource_request where email= '$email'";
+        $app=" select request_ID,status_visited,provost_approval,resource_name from resource_request where email= '$email'";
        $status = mysqli_query($con, $app);
 
-      //  $roomcount = "SELECT COUNT(room_no) AS count FROM room_request WHERE room_no = '$room_number' AND hall_name= '$hall_name'";
-      // $countcheck = mysqli_query($con, $roomcount);
-      // $row2 = mysqli_fetch_assoc($roomcount);
+     
 
         echo "<br>";
 
@@ -367,13 +365,16 @@ include('student_photo.php');
          if($row['provost_approval'] =="Approved"){
           
         //  echo '<div class="alert alert-success alert-dismissible fade show p-3 text-center" role="alert"><b> Your Request Has Been Approved</b></div>';
-            
+        if($row['status_visited']==0){
 
-        echo '<div class="alert alert-success alert-dismissible text-center">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>'.
-        '<strong>Success!</strong>'. " Your request for ". "<b>".$row['resource_name']."</b>". " has been approved".
-      '</div>';
-                   
+            echo '<div class="alert alert-success alert-dismissible text-center">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>'.
+            '<strong>Success!</strong>'. " Your request for ". "<b>".$row['resource_name']."</b>". " has been approved".
+          '</div>';
+          $r_id= $row['request_ID'];
+          $visited ="UPDATE resource_request SET status_visited = '1' WHERE request_ID='$r_id'";
+          $status_visited=mysqli_query($con, $visited);
+        }       
           
          }
           else if($row['provost_approval'] ==""){

@@ -1,3 +1,219 @@
+   <!-- registration -->
+
+<?php
+
+	session_start();
+
+
+	$con =mysqli_connect('localhost', 'root','190042106');
+
+	mysqli_select_db($con, 'iut_dms');
+
+  if(isset($_POST['register'])){
+    $role=mysqli_real_escape_string($con,$_POST['role']);
+    $name = mysqli_real_escape_string($con,$_POST['name']);
+    $s_id= mysqli_real_escape_string($con,$_POST['s_id']); 
+    $dept = mysqli_real_escape_string($con,$_POST['dept']);
+    $gender= mysqli_real_escape_string($con,$_POST['gender']);
+    $email = mysqli_real_escape_string($con,$_POST['email']);
+    $password = mysqli_real_escape_string($con,$_POST['pwd']);
+    $cpassword= mysqli_real_escape_string($con,$_POST['cpwd']);
+        
+    
+  
+    $hashed_password= password_hash($password, PASSWORD_DEFAULT);
+  
+    $query1 = " select * from student where email = '$email' ";
+    $query2 = " select * from provost where email = '$email' ";
+    $query3 = " select * from admin where email = '$email' ";
+  
+  
+    $result1 = mysqli_query($con, $query1);
+    $result2 = mysqli_query($con, $query2);
+    $result3 = mysqli_query($con, $query3);
+  
+    $num1 = mysqli_num_rows($result1);
+    $num2 = mysqli_num_rows($result2);
+    $num3 = mysqli_num_rows($result3);
+  
+    if($num1 == 1 or $num2 == 1 or $num3 ==1){
+      echo '<div class="alert alert-danger alert-dismissible text-center">
+      Email already used
+     <button type="button" class="close" data-dismiss="alert">&times;</button>
+   </div>';
+    }
+  
+    else {
+  
+      if($cpassword == $password){
+  
+  
+        if($role == "Student") {
+  
+          $reg1 = " insert into student(name, student_ID, programme, gender, email, password) 
+          values('$name', '$s_id', '$dept', '$gender', '$email', '$hashed_password')" ;
+  
+          mysqli_query($con, $reg1);
+          // header('location:login.php');
+          echo '<div class="alert alert-success alert-dismissible text-center">
+          Registration Successful!!!
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>';
+        }
+  
+        else if(($role == "Provost")){
+          
+          $reg2 = " insert into provost(name, programme, gender, email, password) 
+          values('$name', '$dept', '$gender', '$email', '$hashed_password')" ;
+  
+          mysqli_query($con, $reg2);
+          // header('location:login.php');
+          echo '<div class="alert alert-success alert-dismissible text-center">
+          Registration Successful!!!
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>';
+  
+        }
+  
+        else{
+          $reg3 = " insert into admin(name, gender, email, password) 
+          values('$name', '$gender', '$email', '$hashed_password')" ;
+  
+          mysqli_query($con, $reg3);
+        echo '<div class="alert alert-success alert-dismissible text-center">
+        Registration Successful!!!
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>';
+          // header('location:login.php');
+          
+        }			
+        
+      }
+  
+      else{
+        echo '<div class="alert alert-danger alert-dismissible text-center">
+         Password doesn not match 
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>';
+      }
+      
+    }
+  
+
+	}
+
+
+?>
+
+
+    <!-- login and validation -->
+    <?php
+
+$con =mysqli_connect('localhost', 'root','190042106');
+
+mysqli_select_db($con, 'iut_dms');
+
+if(isset($_POST['submit'])){
+
+  //$name = mysqli_real_escape_string($con,$_POST['name']);
+  $email = mysqli_real_escape_string($con,$_POST['email']);
+  $password = mysqli_real_escape_string($con,$_POST['pwd']);
+ // $cpassword= mysqli_real_escape_string($con,$_POST['cpwd']);
+  $query1 = " select * from student where email='$email' ";
+  $query2 = " select * from provost where email='$email' ";
+  $query3 = " select * from admin where email='$email' ";
+  
+  $result1 = mysqli_query($con, $query1);
+  $result2 = mysqli_query($con, $query2);
+  $result3 = mysqli_query($con, $query3);
+  
+  
+  $numberOfRows1 = mysqli_num_rows($result1);
+  $numberOfRows2 = mysqli_num_rows($result2);
+  $numberOfRows3 = mysqli_num_rows($result3);
+  
+  $_SESSION['email'] = $email;
+  
+  if($numberOfRows1 == 1){
+  
+  while($row = mysqli_fetch_assoc($result1)) {
+  
+    if(password_verify($password, $row['password'])){
+   
+     header('location:student_home.php');
+    }
+
+    else{
+    echo  '<div class="alert alert-danger alert-dismissible text-center">
+         Wrong Password
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>';
+
+    }
+  }
+    
+  } 
+  
+  elseif($numberOfRows2 == 1){
+  
+   while($row = mysqli_fetch_assoc($result2)){
+  
+     if(password_verify($password, $row['password'])){
+      
+        header('location:provost_home.php');
+     }
+     else{
+      echo  '<div class="alert alert-danger alert-dismissible text-center">
+           Wrong Password
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>';
+  
+      }
+   }
+   
+  }
+  
+  elseif($numberOfRows3 == 1){
+  
+  while($row = mysqli_fetch_assoc($result3)){
+  
+   if(password_verify($password, $row['password'])){
+    
+      header('location:admin_home.php');
+   }
+   else{
+    echo  '<div class="alert alert-danger alert-dismissible text-center">
+         Wrong Password
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>';
+
+    }
+  }
+  
+  }
+  
+  
+  
+  
+  else{
+  
+     echo "Wrong Password!!";
+      
+  
+  }
+  
+
+}
+
+
+?>
+
+
+
+
+
+
+
 <!doctype html>
 
 <html lang="en">
@@ -44,7 +260,7 @@
             <div class="col-lg-7 text-center py-5">
               <h1 class="animate__animated animate__pulse animate__infinite">Welcome Back!</h1>
 
-              <form action="validation.php" method="post">
+              <form action="login.php" method="post">
 
                 <div class="form-row py-3 pt-5">
                  
@@ -118,7 +334,7 @@
 					<div class="modal-body">
 	  
 	  
-						<form action="registration.php" class="m-2 p-3 border border-warning" method="post">
+						<form action="login.php" class="m-2 p-3 border border-warning" method="post">
 	  
 							<div class="mb-3">
 	  
