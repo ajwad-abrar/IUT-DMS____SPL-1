@@ -95,6 +95,11 @@ include('student_photo.php');
 		$result = mysqli_query($con, $reg);
 
 		while($row = mysqli_fetch_assoc($result)){
+
+			if($row['img_path'] == ""){
+			  return "student_profile_picture/student_default.jpg";
+			}
+	
 			return "{$row['img_path']}";
 		}
 	}

@@ -17,8 +17,13 @@
 		$result = mysqli_query($con, $reg);
 
 		while($row = mysqli_fetch_assoc($result)){
+
+			if($row['img_path'] == ""){
+			  return "student_profile_picture/student_default.jpg";
+			}
+	
 			return "{$row['img_path']}";
-		}
+		  }
 	}
 
 	$imagePath = getImagePath();
@@ -58,7 +63,7 @@
    		<div class="sidebar-header">
 
 		   <div class="container">
-				<a href="#"> <img src="<?php echo $imagePath ?>" id="profile_picture"></a>
+				<img src="<?php echo $imagePath ?>" id="profile_picture"></a>
 			</div>
 
             <h4>
