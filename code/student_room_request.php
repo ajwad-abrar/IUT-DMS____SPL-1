@@ -363,7 +363,7 @@ include('student_photo.php');
    <form action="student_room_request.php" class="room_rqst" method="POST">
 
 
-   <div class="container mt-5">
+    <div class="container mt-5">
 				  <div class="row">
 					<!-- <div class="col-md-2">
 						<h5>Dynamic Drop down</h5>
@@ -375,7 +375,7 @@ include('student_photo.php');
 
 						<select name="hall_name" id="main_menu" class="custom-select">
 							
-							<option value="choose" selected>Select </option>
+							<option value="selected" selected> Select </option>
 							<option value="north">North Hall</option>
 							<option value="south">South Hall</option>
 							<option value="female">Female Hall</option>
@@ -390,6 +390,7 @@ include('student_photo.php');
 						<h4 class="text-center">Floor</h4>
 
 						<select name="floor_number" id="sub_menu" class="custom-select">
+              <!-- <option value="choose" selected>Select </option> -->
 						</select>
 		
 		
@@ -401,9 +402,6 @@ include('student_photo.php');
 						<h4 class="text-center">Room Number</h4>
 
 						<select name="room_number" id="sub_menu2" class="custom-select">
-		       <?php
-           
-             ?>
              
 						</select>
 		

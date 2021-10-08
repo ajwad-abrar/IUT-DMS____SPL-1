@@ -325,8 +325,6 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
       
    	
   
-  <!--<a class="navbar-brand" href="#">Navbar</a> -->
-  
       </nav>
   
 
