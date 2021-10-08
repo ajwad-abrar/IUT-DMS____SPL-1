@@ -117,7 +117,7 @@
 							<div class="mb-3">
 
 								<label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
-								<input type="file" name="profile_pic" class="form-control" id="customFile" required> <br>
+								<input type="file" accept="image/*" name="profile_pic" class="form-control" id="customFile" required> <br>
 
 								<!-- <label for="" class="label-style">Name</label>
 								<input type="text" placeholder="Enter your name" class="form-control" name="admin_name" required> <br>  -->

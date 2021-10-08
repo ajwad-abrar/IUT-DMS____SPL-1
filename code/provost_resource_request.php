@@ -210,7 +210,7 @@ $con =mysqli_connect('localhost', 'root','190042106','iut_dms');
                 <div class="mb-3">
 
                   <label class="form-label" style="font-weight: bolder; color:black" for="customFile">Upload Your Profile Picture</label> <br>
-                  <input type="file" class="form-control" id="customFile" name="provost_profile_pic" required> <br>
+                  <input type="file" accept="image/*" class="form-control" id="customFile" name="provost_profile_pic" required> <br>
 
                   <!-- <label for="" style="font-weight: bolder; color:black">Name</label>
                   <input type="text" placeholder="Enter your name" class="form-control" name="provost_name" required> <br>  -->
