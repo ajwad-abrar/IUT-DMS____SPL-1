@@ -294,10 +294,10 @@
 					<div class="mb-3">
 
 						<label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
-						<input type="file" class="form-control" id="customFile" name="stu_profile_pic"> <br>
+						<input type="file" class="form-control" id="customFile" name="stu_profile_pic" required> <br>
 
-						<label for="" class="label-style">Name</label>
-						<input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
+						<!-- <label for="" class="label-style">Name</label>
+						<input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br>  -->
 						
 					</div>
 
@@ -327,6 +327,8 @@
 		<!-- Update Profile PHP Code starts -->
 
 		<?php
+
+			/*
 
 			if(isset($_POST['update_student_profile'])) {
 
@@ -358,6 +360,8 @@
 				mysqli_close($conn);
 
 			}
+
+			*/
 
 		?>
 

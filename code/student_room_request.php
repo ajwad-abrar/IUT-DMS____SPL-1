@@ -201,8 +201,8 @@ include('student_photo.php');
                   <label class="form-label" for="customFile" style="font-weight: bolder; color:black">Upload Your Profile Picture</label> <br>
                   <input type="file" class="form-control" id="customFile" name="stu_profile_pic" required> <br>
 
-                  <label for="" style="font-weight: bolder; color:black">Name</label>
-                  <input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br> 
+                  <!-- <label for="" style="font-weight: bolder; color:black">Name</label>
+                  <input type="text" placeholder="Enter your name" class="form-control" name="student_name" required> <br>  -->
                   
                 </div>
 
@@ -233,7 +233,7 @@ include('student_photo.php');
       <!-- Update Profile PHP Code starts -->
 
 		<?php
-
+        /*
         if(isset($_POST['update_student_profile'])) {
 
           $servername = "localhost";
@@ -263,7 +263,7 @@ include('student_photo.php');
 
           mysqli_close($conn);
 
-        }
+        }         */
 
     ?>
   

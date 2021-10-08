@@ -117,10 +117,10 @@
 							<div class="mb-3">
 
 								<label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
-								<input type="file" name="profile_pic" class="form-control" id="customFile"> <br>
+								<input type="file" name="profile_pic" class="form-control" id="customFile" required> <br>
 
-								<label for="" class="label-style">Name</label>
-								<input type="text" placeholder="Enter your name" class="form-control" name="admin_name" required> <br> 
+								<!-- <label for="" class="label-style">Name</label>
+								<input type="text" placeholder="Enter your name" class="form-control" name="admin_name" required> <br>  -->
 								
 							</div>
 
@@ -241,7 +241,7 @@
                     echo "<b>Name: </b>" .$row['name'] ." <br> <br>";
                     echo "<b> Gender: </b> " .$row['gender'] ." <br><br>";
                     echo "<b> Email: </b>" .$row['email'] ." <br><br>";
-                    echo "<b> Reg Date: </b>" .date("d M, Y", strtotime($row['reg_date']))." ";
+                    // echo "<b> Reg Date: </b>" .date("d M, Y", strtotime($row['reg_date']))." ";
                 }
           } else {
                 echo "Error: " . $sql . "<br>" . mysqli_error($conn);
@@ -258,7 +258,7 @@
 
 
 	<?php
-
+		/*
 		if(isset($_POST['update_profile'])) {
 
 			$servername = "localhost";
@@ -274,21 +274,23 @@
 
 			// Check connection
 			if (!$conn) {
-			die("Connection failed: " . mysqli_connect_error());
+				die("Connection failed: " . mysqli_connect_error());
 			}
 
 			$sql = "UPDATE admin SET name = '$name' WHERE email = '$email'";
 
 			if (mysqli_query($conn, $sql)) {
-			echo "";
+				echo "";
 			} else {
-			echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+				echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 			}
 
 
 			mysqli_close($conn);
 
 		}
+
+		*/
 
 	?>	
 

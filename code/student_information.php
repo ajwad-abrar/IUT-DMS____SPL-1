@@ -178,8 +178,8 @@ include('provost_photo.php');
                 <label class="form-label label-style" for="customFile">Upload Your Profile Picture</label> <br>
                 <input type="file" class="form-control" id="customFile" name="provost_profile_pic" required> <br>
 
-                <label for="" class="label-style">Name</label>
-                <input type="text" placeholder="Enter your name" class="form-control" name="provost_name" required> <br> 
+                <!-- <label for="" class="label-style">Name</label>
+                <input type="text" placeholder="Enter your name" class="form-control" name="provost_name" required> <br>  -->
                 
               </div>
 
@@ -210,7 +210,7 @@ include('provost_photo.php');
       <!-- Update Profile PHP Code starts -->
 
       <?php
-
+        /*
         if(isset($_POST['update_provost_profile'])) {
 
               $servername = "localhost";
@@ -241,7 +241,7 @@ include('provost_photo.php');
               mysqli_close($conn);
 
           }
-
+        */  
       ?>
 
 
