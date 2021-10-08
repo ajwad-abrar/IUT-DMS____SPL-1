@@ -74,7 +74,7 @@
 		}
 
 		else{
-		  echo "password does not match";
+			echo "ERROR!!!";
 		}
 		
 	}
