@@ -97,8 +97,8 @@
 		}
 
 		th, tr, td{
-			background-color:blanchedalmond;
-			border-top: 3px black solid;
+			background-color:whitesmoke;
+			/* border-top: 3px black solid; */
 		}
 
 		td{
@@ -261,13 +261,12 @@
 
           	<div class="form-floating">
 		  		&nbsp;
-              	<label for="floatingTextarea1" class="meal_header">Select a date </label>
+              	<label for="floatingTextarea1" class="meal_header" style="font-size: 26px;">Select a date </label>
 			    &nbsp;  &nbsp;  &nbsp; 
-              	<input type="date" id="floatingTextarea1" name="input_date" style="height: 40px">
+              	<input required type="date" id="floatingTextarea1" name="input_date" style="height: 40px">
 			 	 &nbsp;  &nbsp;  &nbsp; 
 			  	<button type="submit"  class="btn btn-success btn-lg" id="post" name="admin_meal_check">Submit</button>  
-            </div>
-            
+            </div>          
             
            
 		   <div class="form-group">       
@@ -276,33 +275,32 @@
            </div>
            </div>
     
-      </form>
-
-
-
-
-
-	 		
-
-
-       
-
+      </form> 
 
     </div>
 
-	<div >
-     <br><br>
-	<b><h5 class="font-weight-bolder">Students who cancelled their meal for this particular day </h5></b>
-    <br>
+	
+	<?php
 
-		<div style=" width:100%; background-color:snow; padding:15px; border-radius: 2%; border:0.5px solid black;"> 
-
-
-			<h3 style="text-align: center;">
+		$con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+		
+		$reg= "SELECT COUNT(email) as COUNT from student";		
+		
+		$result = mysqli_query($con, $reg);
+		
+		while($row = mysqli_fetch_assoc($result)){
+			$count =  "{$row['COUNT']}";
+		}	
 			
-			 <table style="width:100%; border: 2px solid black;" >
+	?>
 
-             <b> 
+	<div style="background:whitesmoke  ">
+
+		<h2 class="font-weight-bolder text-center">Total Student :<span style="color: crimson;  font-weight: bold;"> <?php echo $count; ?> </span></h2>
+		
+
+		<h2 class="font-weight-bolder text-center" style="color:black;">  Meal Cancelled : 
+			<span style="color: crimson;">	
 				<?php
 
 					if(isset($_POST['admin_meal_check'])) {
@@ -318,142 +316,177 @@
 						$result = mysqli_query($con, $reg);
 						$show_people =mysqli_query($con, $pepole);
 						
-						
 						while($row = mysqli_fetch_assoc($result)){
 							$number_of_meal =  "{$row['COUNT']}";
 						}
-						
-						echo $number_of_meal;
-						echo " students";
-						echo "<br><br>";
+
+						echo "<b>$number_of_meal</b>";
 						
 					}		
+
+				?>  </span>  </h2>
+
+		<h2 class="font-weight-bolder text-center" style="color:black;">
 			
+			Meal To Be Preapred :  
+			<span style="color: crimson; font-weight:bold">		
+				<?php 
+					if(isset($_POST['admin_meal_check'])) {
+						echo $count - $number_of_meal; 
+						echo "<br>"; 
+					}
 				?>
+			</span>
+
+		</h2>
+	</div>		
+	
+	
+	<h3 class="text-center">
+
+	
+		<table  style="width:100%; border: 2px solid black;" >   <b> 
+
+		<br><h2 style="background:seashell; font-weight:600;">Students Who Cancelled Their Meal On 
 				
-			</b>
-
-			
-			 <tr>
-				<th>Name</th>
-				<th>Student ID</th>
-				<th>Reason</th>
-			</tr>
-
-			<tr>
-                <td>
-					<?php
-
-						if(isset($_POST['admin_meal_check'])) {
-
-							$con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
-							
-							$date = $_POST['input_date'];
-							
-							
-							$pepole=" select email from meal_cancellation where cancel_date = '$date'";
-							$show_people = mysqli_query($con, $pepole);
-							
-					
-							while($row2=mysqli_fetch_assoc($show_people)){
-								$email_of_student= $row2['email'];
-								
-								$pepole_data= "SELECT S.name, S.student_ID, M.reason FROM student S, meal_cancellation M WHERE S.email = '$email_of_student' AND M.email = '$email_of_student' AND M.cancel_date = '$date'	";
-								$show_data =mysqli_query($con, $pepole_data);
-								$row3 =mysqli_fetch_assoc($show_data);
-							
-								echo $row3['name'] ;
-								echo " ";					
-								echo "<br>";			
-							
-							}							
-						}					
-					?>
-
-				</td>
-
-				<td>
-
-					<?php
-
-						if(isset($_POST['admin_meal_check'])) {
-
-							$con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
-							
-							$date = $_POST['input_date'];
-							
-							
-							$pepole=" select email from meal_cancellation where cancel_date = '$date'";
-							
-							
-
-							$show_people =mysqli_query($con, $pepole);
-						
-							
-							while($row2=mysqli_fetch_assoc($show_people)){
-
-								$email_of_student= $row2['email'];
-											
-								$pepole_data= "SELECT S.name, S.student_ID, M.reason FROM student S, meal_cancellation M WHERE S.email = '$email_of_student' AND M.email = '$email_of_student' AND M.cancel_date = '$date'	";
-								$show_data =mysqli_query($con, $pepole_data);
-								$row3 =mysqli_fetch_assoc($show_data);
-								
-								echo $row3['student_ID'];
-								echo " ";
-								echo "<br>";
-							}			
-							
-						}		
-		
-					?>
-
-		     	</td>
-				 
-				<td>
-
+			<span style="color:red; font-weight:bold">	
 				<?php
 
 					if(isset($_POST['admin_meal_check'])) {
 
-						$con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
-						
-						$date = $_POST['input_date'];
-					
-						$pepole=" select email from meal_cancellation where cancel_date = '$date'";
-						$show_people =mysqli_query($con, $pepole);
-						
-						
-					
-						
-						while($row2=mysqli_fetch_assoc($show_people)){
-							$email_of_student= $row2['email'];					
-						
-							$pepole_data= "SELECT S.name, S.student_ID, M.reason FROM student S, meal_cancellation M WHERE S.email = '$email_of_student' AND M.email = '$email_of_student' AND M.cancel_date = '$date'	";
-							$show_data =mysqli_query($con, $pepole_data);
-							$row3 =mysqli_fetch_assoc($show_data);
-						
-							echo $row3['reason'] ;
-							echo " ";				
-							echo "<br>";
-						
-						}	
-							
-					}		
+						$con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
 			
+						$date = $_POST['input_date'];
+						
+						$newDate = date("d M, Y", strtotime($date)); 
+						
+						echo $newDate;
+					}												
 				?>
 
-				</td> 
+			</span>	
+	
+		</h2>
 
-		    </tr>	
-		 
+						
+			<div>
+				<div style=" width:100%; padding:15px;"> 			
+					<thead>
+						<tr >
+							<th>Name</th>
+							<th>Student ID</th>
+							<th>Reason</th>
+						</tr>
+					</thead>
 
-			</table>
+					<tr>
+						<td>
+							<?php
+
+								if(isset($_POST['admin_meal_check'])) {
+
+									$con = mysqli_connect('localhost', 'root','190042106', 'iut_dms');
 									
-					
-			</h3>
-		</div>
- 
-	</div>
+									$date = $_POST['input_date'];
+									
+									
+									$pepole=" select email from meal_cancellation where cancel_date = '$date'";
+									$show_people = mysqli_query($con, $pepole);
+									
+							
+									while($row2=mysqli_fetch_assoc($show_people)){
+										$email_of_student= $row2['email'];
+										
+										$pepole_data= "SELECT S.name, S.student_ID, M.reason FROM student S, meal_cancellation M WHERE S.email = '$email_of_student' AND M.email = '$email_of_student' AND M.cancel_date = '$date'	";
+										$show_data =mysqli_query($con, $pepole_data);
+										$row3 =mysqli_fetch_assoc($show_data);
+									
+										echo $row3['name'] ;
+										echo " ";					
+										echo "<br>";			
+									
+									}							
+								}					
+							?>
+
+						</td>
+
+						<td>
+
+							<?php
+
+								if(isset($_POST['admin_meal_check'])) {
+
+									$con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+									
+									$date = $_POST['input_date'];
+									
+									$pepole=" select email from meal_cancellation where cancel_date = '$date'";
+
+									$show_people =mysqli_query($con, $pepole);
+								
+									
+									while($row2=mysqli_fetch_assoc($show_people)){
+
+										$email_of_student= $row2['email'];
+													
+										$pepole_data= "SELECT S.name, S.student_ID, M.reason FROM student S, meal_cancellation M WHERE S.email = '$email_of_student' AND M.email = '$email_of_student' AND M.cancel_date = '$date'	";
+										$show_data =mysqli_query($con, $pepole_data);
+										$row3 =mysqli_fetch_assoc($show_data);
+										
+										echo $row3['student_ID'];
+										echo " ";
+										echo "<br>";
+									}			
+									
+								}		
+				
+							?>
+
+						</td>
+							
+						<td>
+
+							<?php
+
+								if(isset($_POST['admin_meal_check'])) {
+
+									$con =mysqli_connect('localhost', 'root','190042106', 'iut_dms');
+									
+									$date = $_POST['input_date'];
+								
+									$pepole=" select email from meal_cancellation where cancel_date = '$date'";
+									$show_people =mysqli_query($con, $pepole);
+									
+									
+								
+									
+									while($row2=mysqli_fetch_assoc($show_people)){
+										$email_of_student= $row2['email'];					
+									
+										$pepole_data= "SELECT S.name, S.student_ID, M.reason FROM student S, meal_cancellation M WHERE S.email = '$email_of_student' AND M.email = '$email_of_student' AND M.cancel_date = '$date'	";
+										$show_data =mysqli_query($con, $pepole_data);
+										$row3 =mysqli_fetch_assoc($show_data);
+									
+										echo $row3['reason'] ;
+										echo " ";				
+										echo "<br>";
+									
+									}	
+										
+								}		
+						
+							?>
+
+						</td> 
+
+					</tr>	
+				</div>
+			</div>				
+		</table>
+											
+							
+	</h3>
 
 
 
