@@ -95,7 +95,7 @@
 					}
 			} 	
 			else {
-				echo "0 results";
+				echo "No Announcement To Show";
 			}
 
 			mysqli_close($conn);
@@ -137,7 +137,7 @@
 				}
 			} 	
 			else {
-				echo "0 results";
+				echo "No Announcement To Show";
 			}
 
 			mysqli_close($conn);
@@ -176,7 +176,7 @@
 				}
 			} 	
 			else {
-				echo "0 results";
+				echo "No Announcement To Show";
 			}
 
 			mysqli_close($conn);
@@ -218,7 +218,7 @@
 				}
 			} 	
 			else {
-				echo "0 results";
+				echo "No Announcement To Show";
 			}
 
 			mysqli_close($conn);
@@ -498,7 +498,7 @@
 							</div> <br>
 					
 							<label class="form-label label-style" for="customFile">Upload relevant Attachment</label> <br>
-							<input type="file" class="form-control" id="customFile" name="stu_pdf"> 
+							<input accept="application/pdf" type="file" class="form-control" id="customFile" name="stu_pdf"> 
 		
 							<br> <br>
 

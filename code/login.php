@@ -302,7 +302,6 @@ if(isset($_POST['submit'])){
 
               </form>
 
-              <!-- <p class="pt-4">If you do not have an account, please <a href="#">Register</a> </p> -->
               <p class="pt-4">If you do not have an account, please    
 
                  <button class="btn btn-primary" data-toggle="modal" data-target="#try">Sign Up</button> 
@@ -350,7 +349,7 @@ if(isset($_POST['submit'])){
 	  
 	              <br><br>
                 <label for="" class="label-style">Student Id</label>
-								<input type="number" name="s_id" placeholder="Enter your Student ID" class="form-control"> <br>
+								<input type="number" minlength="9" maxlength="9" name="s_id" placeholder="Enter your Student ID" class="form-control"> <br>
 
                 <b class="label-style"> Programme </b>
                 
