@@ -347,9 +347,10 @@
  </nav>
 
     
-    <div class="modal-body">
+    <!-- <div class="modal-body">
           
       <form class="form-horizontal" action="student_meal.php" method="POST">
+        
         <div class="form-group">
 
           <div class="form-floating">
@@ -384,9 +385,66 @@
             <div class="col-sm-offset-2 col-sm-10">
               <button onclick="alert('Your meal has been cancelled for the particular day/days.')" href="#ale" type="submit"  class="btn btn-success btn-lg" id="post" name="submit">Submit</button>
            </div>
-           </div>
+          </div>
+        </div>
       </form>
+    </div> -->
+
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="modal-body">
+              
+          <form class="form-horizontal" action="student_meal.php" method="POST">
+            
+            <div class="form-group">
+
+              <div class="form-floating">
+                  <label for="floatingTextarea1" class="meal_header" style="padding-top: 25px; font-size: 22px">Start Date</label>
+                  <br>
+                  &nbsp;   &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;
+                  
+                  <input placeholder="Select Start Date" type="text" id="floatingTextarea1" name="start_date" required class="datepicker" autocomplete="off" style="height: 40px;" >
+                  <br><br>
+                  
+              </div>
+                
+              <div class="form-floating">
+                  <label for="floatingTextarea1" class="meal_header" style="padding-top: 25px; font-size: 22px"> End Date</label><br>
+
+                  &nbsp;   &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;
+                  <input placeholder="Select End Date" type="text" id="floatingTextarea1" name="end_date" required class="datepicker" autocomplete="off" style="height: 40px"></textarea>
+                  
+              </div>  <br>
+                
+              <div class="form-floating">
+                
+                  <label for="floatingTextarea2" class = "meal_header" style="padding-top: 25px; font-size: 22px">Reason for Meal Cancellation</label>
+                  <br><br><br>
+                  <textarea class="form-control p-2" placeholder="Write your reason/s" id="cancel_reason" required name="reason" maxlength = "150"></textarea>
+                
+              </div> <br>
+          
+              <div class="form-group">       
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button onclick="alert('Your meal has been cancelled for the particular day/days.')" href="#ale" type="submit"  class="btn btn-success btn-lg" id="post" name="submit">Submit</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+      <div class="col" style="padding-left: 10%; border-left:5px solid green;">
+          <img class="rounded mx-auto d-block" src="images/fac2.png"  height="420px" alt="Cafeteria" >
+          <h4 class="text-justify" style="padding-top: 5%;">IUT has two self-service Cafeterias where the students take their breakfast and normal meals. 
+          All residential students are provided with continental breakfast, lunch, evening tea and dinner. </h4>
+      </div>
     </div>
+  </div>
 
 
 
