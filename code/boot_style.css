@@ -50,7 +50,9 @@ a, a:hover, a:focus{
     display: flex;
     width: 100%;
     align-items: stretch;
-    height: 750px;
+    min-height: 750px;
+    max-height: 100%;
+    
 }
 
 #sidebar {
@@ -59,6 +61,11 @@ a, a:hover, a:focus{
     background: teal;
     color: #fff;
     transition: all 0.3s;
+    max-height: 100%;
+    min-height: 750px;
+
+    
+
 }
 
 #sidebar.active{
@@ -188,4 +195,3 @@ a.article, a.article:hover {
 		display: none;
 	}
 }
-
