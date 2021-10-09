@@ -46,7 +46,7 @@ include('provost_photo.php');
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   
 
-    <title>announcement</title>
+    <title>Announcement</title>
 
     <style>
       
@@ -404,17 +404,16 @@ include('provost_photo.php');
               <form class="form-horizontal" action="provost_announcement.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
   
-                  <div class="form-floating">
+                  <!-- <div class="form-floating">
                       <label for="floatingTextarea1"> <b>Date of Announcement</b>  </label><br>
                       <input type="date" id="floatingTextarea1" style="height: 40px" name="date_of_post"></textarea>
                       
-                    </div>
-                    <br>
-                    <div class="form-floating">
+                  </div>      <br> -->
+
+                  <div class="form-floating">
                       <label for="floatingTextarea3"> <b>Subject</b> </label>
-                      <textarea class="form-control p-2" placeholder="Purpose of Announcement" id="floatingTextarea3"  name="subject_of_post"
-                      
-                      
+                      <textarea class="form-control p-2" required placeholder="Purpose of Announcement" id="floatingTextarea3"  name="subject_of_post"
+                          
                       style="
 								
                         resize: none;
@@ -423,37 +422,31 @@ include('provost_photo.php');
                         height: 50px;" ></textarea>
                     
                      
-                    </div>         
-                      
-                    
-                    
-                    <br>
+                  </div>           <br>
 
                   <div class="form-floating">
                       <label for="floatingTextarea2"> <b> Announcement</b></label>
-                      <textarea class="form-control p-2" placeholder="Write an Announement" id="floatingTextarea2" name="message_of_post"
+                      <textarea required class="form-control p-2" placeholder="Write an Announement" id="floatingTextarea2" name="message_of_post"
                       
                       style="
 
                       resize: none;
                       color: black;
                       border:black solid;
-                      height: 200px;" > </textarea>
-                      
-                    
+                      height: 200px;" >  </textarea>
                      
-                    </div>
-                   <br>
+                  </div>  <br>
 
                    <label class="form-label label-style" for="customFile" style="font-weight: 700;">Upload Relevant Attachment</label> <br>
                    <input type="file" class="form-control" id="customFile" name="pro_pdf"> 
                   
-
                    <br> <br>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-people" id="user" viewBox="0 0 16 16">
+
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-people" id="user" viewBox="0 0 16 16">
                       <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
-                    </svg>
-                    <h6 > &nbsp; It will appear to those who have access to IUTDMS</h6>
+                  </svg>
+
+                  <h6 > &nbsp; It will appear to those who have access to IUTDMS</h6>
   
                     <br><br>
                 <div class="form-group">        
@@ -580,7 +573,7 @@ include('provost_photo.php');
           // Create connection
           $conn = mysqli_connect($servername, $username, $password, $dbname);
 
-          $date = $_POST['date_of_post'];
+          // $date = $_POST['date_of_post'];
           $sub = $_POST['subject_of_post'];
           $message = $_POST['message_of_post'];
           $email = $_SESSION['email'];

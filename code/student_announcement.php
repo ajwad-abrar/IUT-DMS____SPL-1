@@ -465,14 +465,14 @@
 
 						<div class="form-group">
 			
-							<div class="form-floating">
+							<!-- <div class="form-floating">
 								<label for="floatingTextarea1"> <b>Date of Announcement</b>  </label><br>
 								<input type="date" id="floatingTextarea1" name="date_of_post"></textarea>
-							</div>      <br>
+							</div>      <br> -->
 							
 							<div class="form-floating">
 								<label for="floatingTextarea3"> <b>Subject </b> </label>
-									<textarea class="form-control p-2" placeholder="Purpose of Announcement" name="subject_of_post" id="subject_announcement" maxlength="50"
+									<textarea required class="form-control p-2" placeholder="Purpose of Announcement" name="subject_of_post" id="subject_announcement" maxlength="50"
 								
 										style="
 										
@@ -484,7 +484,7 @@
 
 							<div class="form-floating">
 								<label for="floatingTextarea2"> <b> Announcement</b></label>
-								<textarea class="form-control p-2" placeholder="Write an announement" id="floatingTextarea2" name="message_of_post"
+								<textarea required class="form-control p-2" placeholder="Write an announement" id="floatingTextarea2" name="message_of_post"
 								
 								style="
 										
