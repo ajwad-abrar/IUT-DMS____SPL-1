@@ -744,7 +744,7 @@
 			// Create connection
 			$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-			$date = $_POST['date_of_post'];
+			// $date = $_POST['date_of_post'];
 			$sub = $_POST['subject_of_post'];
 			$message = $_POST['message_of_post'];
 			$email = $_SESSION['email'];
